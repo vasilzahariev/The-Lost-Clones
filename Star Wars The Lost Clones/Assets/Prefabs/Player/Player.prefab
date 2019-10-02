@@ -1647,7 +1647,7 @@ MonoBehaviour:
   Speed: 5
   BackwardsSpeed: 2.5
   RotationSpeed: 20
-  JumpForce: 700
+  JumpForce: 25
 --- !u!1 &5077103436493766707
 GameObject:
   m_ObjectHideFlags: 0
