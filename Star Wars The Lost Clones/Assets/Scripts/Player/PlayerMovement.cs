@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumping; // Detects if the player is still jumping
     private bool falling;
     private bool running;
+    private bool fallingAfterJump;
 
     private float h;
     private float v;
@@ -31,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private float currentJumpForce;
     private float defaultSpeed;
     private float defaultBackwardsSpeed;
+    private float defaultSideWaysSpeed;
+    private float currentSideWaysSpeed;
 
     void Start()
     {
@@ -44,48 +47,71 @@ public class PlayerMovement : MonoBehaviour
         this.jumping = false;
         this.falling = false;
         this.running = false;
+        this.fallingAfterJump = false;
 
         this.maxJumpForce = this.JumpForce * 40;
         this.currentJumpForce = 0f;
         this.defaultSpeed = this.Speed;
         this.defaultBackwardsSpeed = this.BackwardsSpeed;
+        this.defaultSideWaysSpeed = this.Speed / 2;
     }
 
     void Update()
     {
-        if (this.jumping)
+        if (this.jumping || this.fallingAfterJump)
         {
-            this.Speed = this.defaultSpeed / 2;
-            this.BackwardsSpeed = this.defaultBackwardsSpeed / 2;
+            this.Speed = 0f;
+            this.BackwardsSpeed = 0f;
+            this.currentSideWaysSpeed = 0f;
+            
+            //this.Speed = this.defaultSpeed / 2;
+            //this.BackwardsSpeed = this.defaultBackwardsSpeed / 2;
         }
         else
         {
-            this.Speed = this.defaultSpeed;
-            this.BackwardsSpeed = this.defaultBackwardsSpeed;
-        }
+            if (this.running)
+            {
+                this.Speed = this.defaultSpeed * 2;
+                this.currentSideWaysSpeed = this.defaultSideWaysSpeed * 2;
+            }
+            else
+            {
+                this.Speed = this.defaultSpeed;
+                this.currentSideWaysSpeed = this.defaultSideWaysSpeed;
+            }
 
-        if (this.running)
-        {
-            this.Speed = this.defaultSpeed * 2;
-        }
-        else
-        {
-            this.Speed = this.defaultSpeed;
+            this.BackwardsSpeed = this.defaultBackwardsSpeed;
         }
 
         if (Input.GetAxis("Vertical") < 0f)
         {
-            this.h = Input.GetAxis("Horizontal") * this.BackwardsSpeed;
+            this.currentSideWaysSpeed = this.defaultSideWaysSpeed;
+
+            this.h = Input.GetAxis("Horizontal") * this.currentSideWaysSpeed;
             this.v = Input.GetAxis("Vertical") * this.BackwardsSpeed;
         }
         else
         {
-            this.h = Input.GetAxis("Horizontal") * this.Speed;
+            this.h = Input.GetAxis("Horizontal") * this.currentSideWaysSpeed;
             this.v = Input.GetAxis("Vertical") * this.Speed;
         }
 
         if (Input.GetButtonDown("Jump") && !this.falling)
         {
+            if (this.walking)
+            {
+                this.rg.velocity = this.transform.forward * this.Speed;
+            }
+
+            if (this.backwards)
+            {
+                this.rg.velocity = -this.transform.forward * this.BackwardsSpeed;
+            }
+
+            if (!this.walking && !this.backwards && this.h != 0f)
+            {
+                this.rg.velocity = (this.h > 0f ? 1f : -1f) * this.transform.right * this.currentSideWaysSpeed;
+            }
 
             this.jumping = true;
 
@@ -102,8 +128,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonUp("Jump") || this.currentJumpForce == this.maxJumpForce)
         {
             this.jumping = false;
-
-            this.animator.SetBool("IsFalling", true);
+            this.fallingAfterJump = true;
         }
 
         if (Input.GetButton("Run"))
@@ -169,17 +194,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Moving sideways
-        if (this.h > 0f)
+        if (this.h > 0f && (!this.walking && !this.backwards))
         {
             this.animator.SetBool("IsMovingLeft", false);
             this.animator.SetBool("IsMovingRight", true);
         }
         else if (this.h > 0f && (this.walking || this.backwards))
         {
+            this.animator.SetBool("IsMovingRight", false);
             this.animator.SetBool("IsMovingLeft", false);
-            this.animator.SetBool("IsMovingRight", true);
+
+            this.transform.Rotate(0f, 15f * (this.walking == true ? 1 : -1), 0f);
         }
-        else if (this.h < 0f)
+        else if (this.h < 0f && (!this.walking && !this.backwards))
         {
             this.animator.SetBool("IsMovingRight", false);
             this.animator.SetBool("IsMovingLeft", true);
@@ -187,7 +214,9 @@ public class PlayerMovement : MonoBehaviour
         else if (this.h < 0f && (this.walking || this.backwards))
         {
             this.animator.SetBool("IsMovingRight", false);
-            this.animator.SetBool("IsMovingLeft", true);
+            this.animator.SetBool("IsMovingLeft", false);
+
+            this.transform.Rotate(0f, -15f * (this.walking == true ? 1 : -1), 0f);
         }
         else if (this.h == 0f)
         {
@@ -210,8 +239,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            if (this.rg.velocity != Vector3.zero)
+            {
+                this.rg.velocity = Vector3.zero;
+            }
+
             this.currentJumpForce = 0f;
             this.jumping = false;
+            this.fallingAfterJump = false;
             this.falling = false;
             this.animator.SetBool("IsJumping", this.jumping);
             this.animator.SetBool("IsFalling", this.falling);
@@ -222,6 +257,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            this.fallingAfterJump = false;
+
             this.falling = false;
 
             this.animator.SetBool("IsFalling", this.falling);
