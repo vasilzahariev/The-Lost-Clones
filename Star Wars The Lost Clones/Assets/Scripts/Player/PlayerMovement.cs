@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         this.running = false;
         this.fallingAfterJump = false;
 
-        this.maxJumpForce = this.JumpForce * 40;
+        this.maxJumpForce = this.JumpForce * 30;
         this.currentJumpForce = 0f;
         this.defaultSpeed = this.Speed;
         this.defaultBackwardsSpeed = this.BackwardsSpeed;
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.Speed = 0f;
             this.BackwardsSpeed = 0f;
-            this.currentSideWaysSpeed = 0f;
+            this.currentSideWaysSpeed = 3f;
             
             //this.Speed = this.defaultSpeed / 2;
             //this.BackwardsSpeed = this.defaultBackwardsSpeed / 2;
