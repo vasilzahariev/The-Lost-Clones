@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rg;
     private Animator animator;
+    private Player player;
 
     private bool walking;
     private bool backwards;
@@ -35,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     {
         this.rg = this.GetComponent<Rigidbody>();
         this.animator = this.GetComponent<Animator>();
+        this.player = this.GetComponent<Player>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -61,11 +65,13 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        this.Rotate();
-        this.Move();
-        //this.Jump();
+        if (!this.player.IsDead)
+        {
+            this.Rotate();
+            this.Move();
 
-        this.AnimationParser();
+            this.AnimationParser();
+        }
     }
 
     private void Rotate()
@@ -136,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (this.jump)
+        if (this.jump && !this.player.IsDead)
         {
             this.rg.AddForce(this.transform.up * this.JumpForce);
 

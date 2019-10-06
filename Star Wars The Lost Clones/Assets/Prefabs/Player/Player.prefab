@@ -1557,6 +1557,7 @@ GameObject:
   - component: {fileID: 153057056736253340}
   - component: {fileID: 153057056736253341}
   - component: {fileID: 153057056736253331}
+  - component: {fileID: 5287848766786138103}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1652,6 +1653,24 @@ MonoBehaviour:
   SideWaysRunningSpeed: 6
   RotationSpeed: 5
   JumpForce: 500
+--- !u!114 &5287848766786138103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4985374070369935530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc25cabf0b48b8240aecfd97354ec7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBar: {fileID: 0}
+  ForceStaminaBar: {fileID: 0}
+  LightsaberStaminaBar: {fileID: 0}
+  BaseHealth: 100
+  BaseForceStamina: 100
+  BaseLightsaberStamina: 100
 --- !u!1 &5077103436493766707
 GameObject:
   m_ObjectHideFlags: 0
