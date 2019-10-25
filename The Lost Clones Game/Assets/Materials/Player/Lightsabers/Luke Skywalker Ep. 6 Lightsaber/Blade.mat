@@ -74,7 +74,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_4AACC32A: {r: 0, g: 11.984314, b: 1.6941177, a: 0}
-    - Color_DC42B3B6: {r: 0, g: 16, b: 3.1762276, a: 0}
+    - Color_DC42B3B6: {r: 0, g: 11.984314, b: 1.4431373, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
