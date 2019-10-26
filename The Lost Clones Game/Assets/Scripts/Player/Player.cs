@@ -189,9 +189,18 @@ public class Player : MonoBehaviour, IDamagable
         }
         else
         {
-            this.attacking = false;
+            if (this.nextAttack && this.attack == this.MainAttackAnimationsCount)
+            {
+                this.attacking = true;
 
-            this.attack = 0;
+                this.attack = 1;
+            }
+            else
+            {
+                this.attacking = false;
+
+                this.attack = 0;
+            }
         }
 
         this.IsSwinging = false;
