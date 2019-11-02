@@ -11,10 +11,14 @@ public class TestBullet : MonoBehaviour
     private Camera playerCamera;
 
     private Vector3 direction;
+    private Vector3 hitPoint;
+    private Transform hitTransform;
 
     private float xRot;
     private float yRot;
     private float zRot;
+
+    private bool isDeflected;
 
     void Start()
     {
@@ -28,6 +32,8 @@ public class TestBullet : MonoBehaviour
         this.yRot = 0f;
         this.zRot = 0f;
 
+        this.isDeflected = false;
+
         this.transform.parent = null;
     }
 
@@ -36,17 +42,43 @@ public class TestBullet : MonoBehaviour
         //this.transform.Translate(this.direction * this.transform.forward * this.Speed * Time.fixedDeltaTime);
         //this.transform.Translate(this.direction * (this.transform.forward + this.transform.right) * this.Speed * Time.fixedDeltaTime);
 
-        this.transform.Translate(this.direction * Time.fixedDeltaTime);
+        if (!this.isDeflected)
+        {
+            this.transform.Translate(this.direction * Time.fixedDeltaTime);
+        }
+        else
+        {
+            this.MoveToHitPoint();
+        }
+
         this.transform.rotation = Quaternion.Euler(this.xRot, this.yRot, this.zRot);
     }
 
     public void ChangeDirection()
     {
-        //this.direction *= -1;
+        RaycastHit hit;
 
-        this.direction = -this.transform.forward * this.Speed;
+        if (Physics.Raycast(this.playerCamera.transform.position, this.playerCamera.transform.forward, out hit, Mathf.Infinity))
+        {
+            this.hitPoint = hit.point;
+            this.hitTransform = hit.transform;
+            this.isDeflected = true;
+        }
+        else
+        {
+            this.direction = -this.transform.forward * this.Speed;
+        }
+
         this.xRot += (this.playerCamera.transform.rotation.x * 100f);
         this.yRot = (this.playerCamera.transform.rotation.y * 100f) + 5;
+    }
+
+    private void MoveToHitPoint()
+    {
+        float step = this.Speed * Time.fixedDeltaTime;
+
+        this.transform.position = Vector3.MoveTowards(this.transform.position, this.hitPoint, step);
+        this.transform.LookAt(this.hitTransform);
     }
 
     private void Destroy()
