@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IDamagable
 {
 
     public GameObject LightsaberBlade;
+    public GameObject ForcePush;
 
     [HideInInspector]
     public bool IsSwinging;
@@ -63,6 +64,11 @@ public class Player : MonoBehaviour, IDamagable
         if (Input.GetKeyDown(KeyCode.C))
         {
             this.isLightsaberActivated = this.isLightsaberActivated ? false : true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            this.ForcePush.SetActive(true);
         }
 
         if (!this.blocking)

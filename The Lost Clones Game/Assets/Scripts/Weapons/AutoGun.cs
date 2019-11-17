@@ -16,7 +16,7 @@ public class AutoGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.F) && this.canShoot)
+        if (Input.GetKey(KeyCode.Z) && this.canShoot)
         {
             Shoot();
 
