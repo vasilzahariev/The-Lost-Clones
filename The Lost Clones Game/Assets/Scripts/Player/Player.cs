@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public GameObject LightsaberBlade;
     public GameObject ForcePush;
+    public GameObject ForcePull;
 
     [HideInInspector]
     public bool IsSwinging;
@@ -43,6 +44,10 @@ public class Player : MonoBehaviour, IDamagable
     private bool nextAttack;
     private bool reloadingLightsaber;
     private bool isLightsaberActivated;
+    private bool gravity;
+    private bool isUsingTheForce;
+    private bool isForcePushing;
+    private bool isForcePulling;
 
     void Start()
     {
@@ -57,21 +62,35 @@ public class Player : MonoBehaviour, IDamagable
         this.LightsaberStamina = this.BaseLightsaberStamina;
 
         this.isLightsaberActivated = false;
+
+        this.gravity = true;
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            this.gravity = this.gravity ? false : true;
+        }
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             this.isLightsaberActivated = this.isLightsaberActivated ? false : true;
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !this.attacking && !this.isUsingTheForce && !this.blocking)
         {
-            this.ForcePush.SetActive(true);
+            this.isUsingTheForce = true;
+            this.isForcePushing = true;
         }
 
-        if (!this.blocking)
+        if (Input.GetKeyDown(KeyCode.Q) && !this.attacking && !this.isUsingTheForce && !this.blocking)
+        {
+            this.isUsingTheForce = true;
+            this.isForcePulling = true;
+        }
+
+        if (!this.blocking && !this.isUsingTheForce)
         {
             if (Input.GetMouseButtonDown(0) && this.attacking && this.attack != 0)
             {
@@ -86,7 +105,7 @@ public class Player : MonoBehaviour, IDamagable
             }
         }
 
-        if (Input.GetMouseButtonDown(1) && this.LightsaberStamina != 0f)
+        if (Input.GetMouseButtonDown(1) && this.LightsaberStamina != 0f && !this.isUsingTheForce)
         {
             this.blocking = true;
 
@@ -112,6 +131,8 @@ public class Player : MonoBehaviour, IDamagable
             this.ReloadingLightsaberStamina();
         }
 
+        this.gameObject.GetComponent<Rigidbody>().useGravity = this.gravity;
+
         this.AnimationParser();
         this.ActivateOrDeativateLightsaber();
     }
@@ -122,6 +143,8 @@ public class Player : MonoBehaviour, IDamagable
         {
             this.animator.SetInteger("Attack", this.attack);
             this.animator.SetBool("IsBlocking", this.blocking);
+            this.animator.SetBool("IsForcePushing", this.isForcePushing);
+            this.animator.SetBool("IsForcePulling", this.isForcePulling);
         }
 
         if (this.IsDead)
@@ -210,5 +233,35 @@ public class Player : MonoBehaviour, IDamagable
         }
 
         this.IsSwinging = false;
+    }
+
+    public void StartForcePush()
+    {
+        if (this.isForcePushing)
+        {
+            this.ForcePush.SetActive(true);
+        }
+        else if (this.isForcePulling)
+        {
+            this.ForcePull.SetActive(true);
+        }
+    }
+
+    public void StopForcePush()
+    {
+        if (this.isForcePushing)
+        {
+            this.isForcePushing = false;
+
+            this.ForcePush.SetActive(false);
+        }
+        else if (this.isForcePulling)
+        {
+            this.isForcePulling = false;
+
+            this.ForcePull.SetActive(false);
+        }
+
+        this.isUsingTheForce = false;
     }
 }

@@ -96,13 +96,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (this.v > 0f)
         {
-            this.v *= this.running ? this.RunningSpeed : this.Speed;
+            this.v = this.running ? this.RunningSpeed : this.Speed;
 
             this.walking = true;
         }
         else if (this.v < 0f)
         {
-            this.v *= this.running ? this.BackwardsRunningSpeed : this.BackwardsSpeed;
+            this.v = -(this.running ? this.BackwardsRunningSpeed : this.BackwardsSpeed);
 
             this.backwards = true;
         }
@@ -119,13 +119,21 @@ public class PlayerMovement : MonoBehaviour
             this.left = true;
         }
 
-        if (this.running && !this.walking)
+        if (this.h != 0f)
         {
-            this.h *= this.SideWaysRunningSpeed;
+            if (this.running && !this.walking)
+            {
+                this.h = this.SideWaysRunningSpeed;
+            }
+            else
+            {
+                this.h = this.SideWaysSpeed;
+            }
         }
-        else
+
+        if (this.left)
         {
-            this.h *= this.SideWaysSpeed;
+            this.h *= -1;
         }
 
         //this.h *= this.running ? this.SideWaysRunningSpeed : this.SideWaysSpeed;
@@ -147,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
             this.transform.Rotate(0f, -15f, 0f);
         }
 
-        this.transform.Translate(this.h * Time.fixedDeltaTime, 0f, this.v * Time.deltaTime);
+        this.rg.MovePosition(this.transform.position + (this.transform.forward * this.v * Time.fixedDeltaTime) + (this.transform.right * this.h * Time.fixedDeltaTime));
     }
 
     public void Jump()

@@ -9,7 +9,6 @@ public class ForcePush : MonoBehaviour
     public float BaseDistance;
     public float BaseThickness;
     public float BaseStaminaCost;
-    public float ActiveSeconds;
 
     private BoxCollider boxCollider;
 
@@ -33,18 +32,6 @@ public class ForcePush : MonoBehaviour
         this.boxCollider.center = new Vector3(this.boxCollider.center.x, this.boxCollider.center.y, this.boxCollider.center.z + (this.distance / 2));
     }
 
-    private void Update()
-    {
-        StartCoroutine(this.Count());
-    }
-
-    private IEnumerator Count()
-    {
-        yield return new WaitForSeconds(this.ActiveSeconds);
-
-        this.gameObject.SetActive(false);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         Rigidbody rg = other.gameObject.GetComponent<Rigidbody>();
@@ -52,7 +39,7 @@ public class ForcePush : MonoBehaviour
         if (rg != null)
         {
             rg.AddForce(this.transform.forward * this.pushForce);
-            rg.AddForce(this.transform.up * this.pushForce / 1.5f);
+            rg.AddForce(this.transform.up * this.pushForce / 2f);
         }
     }
 }

@@ -29,7 +29,7 @@ public class PlayerUIManager : MonoBehaviour
     private void UpdateBars()
     {
         this.HealthBar.value = this.player.Health;
-        this.HealthBar.GetComponentInChildren<Text>().text = $"{this.player.Health} / {this.player.BaseHealth} HP";
+        //this.HealthBar.GetComponentInChildren<Text>().text = $"{this.player.Health} / {this.player.BaseHealth} HP";
 
         this.ForceStaminaBar.value = this.player.ForceStamina;
         this.ForceStaminaBar.GetComponentInChildren<Text>().text = $"{this.player.ForceStamina} / {this.player.BaseForceStamina} FSP";
