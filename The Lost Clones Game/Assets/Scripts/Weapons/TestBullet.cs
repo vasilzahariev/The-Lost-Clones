@@ -101,6 +101,8 @@ public class TestBullet : MonoBehaviour
                         player.ReduceLightsaberStamina(1f);
 
                         this.ChangeDirection();
+
+                        FindObjectOfType<AudioManager>().Play("LightsaberDeflect");
                     }
                     else
                     {
@@ -119,10 +121,13 @@ public class TestBullet : MonoBehaviour
             {
                 this.ChangeDirection();
             }
+
+            FindObjectOfType<AudioManager>().Play("LightsaberDeflect");
         }
         else if (!other.gameObject.CompareTag("Bullet"))
         {
             this.Destroy();
         }
+
     }
 }

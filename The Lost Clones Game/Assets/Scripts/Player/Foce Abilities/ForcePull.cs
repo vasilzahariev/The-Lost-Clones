@@ -39,7 +39,7 @@ public class ForcePull : MonoBehaviour
         if (rg != null)
         {
             rg.AddForce(-this.transform.forward * this.pullForce);
-            rg.AddForce(this.transform.up * this.pullForce / 2f);
+            rg.AddForce(this.transform.up * this.pullForce / 5f);
         }
     }
 }

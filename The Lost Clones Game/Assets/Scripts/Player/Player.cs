@@ -68,14 +68,27 @@ public class Player : MonoBehaviour, IDamagable
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             this.gravity = this.gravity ? false : true;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             this.isLightsaberActivated = this.isLightsaberActivated ? false : true;
+
+            if (this.isLightsaberActivated)
+            {
+                FindObjectOfType<AudioManager>().Stop("LightsaberStop");
+                FindObjectOfType<AudioManager>().Play("LightsaberStart");
+                FindObjectOfType<AudioManager>().PlayAfter("LightsaberIdle", "LightsaberStart");
+            }
+            else
+            {
+                FindObjectOfType<AudioManager>().Stop("LightsaberStart");
+                FindObjectOfType<AudioManager>().Stop("LightsaberIdle");
+                FindObjectOfType<AudioManager>().Play("LightsaberStop");
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F) && !this.attacking && !this.isUsingTheForce && !this.blocking)
@@ -110,12 +123,18 @@ public class Player : MonoBehaviour, IDamagable
             this.blocking = true;
 
             this.reloadingLightsaber = false;
+
+            FindObjectOfType<AudioManager>().Stop("LightsaberStop");
+            FindObjectOfType<AudioManager>().Play("LightsaberStart");
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             this.blocking = false;
             this.reloadingLightsaber = true;
+
+            FindObjectOfType<AudioManager>().Stop("LightsaberStart");
+            FindObjectOfType<AudioManager>().Play("LightsaberStop");
         }
 
         if (!this.blocking && (this.LightsaberStamina < 100f && this.LightsaberStamina >= 0f))
@@ -235,7 +254,17 @@ public class Player : MonoBehaviour, IDamagable
         this.IsSwinging = false;
     }
 
-    public void StartForcePush()
+    public void PlayForcePushSound()
+    {
+        FindObjectOfType<AudioManager>().Play("ForcePush");
+    }
+
+    public void PlayForcePullSound()
+    {
+        FindObjectOfType<AudioManager>().Play("ForcePull");
+    }
+
+    public void StartForce()
     {
         if (this.isForcePushing)
         {
@@ -247,7 +276,7 @@ public class Player : MonoBehaviour, IDamagable
         }
     }
 
-    public void StopForcePush()
+    public void StopForce()
     {
         if (this.isForcePushing)
         {
