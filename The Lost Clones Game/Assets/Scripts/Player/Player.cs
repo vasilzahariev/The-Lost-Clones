@@ -77,13 +77,13 @@ public class Player : MonoBehaviour, IDamagable
         {
             this.isLightsaberActivated = this.isLightsaberActivated ? false : true;
 
-            if (this.isLightsaberActivated)
+            if (this.isLightsaberActivated && !FindObjectOfType<AudioManager>().IsPlaying("LightsaberIdle"))
             {
                 FindObjectOfType<AudioManager>().Stop("LightsaberStop");
                 FindObjectOfType<AudioManager>().Play("LightsaberStart");
                 FindObjectOfType<AudioManager>().PlayAfter("LightsaberIdle", "LightsaberStart");
             }
-            else
+            else if (!this.isLightsaberActivated && !this.attacking && !this.blocking)
             {
                 FindObjectOfType<AudioManager>().Stop("LightsaberStart");
                 FindObjectOfType<AudioManager>().Stop("LightsaberIdle");
@@ -124,8 +124,12 @@ public class Player : MonoBehaviour, IDamagable
 
             this.reloadingLightsaber = false;
 
-            FindObjectOfType<AudioManager>().Stop("LightsaberStop");
-            FindObjectOfType<AudioManager>().Play("LightsaberStart");
+            if (!this.isLightsaberActivated)
+            {
+                FindObjectOfType<AudioManager>().Stop("LightsaberStop");
+                FindObjectOfType<AudioManager>().Play("LightsaberStart");
+                FindObjectOfType<AudioManager>().Play("LightsaberIdle");
+            }
         }
 
         if (Input.GetMouseButtonUp(1))
@@ -133,8 +137,12 @@ public class Player : MonoBehaviour, IDamagable
             this.blocking = false;
             this.reloadingLightsaber = true;
 
-            FindObjectOfType<AudioManager>().Stop("LightsaberStart");
-            FindObjectOfType<AudioManager>().Play("LightsaberStop");
+            if (!this.isLightsaberActivated)
+            {
+                FindObjectOfType<AudioManager>().Stop("LightsaberStart");
+                FindObjectOfType<AudioManager>().Play("LightsaberStop");
+                FindObjectOfType<AudioManager>().Stop("LightsaberIdle");
+            }
         }
 
         if (!this.blocking && (this.LightsaberStamina < 100f && this.LightsaberStamina >= 0f))

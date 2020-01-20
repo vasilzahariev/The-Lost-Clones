@@ -55,4 +55,16 @@ public class AudioManager : MonoBehaviour
 
         neededSound.Source.PlayDelayed(1f);
     }
+
+    public bool IsPlaying(string name)
+    {
+        Sound neededSong = Array.Find(this.Sounds, sound => sound.Name == name);
+
+        if (neededSong == null)
+        {
+            return false;
+        }
+
+        return neededSong.Source.isPlaying;
+    }
 }
