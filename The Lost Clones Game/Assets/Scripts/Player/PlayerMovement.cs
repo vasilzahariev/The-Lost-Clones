@@ -138,22 +138,22 @@ public class PlayerMovement : MonoBehaviour
 
         //this.h *= this.running ? this.SideWaysRunningSpeed : this.SideWaysSpeed;
 
-        if (this.walking && this.left)
-        {
-            this.transform.Rotate(0f, -15f, 0f);
-        }
-        else if (this.walking && this.right)
-        {
-            this.transform.Rotate(0f, 15f, 0f);
-        }
-        else if (this.backwards && this.left)
-        {
-            this.transform.Rotate(0f, 15f, 0f);
-        }
-        else if (this.backwards && this.right)
-        {
-            this.transform.Rotate(0f, -15f, 0f);
-        }
+        //if (this.walking && this.left)
+        //{
+        //    this.transform.Rotate(0f, -15f, 0f);
+        //}
+        //else if (this.walking && this.right)
+        //{
+        //    this.transform.Rotate(0f, 15f, 0f);
+        //}
+        //else if (this.backwards && this.left)
+        //{
+        //    this.transform.Rotate(0f, 15f, 0f);
+        //}
+        //else if (this.backwards && this.right)
+        //{
+        //    this.transform.Rotate(0f, -15f, 0f);
+        //}
 
         this.rg.MovePosition(this.transform.position + (this.transform.forward * this.v * Time.fixedDeltaTime) + (this.transform.right * this.h * Time.fixedDeltaTime));
     }
