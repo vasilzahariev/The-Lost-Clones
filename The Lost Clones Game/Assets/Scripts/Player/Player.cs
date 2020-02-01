@@ -11,6 +11,11 @@ public class Player : MonoBehaviour, IDamagable
     public GameObject ForcePush;
     public GameObject ForcePull;
 
+    public string[] AttackTypes;
+
+    [HideInInspector]
+    public string AttackType;
+
     [HideInInspector]
     public bool IsSwinging;
 
@@ -48,9 +53,12 @@ public class Player : MonoBehaviour, IDamagable
     private bool isUsingTheForce;
     private bool isForcePushing;
     private bool isForcePulling;
+    private bool isBlockLooping;
 
     void Start()
     {
+        this.AttackType = this.AttackTypes[0];
+
         this.IsDead = false;
 
         this.animator = this.GetComponent<Animator>();
@@ -158,6 +166,11 @@ public class Player : MonoBehaviour, IDamagable
             this.ReloadingLightsaberStamina();
         }
 
+        if (!this.blocking)
+        {
+            this.isBlockLooping = false;
+        }
+
         this.gameObject.GetComponent<Rigidbody>().useGravity = this.gravity;
 
         this.AnimationParser();
@@ -170,6 +183,7 @@ public class Player : MonoBehaviour, IDamagable
         {
             this.animator.SetInteger("Attack", this.attack);
             this.animator.SetBool("IsBlocking", this.blocking);
+            this.animator.SetBool("IsBlockLooping", this.isBlockLooping);
             this.animator.SetBool("IsForcePushing", this.isForcePushing);
             this.animator.SetBool("IsForcePulling", this.isForcePulling);
         }
@@ -300,5 +314,10 @@ public class Player : MonoBehaviour, IDamagable
         }
 
         this.isUsingTheForce = false;
+    }
+
+    public void BlockingLoop()
+    {
+        this.isBlockLooping = true;
     }
 }

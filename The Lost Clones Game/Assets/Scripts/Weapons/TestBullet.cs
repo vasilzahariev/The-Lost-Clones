@@ -57,8 +57,9 @@ public class TestBullet : MonoBehaviour
     public void ChangeDirection()
     {
         RaycastHit hit;
+        LayerMask mask = 10;
 
-        if (Physics.Raycast(this.playerCamera.transform.position, this.playerCamera.transform.forward, out hit, Mathf.Infinity))
+        if (Physics.Raycast(this.playerCamera.transform.position, this.playerCamera.transform.forward, out hit, Mathf.Infinity, mask))
         {
             this.hitPoint = hit.point;
             this.hitTransform = hit.transform;

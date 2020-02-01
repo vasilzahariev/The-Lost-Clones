@@ -28,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
     private bool jump;
     private bool jumping;
     private bool isInAir;
+    private bool isGoingToTouchTheGround;
+    private bool isJumpFalling;
+    private bool isJumpLanding;
+
 
     private float h;
     private float v;
@@ -45,6 +49,14 @@ public class PlayerMovement : MonoBehaviour
     {
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 2f) && this.isJumpFalling)
+        {
+            this.isJumpFalling = false;
+            this.isJumpLanding = true;
+        }
 
         if (Input.GetButtonDown("Jump") && !this.jumping)
         {
@@ -69,7 +81,10 @@ public class PlayerMovement : MonoBehaviour
         {
             this.Rotate();
 
-            this.Move();
+            if (!this.player.attacking)
+            {
+                this.Move();
+            }
 
             this.AnimationParser();
         }
@@ -96,6 +111,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (this.v > 0f)
         {
+            //if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_WalkFwd") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_SprintLoop"))
+            //{
+            //    this.v = this.running ? this.RunningSpeed : this.Speed;
+            //}
+            //else if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_WalkFwdStart") || this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_SprintStart"))
+            //{
+            //    this.v = this.running ? this.RunningSpeed / 2 : this.Speed / 2;
+            //}
+            //Longs_WalkFwdStart
             this.v = this.running ? this.RunningSpeed : this.Speed;
 
             this.walking = true;
@@ -136,25 +160,6 @@ public class PlayerMovement : MonoBehaviour
             this.h *= -1;
         }
 
-        //this.h *= this.running ? this.SideWaysRunningSpeed : this.SideWaysSpeed;
-
-        //if (this.walking && this.left)
-        //{
-        //    this.transform.Rotate(0f, -15f, 0f);
-        //}
-        //else if (this.walking && this.right)
-        //{
-        //    this.transform.Rotate(0f, 15f, 0f);
-        //}
-        //else if (this.backwards && this.left)
-        //{
-        //    this.transform.Rotate(0f, 15f, 0f);
-        //}
-        //else if (this.backwards && this.right)
-        //{
-        //    this.transform.Rotate(0f, -15f, 0f);
-        //}
-
         this.rg.MovePosition(this.transform.position + (this.transform.forward * this.v * Time.fixedDeltaTime) + (this.transform.right * this.h * Time.fixedDeltaTime));
     }
 
@@ -168,6 +173,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void JumpFall()
+    {
+        this.isJumpFalling = true;
+        //Debug.Log("Test");
+    }
+
     private void AnimationParser()
     {
         this.animator.SetBool("IsWalking", this.walking);
@@ -177,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("IsJumping", this.jumping);
         this.animator.SetBool("IsRunning", this.running);
         this.animator.SetBool("IsInAir", this.isInAir);
+        this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
+        this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -187,6 +200,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 this.jump = false;
                 this.jumping = false;
+                this.isJumpFalling = false;
+                this.isJumpLanding = false;
             }
             else
             {
@@ -199,6 +214,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!this.jumping && collision.gameObject.CompareTag("Ground"))
         {
+            this.isJumpLanding = false;
+            this.isJumpFalling = false;
             this.isInAir = false;
         }
     }
