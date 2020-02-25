@@ -90,11 +90,11 @@ Material:
     m_Colors:
     - Color_4AACC32A: {r: 0, g: 2.0078433, b: 16, a: 0}
     - Color_DC42B3B6: {r: 0, g: 11.560208, b: 31.999996, a: 0}
-    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 8, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 2.6210637, b: 4.241645, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &2737089177869754684

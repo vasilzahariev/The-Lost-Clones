@@ -10,6 +10,7 @@ public class Player : MonoBehaviour, IDamagable
     public GameObject LightsaberBlade;
     public GameObject ForcePush;
     public GameObject ForcePull;
+    public Camera Camera;
 
     public string[] AttackTypes;
 

@@ -52,11 +52,11 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 2f) && this.isJumpFalling)
-        {
-            this.isJumpFalling = false;
-            this.isJumpLanding = true;
-        }
+        //if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 1f) && this.isJumpFalling)
+        //{
+        //    this.isJumpFalling = false;
+        //    this.isJumpLanding = true;
+        //}
 
         if (Input.GetButtonDown("Jump") && !this.jumping)
         {
@@ -208,10 +208,30 @@ public class PlayerMovement : MonoBehaviour
                 this.isInAir = false;
             }
         }
+
+        Debug.Log(this.animator.GetBool("IsJumpFalling"));
+
+        //float angle = Vector3.Angle(collision.contacts[0].normal, Vector3.up);
+
+        //if (Mathf.Approximately(angle, 0) && this.jumping)
+        //{
+        //    this.jump = false;
+        //    this.jumping = false;
+        //    this.isJumpFalling = false;
+        //    this.isJumpLanding = false;
+        //}
+
     }
 
     private void OnCollisionStay(Collision collision)
     {
+        //if (this.jumping)
+        //{
+        //    this.jumping = false;
+        //    this.isJumpFalling = false;
+        //    this.isJumpLanding = false;
+        //}
+
         if (!this.jumping && collision.gameObject.CompareTag("Ground"))
         {
             this.isJumpLanding = false;
