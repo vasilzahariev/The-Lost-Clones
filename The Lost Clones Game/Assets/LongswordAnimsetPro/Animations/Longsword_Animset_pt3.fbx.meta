@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 1bdc2ef74b0fc8b459c915473007e656
 ModelImporter:
-  serializedVersion: 26
+  serializedVersion: 19300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -968,7 +968,7 @@ ModelImporter:
     second: VampTorsoMESH_LOD0
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -3970,7 +3970,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -3983,12 +3983,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -4002,6 +4004,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -4025,12 +4031,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -4075,20 +4077,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -4132,6 +4218,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -4164,12 +4262,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -4183,6 +4283,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -4206,12 +4310,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -4256,20 +4356,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -4314,6 +4498,18 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
+        weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
@@ -4332,7 +4528,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -4513,7 +4709,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -4694,7 +4890,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -5056,7 +5252,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -5069,12 +5265,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -5088,6 +5286,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -5111,12 +5313,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -5161,20 +5359,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -5218,6 +5500,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -5250,12 +5544,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -5269,6 +5565,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -5292,12 +5592,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -5342,20 +5638,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -5399,6 +5779,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -6142,7 +6534,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -6155,12 +6547,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -6174,6 +6568,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -6197,12 +6595,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -6247,20 +6641,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -6304,6 +6782,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -6336,12 +6826,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -6355,6 +6847,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -6378,12 +6874,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -6428,20 +6920,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -6486,6 +7062,18 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
+        weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
@@ -6504,7 +7092,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -6685,7 +7273,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -6866,7 +7454,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -6879,12 +7467,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -6898,6 +7488,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -6921,12 +7515,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -6971,20 +7561,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -7028,6 +7702,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -7047,7 +7733,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -7060,12 +7746,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -7079,6 +7767,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -7102,12 +7794,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -7152,20 +7840,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -7209,6 +7981,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -7228,7 +8012,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -7241,12 +8025,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -7260,6 +8046,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -7283,12 +8073,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -7333,20 +8119,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -7390,6 +8260,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -7409,7 +8291,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -7422,12 +8304,14 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: DummyMESH
-        weight: 0
       - path: Root
         weight: 1
       - path: Root/Hips
         weight: 1
+      - path: Root/Hips/LeftFrontSkirt1
+        weight: 0
+      - path: Root/Hips/LeftFrontSkirt1/LeftFrontSkirt2
+        weight: 0
       - path: Root/Hips/LeftUpLeg
         weight: 1
       - path: Root/Hips/LeftUpLeg/LeftLeg
@@ -7441,6 +8325,10 @@ ModelImporter:
       - path: Root/Hips/LeftUpLeg/LeftLeg/LeftLegRoll
         weight: 0
       - path: Root/Hips/LeftUpLeg/LeftUpLegRoll
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1
+        weight: 0
+      - path: Root/Hips/RightFrontSkirt1/RightFrontSkirt2
         weight: 0
       - path: Root/Hips/RightUpLeg
         weight: 1
@@ -7464,12 +8352,8 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandIndex1
@@ -7514,20 +8398,104 @@ ModelImporter:
         weight: 1
       - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandThumb1/LeftHandThumb2/LeftHandThumb3/LeftHandThumb4
         weight: 0
+      - path: Root/Hips/Spine/Spine1/LeftShoulder/LeftPauldron
+        weight: 0
       - path: Root/Hips/Spine/Spine1/Neck
         weight: 1
       - path: Root/Hips/Spine/Spine1/Neck/Head
         weight: 1
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Jaw_END
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/LeftChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthCenterDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthLeftDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/MouthRightDown1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/RightChin
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/Jaw/Tongue/Tongue1/Tongue2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/LeftNostril
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthCenterUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthLeftUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightCorner
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/MouthRightUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow2
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightBrow3
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheek1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekMouth
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightCheekUp1
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEye
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidDown
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightEyeLidUp
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/Neck/Head/RightNostril
+        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm
         weight: 1
-      - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmRoll
-        weight: 0
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandIndex1
@@ -7571,6 +8539,18 @@ ModelImporter:
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3
         weight: 1
       - path: Root/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandThumb1/RightHandThumb2/RightHandThumb3/RightHandThumb4
+        weight: 0
+      - path: Root/Hips/Spine/Spine1/RightShoulder/RightPauldron
+        weight: 0
+      - path: VampArmsLegsMESH_LOD0
+        weight: 0
+      - path: VampCapeMESH
+        weight: 0
+      - path: VampHeadMESH_LOD0
+        weight: 0
+      - path: VampTeethMESH_LOD0
+        weight: 0
+      - path: VampTorsoMESH_LOD0
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
@@ -9785,7 +10765,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
     serializedVersion: 3
     human:
@@ -10872,8 +11851,10 @@ ModelImporter:
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 3aaf38176678e1d4994b710ba08065f2,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
   additionalBone: 0
   userData: 
   assetBundleName: 

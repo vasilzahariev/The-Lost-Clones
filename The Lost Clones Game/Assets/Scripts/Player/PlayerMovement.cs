@@ -64,12 +64,17 @@ public class PlayerMovement : MonoBehaviour
             this.jumping = true;
         }
 
-        if (Input.GetButtonDown("Run"))
+        if (Input.GetButtonDown("Run") && this.walking)
         {
             this.running = true;
         }
 
-        if (Input.GetButtonUp("Run"))
+        if (Input.GetButton("Run") && this.walking)
+        {
+            this.running = true;
+        }
+
+        if (Input.GetButtonUp("Run") || !this.walking)
         {
             this.running = false;
         }
@@ -120,13 +125,14 @@ public class PlayerMovement : MonoBehaviour
             //    this.v = this.running ? this.RunningSpeed / 2 : this.Speed / 2;
             //}
             //Longs_WalkFwdStart
+
             this.v = this.running ? this.RunningSpeed : this.Speed;
 
             this.walking = true;
         }
         else if (this.v < 0f)
         {
-            this.v = -(this.running ? this.BackwardsRunningSpeed : this.BackwardsSpeed);
+            this.v = -this.BackwardsSpeed;
 
             this.backwards = true;
         }
@@ -145,9 +151,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (this.h != 0f)
         {
-            if (this.running && !this.walking)
+            if (this.walking || this.running)
             {
-                this.h = this.SideWaysRunningSpeed;
+                this.h = this.SideWaysSpeed / 2;
             }
             else
             {
@@ -160,7 +166,10 @@ public class PlayerMovement : MonoBehaviour
             this.h *= -1;
         }
 
-        this.rg.MovePosition(this.transform.position + (this.transform.forward * this.v * Time.fixedDeltaTime) + (this.transform.right * this.h * Time.fixedDeltaTime));
+        if (!this.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            this.rg.MovePosition(this.transform.position + (this.transform.forward * this.v * Time.fixedDeltaTime) + (this.transform.right * this.h * Time.fixedDeltaTime));
+        }
     }
 
     public void Jump()
