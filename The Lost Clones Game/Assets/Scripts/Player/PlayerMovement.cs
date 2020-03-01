@@ -52,11 +52,15 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit hit;
 
-        //if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 1f) && this.isJumpFalling)
-        //{
-        //    this.isJumpFalling = false;
-        //    this.isJumpLanding = true;
-        //}
+        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 2f) && this.isJumpFalling)
+        {
+            Debug.Log(hit.collider.gameObject.name + " " + hit.distance);
+            this.isJumpFalling = false;
+            this.isJumpLanding = true;
+
+            this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
+            this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
+        }
 
         if (Input.GetButtonDown("Jump") && !this.jumping)
         {
@@ -210,7 +214,10 @@ public class PlayerMovement : MonoBehaviour
                 this.jump = false;
                 this.jumping = false;
                 this.isJumpFalling = false;
-                this.isJumpLanding = false;
+                this.isJumpLanding = true;
+
+                //this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
+                //this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
             }
             else
             {
@@ -218,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        Debug.Log(this.animator.GetBool("IsJumpFalling"));
+        //Debug.Log(this.animator.GetBool("IsJumpFalling"));
 
         //float angle = Vector3.Angle(collision.contacts[0].normal, Vector3.up);
 
@@ -243,7 +250,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.jumping && collision.gameObject.CompareTag("Ground"))
         {
-            this.isJumpLanding = false;
+            if (!this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
+            {
+                this.isJumpLanding = false;
+            }
+
+            //this.isJumpLanding = false;
             this.isJumpFalling = false;
             this.isInAir = false;
         }

@@ -172,7 +172,14 @@ public class Player : MonoBehaviour, IDamagable
             this.isBlockLooping = false;
         }
 
-        this.gameObject.GetComponent<Rigidbody>().useGravity = this.gravity;
+        if (this.IsDead)
+        {
+            this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        }
+        else
+        {
+            this.gameObject.GetComponent<Rigidbody>().useGravity = this.gravity;
+        }
 
         this.AnimationParser();
         this.ActivateOrDeativateLightsaber();

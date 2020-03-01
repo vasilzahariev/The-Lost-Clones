@@ -10,6 +10,9 @@ public class PlayerUIManager : MonoBehaviour
     public Slider ForceStaminaBar;
     public Slider LightsaberStaminaBar;
 
+    public Image GravityOnImage;
+    public Image GravityOffImage;
+
     private Player player;
 
     void Start()
@@ -24,6 +27,7 @@ public class PlayerUIManager : MonoBehaviour
     void FixedUpdate()
     {
         this.UpdateBars();
+        this.GravityController();
     }
 
     private void UpdateBars()
@@ -36,5 +40,21 @@ public class PlayerUIManager : MonoBehaviour
 
         this.LightsaberStaminaBar.value = this.player.LightsaberStamina;
         this.LightsaberStaminaBar.GetComponentInChildren<Text>().text = $"{this.player.LightsaberStamina} / {this.player.BaseLightsaberStamina} LSP";
+    }
+
+    private void GravityController()
+    {
+        Rigidbody rg = this.player.gameObject.GetComponent<Rigidbody>();
+
+        if (rg.useGravity == true)
+        {
+            this.GravityOnImage.gameObject.SetActive(true);
+            this.GravityOffImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            this.GravityOnImage.gameObject.SetActive(false);
+            this.GravityOffImage.gameObject.SetActive(true);
+        }
     }
 }
