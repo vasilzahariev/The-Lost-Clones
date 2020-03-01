@@ -250,6 +250,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.jumping && collision.gameObject.CompareTag("Ground"))
         {
+            //if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Fall"))
+            //{
+            //    this.isJumpFalling = false;
+            //    this.isJumpLanding = true;
+            //}
+
             if (!this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
             {
                 this.isJumpLanding = false;
