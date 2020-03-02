@@ -31,16 +31,19 @@ public class PlayerMovement : MonoBehaviour
     private bool isGoingToTouchTheGround;
     private bool isJumpFalling;
     private bool isJumpLanding;
-
+    private bool hasMadeTheJumpUp;
 
     private float h;
     private float v;
+    private int counter;
 
     void Start()
     {
         this.rg = this.GetComponent<Rigidbody>();
         this.animator = this.GetComponent<Animator>();
         this.player = this.GetComponent<Player>();
+
+        this.counter = 0;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -50,11 +53,25 @@ public class PlayerMovement : MonoBehaviour
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Start"))
+        {
+            Debug.Log("Start " + this.isJumpFalling + " " + ++this.counter);
+        }
+
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Fall"))
+        {
+            Debug.Log("Falling " + this.isJumpFalling + " " + ++this.counter);
+        }
+
+        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
+        {
+            Debug.Log("Landing " + this.isJumpFalling + " " + ++this.counter);
+        }
+
         RaycastHit hit;
 
-        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 2f) && this.isJumpFalling)
+        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 1f) && this.isJumpFalling)
         {
-            Debug.Log(hit.collider.gameObject.name + " " + hit.distance);
             this.isJumpFalling = false;
             this.isJumpLanding = true;
 
@@ -189,7 +206,12 @@ public class PlayerMovement : MonoBehaviour
     public void JumpFall()
     {
         this.isJumpFalling = true;
-        //Debug.Log("Test");
+       // Debug.Log("Test");
+    }
+
+    public void JumpLand()
+    {
+        this.isJumpLanding = false;
     }
 
     private void AnimationParser()
@@ -203,6 +225,7 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("IsInAir", this.isInAir);
         this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
         this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
+        this.animator.SetBool("Jump", this.jump);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -256,12 +279,6 @@ public class PlayerMovement : MonoBehaviour
             //    this.isJumpLanding = true;
             //}
 
-            if (!this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
-            {
-                this.isJumpLanding = false;
-            }
-
-            //this.isJumpLanding = false;
             this.isJumpFalling = false;
             this.isInAir = false;
         }
