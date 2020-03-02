@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isGoingToTouchTheGround;
     private bool isJumpFalling;
     private bool isJumpLanding;
-    private bool hasMadeTheJumpUp;
+    private bool canRaycastForLanding;
 
     private float h;
     private float v;
@@ -53,31 +53,38 @@ public class PlayerMovement : MonoBehaviour
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Start"))
-        {
-            Debug.Log("Start " + this.isJumpFalling + " " + ++this.counter);
-        }
+        //if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Start"))
+        //{
+        //    Debug.Log("Start " + this.isJumpFalling + " " + this.isJumpLanding + " " + ++this.counter);
+        //}
 
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Fall"))
-        {
-            Debug.Log("Falling " + this.isJumpFalling + " " + ++this.counter);
-        }
+        //if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Fall"))
+        //{
+        //    Debug.Log("Falling " + this.isJumpFalling + " " + this.isJumpLanding + " " + ++this.counter);
+        //}
 
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
-        {
-            Debug.Log("Landing " + this.isJumpFalling + " " + ++this.counter);
-        }
+        //if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("Longs_Jump_Platformer_Land"))
+        //{
+        //    Debug.Log("Landing " + this.isJumpFalling + " " + this.isJumpLanding + " " + ++this.counter);
+        //}
 
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 1f) && this.isJumpFalling)
-        {
-            this.isJumpFalling = false;
-            this.isJumpLanding = true;
+        //if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, 1f))
+        //{
+        //    if (this.isJumpFalling)
+        //    {
+        //        this.isJumpFalling = false;
+        //        this.isJumpLanding = true;
 
-            this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
-            this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
-        }
+        //        this.animator.SetBool("IsJumpFalling", this.isJumpFalling);
+        //        this.animator.SetBool("IsJumpLanding", this.isJumpLanding);
+        //    }
+        //    else if (this.jumping && !this.isJumpLanding)
+        //    {
+        //        //Debug.Log(hit.collider.gameObject.name);
+        //    }
+        //}
 
         if (Input.GetButtonDown("Jump") && !this.jumping)
         {
@@ -212,6 +219,11 @@ public class PlayerMovement : MonoBehaviour
     public void JumpLand()
     {
         this.isJumpLanding = false;
+    }
+
+    public void AllowRaycastingForLanding()
+    {
+        Debug.Log("Test");
     }
 
     private void AnimationParser()
