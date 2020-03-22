@@ -90,7 +90,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_4AACC32A: {r: 0, g: 2.0078433, b: 16, a: 0}
-    - Color_753765FD: {r: 8.47419, g: 8.47419, b: 0, a: 0}
+    - Color_753765FD: {r: 16.94838, g: 16.94838, b: 0, a: 0}
     - Color_DC42B3B6: {r: 0, g: 11.560208, b: 31.999996, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
