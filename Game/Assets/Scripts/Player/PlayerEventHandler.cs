@@ -15,17 +15,23 @@ public class PlayerEventHandler : MonoBehaviour
 
     #endregion
 
-    // TODO: Make it so when the player is sliding the capsule collider becomes smaller or rotates
+    // TODO: Make it so, when the player stops sliding under a block, he continues sliding
     #region Slide
     public void StartSliding()
     {
         this.playerMovement.IsSliding = true;
+
+        this.gameObject.GetComponent<CapsuleCollider>().height /= 2;
+        this.gameObject.GetComponent<CapsuleCollider>().center /= 2;
     }
 
     public void EndSlide()
     {
         this.playerMovement.Slide = false;
         this.playerMovement.IsSliding = false;
+
+        this.gameObject.GetComponent<CapsuleCollider>().height *= 2;
+        this.gameObject.GetComponent<CapsuleCollider>().center *= 2;
     }
 
     #endregion

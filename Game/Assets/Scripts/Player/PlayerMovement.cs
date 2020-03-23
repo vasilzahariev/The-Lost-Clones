@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public Camera Camera;
 
     public float RotationSpeed;
+    public float AirSpeed;
+    public float AirRunSpeed;
 
     [HideInInspector]
     public bool Slide;
@@ -70,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
             this.Slide = true;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && (!this.jump ^ !this.IsSliding))
         {
             this.jump = true;
         }
@@ -90,7 +92,14 @@ public class PlayerMovement : MonoBehaviour
             this.Rotate();
         }
 
-        this.Move();
+        if (this.Jumping)
+        {
+            this.AirMove();
+        }
+        else
+        {
+            this.Move();
+        }
 
         this.AnimationParser();
     }
@@ -98,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     // TODO: Add a little air mobility
+    // TODO: There are many animation bugs that have to be fixed
     #region Methods
     private void Rotate()
     {
@@ -154,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.IsSliding)
         {
-            if (!this.running)
+            if (!this.running || this.IsSliding)
             {
                 this.Slide = false;
             }
@@ -166,6 +176,15 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void AirMove()
+    {
+        float speed = this.running ? this.AirRunSpeed : this.AirSpeed;
+
+        this.rg.MovePosition(this.transform.position +
+                            (this.transform.forward * this.v * speed * Time.fixedDeltaTime) +
+                            (this.transform.right * this.h * speed * Time.fixedDeltaTime));
     }
 
     public void MakeTheJump()
