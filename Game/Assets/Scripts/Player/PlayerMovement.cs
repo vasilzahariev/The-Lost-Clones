@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Camera Camera;
 
     public float RotationSpeed;
+    public float JumpForce;
     public float AirSpeed;
     public float AirRunSpeed;
 
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             this.Slide = true;
         }
 
-        if (Input.GetButtonDown("Jump") && (!this.jump ^ !this.IsSliding))
+        if (Input.GetButtonDown("Jump") && (!this.jump && !this.IsSliding))
         {
             this.jump = true;
         }
@@ -87,10 +88,7 @@ public class PlayerMovement : MonoBehaviour
         //    this.Rotate();
         //}
 
-        if (!this.IsSliding)
-        {
-            this.Rotate();
-        }
+        this.Rotate();
 
         if (this.Jumping)
         {
@@ -106,8 +104,10 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    // TODO: Add a little air mobility
-    // TODO: There are many animation bugs that have to be fixed
+    /// <summary>
+    /// TODO: There are many animation bugs that have to be fixed
+    /// TODO: Make it so the slide is always on the loop animation and to check if the charecter is under something and if he is then it won't allow him to break and continues with the animation
+    /// </summary>
     #region Methods
     private void Rotate()
     {
@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MakeTheJump()
     {
-        this.rg.AddForce(this.transform.up * 500f);
+        this.rg.AddForce(this.transform.up * this.JumpForce);
     }
 
     private void AnimationParser()
@@ -210,8 +210,6 @@ public class PlayerMovement : MonoBehaviour
     #region Collision
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Test");
-
         if (collision.gameObject.CompareTag("Ground"))
         {
             this.jump = false;
@@ -227,5 +225,14 @@ public class PlayerMovement : MonoBehaviour
             this.Jumping = false;
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("UnderSlider"))
+        {
+            Debug.Log("Pesho!");
+        }
+    }
+
     #endregion
 }

@@ -16,6 +16,7 @@ public class PlayerEventHandler : MonoBehaviour
     #endregion
 
     // TODO: Make it so, when the player stops sliding under a block, he continues sliding
+    // TODO: W + SHIFT + CTRL = Slide, but if I release SHIT + CTRL and hold W, the animations stops
     #region Slide
     public void StartSliding()
     {
