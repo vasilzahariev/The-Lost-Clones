@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     /// <summary>
     /// TODO: There are many animation bugs that have to be fixed
-    /// TODO: Make it so the slide is always on the loop animation and to check if the charecter is under something and if he is then it won't allow him to break and continues with the animation
+    /// TODO: Make it so when the player is sliding the camera moves down. (for example)
     /// </summary>
     #region Methods
     

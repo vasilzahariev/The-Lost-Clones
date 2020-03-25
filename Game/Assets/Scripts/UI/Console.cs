@@ -64,14 +64,34 @@ public class Console : MonoBehaviour
 
         this.ConsoleInput.text = ">";
 
+        if (input == ">" || string.IsNullOrEmpty(input))
+        {
+            return;
+        }
+
         List<string> inputArgs = input.Split(' ').ToList();
 
         switch (inputArgs[0])
         {
             case ">help":
+                if (inputArgs.Count() != 1)
+                {
+                    output = "Invalid number of arguments" + "\n";
+
+                    break;
+                }
+
                 output = "Commands:" + "\n" + this.Help();
                 break;
             case ">tp":
+                if (inputArgs.Count() != 4)
+                {
+                    output = "Invalid number of arguments" +
+                        "" + "\n";
+
+                    break;
+                }
+
                 if (string.IsNullOrEmpty(inputArgs[1]) || string.IsNullOrEmpty(inputArgs[2]) || string.IsNullOrEmpty(inputArgs[3]))
                 {
                     output = "Invalid number of arguments" +
