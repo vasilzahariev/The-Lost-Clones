@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// TODO: Maybe remove IsInAir for now
+/// TODO: Redo the Jump, so you jump as you hold
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     #region Properties
@@ -23,9 +28,14 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public bool Jumping;
 
+    [HideInInspector]
+    public bool CanStopSliding;
+
     #endregion
 
     #region Fields
+
+    private Player player;
 
     private Animator animator;
     private Rigidbody rg;
@@ -39,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     private bool right;
     private bool running;
     private bool jump;
+    private bool isInAir;
+    private bool wasInAir;
 
     #endregion
 
@@ -46,12 +58,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        this.player = this.gameObject.GetComponent<Player>();
+
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
+        if (this.player.IsConsoleActive)
+        {
+            return;
+        }
+
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
@@ -88,9 +107,14 @@ public class PlayerMovement : MonoBehaviour
         //    this.Rotate();
         //}
 
+        if (this.player.IsConsoleActive)
+        {
+            return;
+        }
+
         this.Rotate();
 
-        if (this.Jumping)
+        if (this.Jumping || this.isInAir)
         {
             this.AirMove();
         }
@@ -98,7 +122,10 @@ public class PlayerMovement : MonoBehaviour
         {
             this.Move();
         }
+    }
 
+    private void LateUpdate()
+    {
         this.AnimationParser();
     }
 
@@ -109,6 +136,11 @@ public class PlayerMovement : MonoBehaviour
     /// TODO: Make it so the slide is always on the loop animation and to check if the charecter is under something and if he is then it won't allow him to break and continues with the animation
     /// </summary>
     #region Methods
+    
+
+    /// <summary>
+    /// This method controls the rotation of the player, using the rotation of the camera and mouse.
+    /// </summary>
     private void Rotate()
     {
         Vector3 forward = this.Camera.transform.forward;
@@ -123,6 +155,10 @@ public class PlayerMovement : MonoBehaviour
         this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), this.RotationSpeed);
     }
 
+
+    /// <summary>
+    /// This method determens what movements the player can execute.
+    /// </summary>
     private void Move()
     {
         if (this.v > 0)
@@ -178,6 +214,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method controls the movement of the player when in air.
+    /// </summary>
     private void AirMove()
     {
         float speed = this.running ? this.AirRunSpeed : this.AirSpeed;
@@ -187,11 +226,17 @@ public class PlayerMovement : MonoBehaviour
                             (this.transform.right * this.h * speed * Time.fixedDeltaTime));
     }
 
+    /// <summary>
+    /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
+    /// </summary>
     public void MakeTheJump()
     {
         this.rg.AddForce(this.transform.up * this.JumpForce);
     }
 
+    /// <summary>
+    /// This method controls what values the animation controller parameters have
+    /// </summary>
     private void AnimationParser()
     {
         this.animator.SetBool("Forward", this.forward);
@@ -203,34 +248,91 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("IsSliding", this.Slide);
         this.animator.SetBool("Jump", this.jump);
         this.animator.SetBool("IsJumping", this.Jumping);
+        this.animator.SetBool("CanStopSliding", this.CanStopSliding);
+        this.animator.SetBool("IsInAir", this.isInAir);
     }
 
     #endregion
 
+
+    /// <summary>
+    /// TODO: Make it so, when the Slide Area Trigger is activated, the player starts sliding.
+    /// </summary>
     #region Collision
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") ||
+            collision.gameObject.CompareTag("SlideArea"))
         {
-            this.jump = false;
-            this.Jumping = false;
+            if (this.Jumping)
+            {
+                this.jump = false;
+                this.Jumping = false;
+            }
+            
+            if (this.isInAir)
+            {
+                this.isInAir = false;
+            }
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && this.Jumping == true)
+        if (collision.gameObject.CompareTag("Ground") ||
+            collision.gameObject.CompareTag("SlideArea"))
         {
-            this.jump = false;
-            this.Jumping = false;
+            if (this.Jumping)
+            {
+                this.jump = false;
+                this.Jumping = false;
+            }
+            
+            if (this.isInAir)
+            {
+                this.isInAir = false;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if ((collision.gameObject.CompareTag("Ground") ||
+            collision.gameObject.CompareTag("SlideArea")) &&
+            !this.isInAir && !this.Jumping)
+        {
+            this.isInAir = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("SlideArea") && this.IsSliding)
+        {
+            this.CanStopSliding = false;
+
+            this.wasInAir = this.isInAir;
+            this.isInAir = false;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("UnderSlider"))
+        if (other.gameObject.CompareTag("SlideArea") && this.IsSliding)
         {
-            Debug.Log("Pesho!");
+            this.CanStopSliding = false;
+
+            this.isInAir = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("SlideArea") && this.IsSliding)
+        {
+            this.CanStopSliding = true;
+
+            this.isInAir = this.wasInAir;
         }
     }
 

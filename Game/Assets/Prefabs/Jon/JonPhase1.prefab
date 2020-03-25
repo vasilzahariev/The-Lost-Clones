@@ -137,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa6137528146d9048a0727bd76531e3c, type: 2}
+  - {fileID: 2100000, guid: 4ec1d8c6c636f404191eb0c4aff58e0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2623,9 +2623,10 @@ GameObject:
   - component: {fileID: 5205517808021368311}
   - component: {fileID: 2789897627737637005}
   - component: {fileID: 4689631935544536977}
+  - component: {fileID: 4282548712126083808}
   - component: {fileID: 4870461129725125674}
   - component: {fileID: 5615480651030953362}
-  - component: {fileID: 4282548712126083808}
+  - component: {fileID: 2701449091509959646}
   m_Layer: 0
   m_Name: JonPhase1
   m_TagString: Untagged
@@ -2686,6 +2687,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!136 &4282548712126083808
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108230101769887716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.22063893
+  m_Height: 1.9769211
+  m_Direction: 1
+  m_Center: {x: -2.5410161e-20, y: 1.0021508, z: 0.00024235249}
 --- !u!114 &4870461129725125674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2706,6 +2721,7 @@ MonoBehaviour:
   Slide: 0
   IsSliding: 0
   Jumping: 0
+  CanStopSliding: 0
 --- !u!114 &5615480651030953362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2718,20 +2734,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835a52e4dbe553a49b6e00e6d69c2fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &4282548712126083808
-CapsuleCollider:
+--- !u!114 &2701449091509959646
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9108230101769887716}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.22063893
-  m_Height: 1.9769211
-  m_Direction: 1
-  m_Center: {x: -2.5410161e-20, y: 1.0021508, z: 0.00024235249}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9617bdd3755e146bc68af6423ec046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Console: {fileID: 0}
 --- !u!1 &9175530442933232317
 GameObject:
   m_ObjectHideFlags: 0

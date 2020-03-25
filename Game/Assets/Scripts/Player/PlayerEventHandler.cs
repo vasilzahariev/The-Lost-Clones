@@ -21,6 +21,7 @@ public class PlayerEventHandler : MonoBehaviour
     public void StartSliding()
     {
         this.playerMovement.IsSliding = true;
+        this.playerMovement.CanStopSliding = true;
 
         this.gameObject.GetComponent<CapsuleCollider>().height /= 2;
         this.gameObject.GetComponent<CapsuleCollider>().center /= 2;
