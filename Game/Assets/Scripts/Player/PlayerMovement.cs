@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-/// <summary>
-/// TODO: Maybe remove IsInAir for now
-/// TODO: Redo the Jump, so you jump as you hold
-/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     #region Properties
@@ -74,17 +69,20 @@ public class PlayerMovement : MonoBehaviour
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Run"))
+        if (!this.IsSliding)
         {
-            this.running = true;
-        }
-        else if (Input.GetButtonUp("Run"))
-        {
-            this.running = false;
-        }
-        else if (Input.GetButton("Run"))
-        {
-            this.running = true;
+            if (Input.GetButtonDown("Run"))
+            {
+                this.running = true;
+            }
+            else if (Input.GetButtonUp("Run"))
+            {
+                this.running = false;
+            }
+            else if (Input.GetButton("Run"))
+            {
+                this.running = true;
+            }
         }
 
         if (Input.GetButtonDown("Slide") && !this.IsSliding && !this.Slide)
@@ -97,7 +95,12 @@ public class PlayerMovement : MonoBehaviour
             this.jump = true;
         }
 
-        //Debug.Log("Jumping: " + this.Jumping + ". Jump: " + this.jump);
+
+        // Maybe redo it, if you think is so ugly, that you can't even watch it
+        if (this.CanStopSliding && this.IsSliding && !this.Slide)
+        {
+            this.Slide = true;
+        }
     }
 
     private void FixedUpdate()
@@ -109,6 +112,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (this.player.IsConsoleActive)
         {
+            this.forward = false;
+            this.backwards = false;
+            this.left = false;
+            this.right = false;
+            this.running = false;
+
             return;
         }
 
@@ -131,10 +140,6 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-    /// <summary>
-    /// TODO: There are many animation bugs that have to be fixed
-    /// TODO: Make it so when the player is sliding the camera moves down. (for example)
-    /// </summary>
     #region Methods
     
 
@@ -200,7 +205,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.IsSliding)
         {
-            if (!this.running || this.IsSliding)
+            if (!this.running)
             {
                 this.Slide = false;
             }
@@ -254,10 +259,6 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
-
-    /// <summary>
-    /// TODO: Make it so, when the Slide Area Trigger is activated, the player starts sliding.
-    /// </summary>
     #region Collision
     private void OnCollisionEnter(Collision collision)
     {

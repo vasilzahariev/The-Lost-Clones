@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
             this.IsConsoleActive = !this.IsConsoleActive;
 
             this.Console.gameObject.SetActive(this.IsConsoleActive);
+
+            this.Console.Focus();
         }
     }
 

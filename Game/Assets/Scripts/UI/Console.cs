@@ -1,13 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Make it so the player can close the console, but can't stop the action
-/// </summary>
 public class Console : MonoBehaviour
 {
     #region Properties
@@ -35,8 +33,9 @@ public class Console : MonoBehaviour
     {
         this.commands = new List<string>();
 
-        this.commands.Add(">help - Shows all commands");
-        this.commands.Add(">tp <x> <y> <z> - Teleport to the given x, y and z coordinates");
+        this.commands.Add("help - Shows all comands");
+        this.commands.Add("tp <x> <y> <z> - Teleports you to the given coordinates");
+        this.commands.Add("clr - Clears the console");
 
         this.commands.Sort();
 
@@ -53,9 +52,50 @@ public class Console : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        this.Focus();
+    }
+
     #endregion
 
     #region Methods
+
+    public void Focus()
+    {
+        this.ConsoleInput.Select();
+        this.ConsoleInput.ActivateInputField();
+    }
+
+    public void OnValueChanged()
+    {
+        string input = this.ConsoleInput.text;
+
+        if (!input.StartsWith(">"))
+        {
+            this.ConsoleInput.text = this.ConsoleInput.text.Insert(0, ">");
+        }
+
+        if (input.Count(c => c == '>') > 1)
+        {
+            this.ConsoleInput.text = ">" + this.ConsoleInput.text.Replace(">", "");
+        }
+
+        if (input.Contains('`'))
+        {
+            this.ConsoleInput.text = this.ConsoleInput.text.Replace("`", "");
+        }
+    }
+
+    public void OnSelect()
+    {
+        if (string.IsNullOrEmpty(this.ConsoleInput.text))
+        {
+            this.ConsoleInput.text += ">";
+        }
+
+        this.Focus();
+    }
 
     private void ReadInput()
     {
@@ -69,33 +109,27 @@ public class Console : MonoBehaviour
             return;
         }
 
-        List<string> inputArgs = input.Split(' ').ToList();
+        string[] inputArgs = input.Split(' ').ToArray();
 
         switch (inputArgs[0])
         {
             case ">help":
-                if (inputArgs.Count() != 1)
+                if (inputArgs.Length != 1)
                 {
                     output = "Invalid number of arguments" + "\n";
 
                     break;
                 }
 
-                output = "Commands:" + "\n" + this.Help();
+                output = this.Help();
+
                 break;
             case ">tp":
-                if (inputArgs.Count() != 4)
+                if (inputArgs.Length != 4)
                 {
                     output = "Invalid number of arguments" +
                         "" + "\n";
 
-                    break;
-                }
-
-                if (string.IsNullOrEmpty(inputArgs[1]) || string.IsNullOrEmpty(inputArgs[2]) || string.IsNullOrEmpty(inputArgs[3]))
-                {
-                    output = "Invalid number of arguments" +
-                        "" + "\n";
                     break;
                 }
 
@@ -109,8 +143,19 @@ public class Console : MonoBehaviour
                 }
                 catch (System.Exception)
                 {
-                    output = "Try again, but this time use the oposite one ('.' - ',')." + "\n";
+                    output = "Invalid argument value" + "\n";
                 }
+
+                break;
+            case ">clr":
+                if (inputArgs.Length != 1)
+                {
+                    output = "Invalid number of arguments";
+
+                    break;
+                }
+
+                this.Clear();
 
                 break;
             default:
@@ -126,11 +171,15 @@ public class Console : MonoBehaviour
         }
 
         this.ConsoleOutput.text += output;
+
+        this.Focus();
     }
 
     private string Help()
     {
         string output = "";
+
+        output += "Commands:" + "\n";
 
         foreach (string command in this.commands)
         {
@@ -144,9 +193,15 @@ public class Console : MonoBehaviour
     {
         Vector3 position = new Vector3(x, y, z);
 
+        this.player.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.player.transform.SetPositionAndRotation(position, this.player.transform.rotation);
 
         return $"Player teleported to {position}" + "\n";
+    }
+
+    private void Clear()
+    {
+        this.ConsoleOutput.text = "";
     }
 
     #endregion
