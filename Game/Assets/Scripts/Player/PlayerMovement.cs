@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float AirSpeed;
     public float AirRunSpeed;
 
+    public float RotationMultiplier;
+
     [HideInInspector]
     public bool Slide;
 
@@ -47,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isInAir;
     private bool wasInAir;
 
+    private bool move;
+
     #endregion
 
     #region MonoMethods
@@ -68,6 +72,32 @@ public class PlayerMovement : MonoBehaviour
 
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            this.move = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            this.move = false;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            this.gameObject.transform.Rotate(0f, -90f * Time.deltaTime * this.RotationMultiplier, 0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            this.gameObject.transform.Rotate(0f, 180f, 0f);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            this.gameObject.transform.Rotate(0f, 90f * Time.deltaTime * this.RotationMultiplier, 0f);
+        }
+
 
         if (!this.IsSliding)
         {
@@ -105,10 +135,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (Input.GetButton("Fire2"))
-        //{
-        //    this.Rotate();
-        //}
+        if (Input.GetButton("Fire2"))
+        {
+            this.Rotate();
+        }
 
         if (this.player.IsConsoleActive)
         {
@@ -121,15 +151,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        this.Rotate();
-
         if (this.Jumping || this.isInAir)
         {
             this.AirMove();
         }
         else
         {
-            this.Move();
+            //this.Move();
         }
     }
 
@@ -255,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("IsJumping", this.Jumping);
         this.animator.SetBool("CanStopSliding", this.CanStopSliding);
         this.animator.SetBool("IsInAir", this.isInAir);
+        this.animator.SetBool("Move", this.move);
     }
 
     #endregion

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08596048, g: 0.13642637, b: 0.32298777, a: 1}
+  m_IndirectSpecularColor: {r: 0.08596006, g: 0.13642573, b: 0.32298607, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3982,42 +3982,42 @@ PrefabInstance:
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.066256784
+      value: -0.0662564
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.048072282
+      value: -0.04818821
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0031957887
+      value: 0.0032034947
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.99663883
+      value: -0.99663323
       objectReference: {fileID: 0}
     - target: {fileID: 6993921129519497453, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.06625677
+      value: -0.066256404
       objectReference: {fileID: 0}
     - target: {fileID: 6993921129519497453, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.04807226
+      value: -0.0481882
       objectReference: {fileID: 0}
     - target: {fileID: 6993921129519497453, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0031956597
+      value: 0.0032033676
       objectReference: {fileID: 0}
     - target: {fileID: 6993921129519497453, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.99663883
+      value: -0.99663323
       objectReference: {fileID: 0}
     - target: {fileID: 6993921129755710049, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
@@ -4092,22 +4092,22 @@ PrefabInstance:
     - target: {fileID: 6993921130123244197, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.07353766
+      value: -0.073537454
       objectReference: {fileID: 0}
     - target: {fileID: 6993921130123244197, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.03437847
+      value: -0.034461666
       objectReference: {fileID: 0}
     - target: {fileID: 6993921130123244197, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0025365434
+      value: 0.0025426818
       objectReference: {fileID: 0}
     - target: {fileID: 6993921130123244197, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.99669653
+      value: -0.9966937
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4247578665540011211, guid: 4a540115d30f7be43ac0873327ddb013, type: 3}
@@ -5318,7 +5318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1903055947}
-  m_LocalRotation: {x: 0.07353768, y: 0.03437847, z: -0.0025364917, w: 0.99669653}
+  m_LocalRotation: {x: 0.07353747, y: 0.034461666, z: -0.0025426303, w: 0.9966937}
   m_LocalPosition: {x: 6.0783076, y: 3.5, z: -18.065378}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -11529,6 +11529,11 @@ PrefabInstance:
         type: 3}
       propertyPath: JumpForce
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870461129725125674, guid: 9628fe94ce8c06641a987a58b14441cd,
+        type: 3}
+      propertyPath: RotationMultiplier
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5205517808021368311, guid: 9628fe94ce8c06641a987a58b14441cd,
         type: 3}
