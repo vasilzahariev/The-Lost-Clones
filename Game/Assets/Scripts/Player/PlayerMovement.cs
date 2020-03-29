@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     #region Properties
 
     public Camera Camera;
+    public GameObject Parent;
 
     public float RotationSpeed;
     public float JumpForce;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float AirRunSpeed;
 
     public float RotationMultiplier;
+
 
     [HideInInspector]
     public bool Slide;
@@ -39,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float h;
     private float v;
+
+    private float rotVal;
 
     private bool forward;
     private bool backwards;
@@ -73,9 +77,11 @@ public class PlayerMovement : MonoBehaviour
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             this.move = true;
+
+            this.rotVal = 0f;
         }
 
         if (Input.GetKeyUp(KeyCode.W))
@@ -83,20 +89,71 @@ public class PlayerMovement : MonoBehaviour
             this.move = false;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.S))
         {
-            this.gameObject.transform.Rotate(0f, -90f * Time.deltaTime * this.RotationMultiplier, 0f);
+            this.move = true;
+
+            this.rotVal = 180f;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
         {
-            this.gameObject.transform.Rotate(0f, 180f, 0f);
+            this.move = false;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            this.move = true;
+
+            this.rotVal = -90f;
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            this.move = false;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            this.gameObject.transform.Rotate(0f, 90f * Time.deltaTime * this.RotationMultiplier, 0f);
+            this.move = true;
+
+            this.rotVal = 90f;
         }
+
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            this.move = false;
+        }
+
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            this.rotVal = 45f;
+        }
+
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        {
+            this.rotVal = -45f;
+        }
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        {
+            this.rotVal = 135f;
+        }
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            this.rotVal = -135f;
+        }
+
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    this.gameObject.transform.Rotate(0f, 180f, 0f);
+        //}
+
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    this.gameObject.transform.Rotate(0f, 90f * Time.deltaTime * this.RotationMultiplier, 0f);
+        //}
 
 
         if (!this.IsSliding)
@@ -135,9 +192,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetButton("Fire2"))
+        if (this.move || this.isInAir || this.Jumping)
         {
             this.Rotate();
+        }
+
+        if (this.move && !this.isInAir && !this.Jumping)
+        {
+            this.transform.Rotate(0f, this.rotVal, 0f);
         }
 
         if (this.player.IsConsoleActive)
@@ -185,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion prevRotation = this.transform.rotation;
 
-        this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), this.RotationSpeed);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(desiredMoveDirection), this.RotationSpeed);
     }
 
 
