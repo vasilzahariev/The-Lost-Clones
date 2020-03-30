@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     #region Properties
 
     public Camera Camera;
-    public GameObject Parent;
+    public Transform PointForRotation;
 
     public float RotationSpeed;
     public float JumpForce;
@@ -30,6 +30,12 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public bool CanStopSliding;
 
+    [HideInInspector]
+    public bool Dodge;
+
+    [HideInInspector]
+    public bool Dodging;
+
     #endregion
 
     #region Fields
@@ -41,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float h;
     private float v;
-
     private float rotVal;
+    private float currentJumpForce;
 
     private bool forward;
     private bool backwards;
@@ -52,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
     private bool jump;
     private bool isInAir;
     private bool wasInAir;
-
     private bool move;
 
     #endregion
@@ -65,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
 
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
+
+        this.currentJumpForce = 0f;
     }
 
     void Update()
@@ -77,16 +84,118 @@ public class PlayerMovement : MonoBehaviour
         this.h = Input.GetAxis("Horizontal");
         this.v = Input.GetAxis("Vertical");
 
+        if (!this.player.IsTargetAcquired && !this.IsSliding)
+        {
+            this.NoTargetMovementInput();
+        }
+
+        if (!this.IsSliding)
+        {
+            if (Input.GetButtonDown("Run"))
+            {
+                this.running = true;
+            }
+            else if (Input.GetButton("Run"))
+            {
+                this.running = true;
+            }
+            else if (Input.GetButtonUp("Run"))
+            {
+                this.running = false;
+            }
+        }
+
+        if (Input.GetButtonDown("Slide") && !this.IsSliding && !this.Slide)
+        {
+            this.Slide = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && !this.Dodging && !this.Dodge)
+        {
+            this.Dodge = true;
+        }
+
+        if (Input.GetButtonDown("Jump") && (!this.jump && !this.IsSliding && !this.isInAir))
+        {
+            this.jump = true;
+        }
+
+        if (this.CanStopSliding && this.IsSliding && !this.Slide)
+        {
+            this.Slide = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (this.player.IsConsoleActive)
+        {
+            this.forward = false;
+            this.backwards = false;
+            this.left = false;
+            this.right = false;
+            this.running = false;
+
+            return;
+        }
+
+        if (!this.player.IsTargetAcquired)
+        {
+            if (this.move || this.isInAir || this.Jumping)
+            {
+                this.Rotate();
+            }
+
+            if (this.move && !this.Jumping && !this.isInAir)
+            {
+                this.transform.Rotate(0f, this.rotVal, 0f);
+            }
+
+            if (this.Jumping || this.isInAir)
+            {
+                this.transform.Rotate(0f, this.rotVal, 0f);
+                this.AirMove();
+            }
+        }
+        else
+        {
+            this.Rotate();
+
+            if (this.Jumping || this.isInAir)
+            {
+                this.AirMove();
+            }
+            else
+            {
+                this.Move();
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        this.AnimationParser();
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void NoTargetMovementInput()
+    {
+        if (Input.GetKeyUp(KeyCode.W) ||
+            Input.GetKeyUp(KeyCode.S) ||
+            Input.GetKeyUp(KeyCode.A) ||
+            Input.GetKeyUp(KeyCode.D))
+        {
+            this.move = false;
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
             this.move = true;
 
             this.rotVal = 0f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            this.move = false;
         }
 
         if (Input.GetKey(KeyCode.S))
@@ -96,11 +205,6 @@ public class PlayerMovement : MonoBehaviour
             this.rotVal = 180f;
         }
 
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            this.move = false;
-        }
-
         if (Input.GetKey(KeyCode.A))
         {
             this.move = true;
@@ -108,21 +212,11 @@ public class PlayerMovement : MonoBehaviour
             this.rotVal = -90f;
         }
 
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            this.move = false;
-        }
-
         if (Input.GetKey(KeyCode.D))
         {
             this.move = true;
 
             this.rotVal = 90f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            this.move = false;
         }
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
@@ -144,94 +238,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.rotVal = -135f;
         }
-
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    this.gameObject.transform.Rotate(0f, 180f, 0f);
-        //}
-
-        //if (Input.GetKey(KeyCode.D))
-        //{
-        //    this.gameObject.transform.Rotate(0f, 90f * Time.deltaTime * this.RotationMultiplier, 0f);
-        //}
-
-
-        if (!this.IsSliding)
-        {
-            if (Input.GetButtonDown("Run"))
-            {
-                this.running = true;
-            }
-            else if (Input.GetButtonUp("Run"))
-            {
-                this.running = false;
-            }
-            else if (Input.GetButton("Run"))
-            {
-                this.running = true;
-            }
-        }
-
-        if (Input.GetButtonDown("Slide") && !this.IsSliding && !this.Slide)
-        {
-            this.Slide = true;
-        }
-
-        if (Input.GetButtonDown("Jump") && (!this.jump && !this.IsSliding))
-        {
-            this.jump = true;
-        }
-
-
-        // Maybe redo it, if you think is so ugly, that you can't even watch it
-        if (this.CanStopSliding && this.IsSliding && !this.Slide)
-        {
-            this.Slide = true;
-        }
     }
-
-    private void FixedUpdate()
-    {
-        if (this.move || this.isInAir || this.Jumping)
-        {
-            this.Rotate();
-        }
-
-        if (this.move && !this.isInAir && !this.Jumping)
-        {
-            this.transform.Rotate(0f, this.rotVal, 0f);
-        }
-
-        if (this.player.IsConsoleActive)
-        {
-            this.forward = false;
-            this.backwards = false;
-            this.left = false;
-            this.right = false;
-            this.running = false;
-
-            return;
-        }
-
-        if (this.Jumping || this.isInAir)
-        {
-            this.AirMove();
-        }
-        else
-        {
-            //this.Move();
-        }
-    }
-
-    private void LateUpdate()
-    {
-        this.AnimationParser();
-    }
-
-    #endregion
-
-    #region Methods
-    
 
     /// <summary>
     /// This method controls the rotation of the player, using the rotation of the camera and mouse.
@@ -316,6 +323,38 @@ public class PlayerMovement : MonoBehaviour
     {
         float speed = this.running ? this.AirRunSpeed : this.AirSpeed;
 
+        if (!this.player.IsTargetAcquired)
+        {
+            if (this.rotVal == 180f)
+            {
+                this.v = -this.v;
+                this.h = 0f;
+            }
+            else if (this.rotVal == 90f)
+            {
+                float oldH = this.h;
+
+                this.v = this.h;
+                this.h = 0f;
+            }
+            else if (this.rotVal == -90f)
+            {
+                float oldH = this.h;
+
+                this.v = -this.h;
+                this.h = 0f;
+            }
+            else if (this.rotVal == 45f || this.rotVal == -45f)
+            {
+                this.h = 0f;
+            }
+            else if (this.rotVal == 135f || this.rotVal == -135f)
+            {
+                this.v = -this.v;
+                this.h = 0f;
+            }
+        }
+
         this.rg.MovePosition(this.transform.position +
                             (this.transform.forward * this.v * speed * Time.fixedDeltaTime) +
                             (this.transform.right * this.h * speed * Time.fixedDeltaTime));
@@ -327,6 +366,32 @@ public class PlayerMovement : MonoBehaviour
     public void MakeTheJump()
     {
         this.rg.AddForce(this.transform.up * this.JumpForce);
+    }
+
+    public void MakeThemZero()
+    {
+        if (this.player.IsTargetAcquired)
+        {
+            this.move = false;
+            this.running = false;
+            this.rotVal = 0f;
+        }
+        else
+        {
+            this.forward = false;
+            this.backwards = false;
+            this.left = false;
+            this.right = false;
+            this.running = false;
+        }
+    }
+
+    private void Land()
+    {
+        this.jump = false;
+        this.Jumping = false;
+        this.isInAir = false;
+        this.currentJumpForce = 0f;
     }
 
     /// <summary>
@@ -346,6 +411,8 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("CanStopSliding", this.CanStopSliding);
         this.animator.SetBool("IsInAir", this.isInAir);
         this.animator.SetBool("Move", this.move);
+        this.animator.SetBool("Dodge", this.Dodge);
+        this.animator.SetBool("IsDodging", this.Dodging);
     }
 
     #endregion
@@ -358,13 +425,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (this.Jumping)
             {
-                this.jump = false;
-                this.Jumping = false;
+                this.Land();
             }
-            
+
             if (this.isInAir)
             {
-                this.isInAir = false;
+                this.Land();
             }
         }
     }
@@ -376,13 +442,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (this.Jumping)
             {
-                this.jump = false;
-                this.Jumping = false;
+                this.Land();
             }
-            
+
             if (this.isInAir)
             {
-                this.isInAir = false;
+                this.Land();
             }
         }
     }

@@ -9,8 +9,18 @@ public class Player : MonoBehaviour
 
     public Console Console;
 
+    public bool IsTargetAcquired;
+
     [HideInInspector]
     public bool IsConsoleActive;
+
+    #endregion
+
+    #region Fields
+
+    private Animator animator;
+
+    private PlayerMovement playerMovement;
 
     #endregion
 
@@ -18,7 +28,13 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
+        this.IsTargetAcquired = false;
         this.IsConsoleActive = false;
+
+        this.animator = this.gameObject.GetComponent<Animator>();
+        this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -31,6 +47,22 @@ public class Player : MonoBehaviour
 
             this.Console.Focus();
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            this.IsTargetAcquired = !this.IsTargetAcquired;
+
+            this.playerMovement.MakeThemZero();
+        }
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void AnimationParser()
+    {
+        this.animator.SetBool("IsTargetAcquired", this.IsTargetAcquired);
     }
 
     #endregion

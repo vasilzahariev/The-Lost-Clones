@@ -8,7 +8,7 @@ public class PlayerEventHandler : MonoBehaviour
 
     #region MonoMethods
 
-    void Start()
+    void Awake()
     {
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
     }
@@ -46,6 +46,21 @@ public class PlayerEventHandler : MonoBehaviour
     public void StartJumping()
     {
         this.playerMovement.Jumping = true;
+    }
+
+    #endregion
+
+    #region Dodge
+
+    public void StartDodge()
+    {
+        this.playerMovement.Dodging = true;
+    }
+
+    public void EndDodge()
+    {
+        this.playerMovement.Dodge = false;
+        this.playerMovement.Dodging = false;
     }
 
     #endregion
