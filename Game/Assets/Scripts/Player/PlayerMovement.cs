@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
     private bool wasInAir;
     private bool move;
 
+    private bool hasAirDodged;
+
     #endregion
 
     #region MonoMethods
@@ -105,14 +107,31 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Slide") && !this.IsSliding && !this.Slide)
+        if (Input.GetButtonDown("Slide") &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.jump &&
+            !this.Jumping &&
+            !this.isInAir &&
+            !this.Dodging &&
+            !this.Dodge)
         {
             this.Slide = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftAlt) && !this.Dodging && !this.Dodge)
+        if (Input.GetKeyDown(KeyCode.C) &&
+            !this.Dodging &&
+            !this.Dodge &&
+            !this.hasAirDodged &&
+            !this.IsSliding &&
+            !this.Slide)
         {
             this.Dodge = true;
+
+            if (this.Jumping)
+            {
+                this.hasAirDodged = true;
+            }
         }
 
         if (Input.GetButtonDown("Jump") && (!this.jump && !this.IsSliding && !this.isInAir))
@@ -137,6 +156,11 @@ public class PlayerMovement : MonoBehaviour
             this.running = false;
 
             return;
+        }
+
+        if (this.Dodging)
+        {
+            this.rg.AddForce(this.transform.forward * 150f);
         }
 
         if (!this.player.IsTargetAcquired)
@@ -321,7 +345,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void AirMove()
     {
-        float speed = this.running ? this.AirRunSpeed : this.AirSpeed;
+        float speed = this.Dodging && !this.player.IsTargetAcquired ? this.AirRunSpeed : this.AirSpeed;
 
         if (!this.player.IsTargetAcquired)
         {
@@ -363,6 +387,15 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
     /// </summary>
+    private void Land()
+    {
+        this.jump = false;
+        this.Jumping = false;
+        this.isInAir = false;
+        this.currentJumpForce = 0f;
+        this.hasAirDodged = false;
+    }
+
     public void MakeTheJump()
     {
         this.rg.AddForce(this.transform.up * this.JumpForce);
@@ -384,14 +417,6 @@ public class PlayerMovement : MonoBehaviour
             this.right = false;
             this.running = false;
         }
-    }
-
-    private void Land()
-    {
-        this.jump = false;
-        this.Jumping = false;
-        this.isInAir = false;
-        this.currentJumpForce = 0f;
     }
 
     /// <summary>

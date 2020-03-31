@@ -56,6 +56,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        this.AnimationParser();
+    }
+
     #endregion
 
     #region Methods
