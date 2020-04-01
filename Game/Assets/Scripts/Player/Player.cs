@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     #region Properties
 
     public Console Console;
+    public GameObject Lightsaber;
 
     public bool IsTargetAcquired;
 
@@ -48,12 +49,21 @@ public class Player : MonoBehaviour
             this.Console.Focus();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) &&
+            !this.playerMovement.Slide &&
+            !this.playerMovement.Dashing &&
+            !this.playerMovement.Jumping)
         {
             this.IsTargetAcquired = !this.IsTargetAcquired;
 
             this.playerMovement.MakeThemZero();
         }
+
+        //Debug.Log($"{this.IsTargetAcquired} {this.playerMovement.Dashing} {this.playerMovement.IsSliding}");
+    }
+
+    private void FixedUpdate()
+    {
     }
 
     private void LateUpdate()
@@ -67,7 +77,7 @@ public class Player : MonoBehaviour
 
     private void AnimationParser()
     {
-        this.animator.SetBool("IsTargetAcquired", this.IsTargetAcquired);
+        this.animator.SetBool("Target", this.IsTargetAcquired);
     }
 
     #endregion

@@ -12,10 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     public float RotationSpeed;
     public float JumpForce;
+    public float DashingForce;
+    public float DashingForceUp;
     public float AirSpeed;
     public float AirRunSpeed;
-
-    public float RotationMultiplier;
 
 
     [HideInInspector]
@@ -31,10 +31,13 @@ public class PlayerMovement : MonoBehaviour
     public bool CanStopSliding;
 
     [HideInInspector]
-    public bool Dodge;
+    public bool Dash;
 
     [HideInInspector]
-    public bool Dodging;
+    public bool Dashing;
+
+    [HideInInspector]
+    public bool CanDash;
 
     #endregion
 
@@ -60,8 +63,6 @@ public class PlayerMovement : MonoBehaviour
     private bool wasInAir;
     private bool move;
 
-    private bool hasAirDodged;
-
     #endregion
 
     #region MonoMethods
@@ -74,6 +75,8 @@ public class PlayerMovement : MonoBehaviour
         this.rg = this.gameObject.GetComponent<Rigidbody>();
 
         this.currentJumpForce = 0f;
+
+        this.CanDash = true;
     }
 
     void Update()
@@ -113,28 +116,30 @@ public class PlayerMovement : MonoBehaviour
             !this.jump &&
             !this.Jumping &&
             !this.isInAir &&
-            !this.Dodging &&
-            !this.Dodge)
+            !this.Dashing &&
+            !this.Dash)
         {
             this.Slide = true;
         }
 
         if (Input.GetKeyDown(KeyCode.C) &&
-            !this.Dodging &&
-            !this.Dodge &&
-            !this.hasAirDodged &&
+            this.CanDash &&
+            !this.Dashing &&
+            !this.Dash &&
             !this.IsSliding &&
-            !this.Slide)
+            !this.Slide &&
+            !this.player.IsTargetAcquired)
         {
-            this.Dodge = true;
-
-            if (this.Jumping)
-            {
-                this.hasAirDodged = true;
-            }
+            this.Dash = true;
         }
 
-        if (Input.GetButtonDown("Jump") && (!this.jump && !this.IsSliding && !this.isInAir))
+        if (Input.GetButtonDown("Jump") &&
+            !this.jump &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.Dash &&
+            !this.Dashing &&
+            !this.isInAir)
         {
             this.jump = true;
         }
@@ -158,9 +163,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (this.Dodging)
+        if (this.Dashing)
         {
-            this.rg.AddForce(this.transform.forward * 150f);
+            this.rg.AddForce(this.transform.forward * this.DashingForce);
         }
 
         if (!this.player.IsTargetAcquired)
@@ -345,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void AirMove()
     {
-        float speed = this.Dodging && !this.player.IsTargetAcquired ? this.AirRunSpeed : this.AirSpeed;
+        float speed = this.Dashing && !this.player.IsTargetAcquired ? this.AirRunSpeed : this.AirSpeed;
 
         if (!this.player.IsTargetAcquired)
         {
@@ -393,7 +398,6 @@ public class PlayerMovement : MonoBehaviour
         this.Jumping = false;
         this.isInAir = false;
         this.currentJumpForce = 0f;
-        this.hasAirDodged = false;
     }
 
     public void MakeTheJump()
@@ -408,6 +412,11 @@ public class PlayerMovement : MonoBehaviour
             this.move = false;
             this.running = false;
             this.rotVal = 0f;
+            this.CanStopSliding = true;
+            this.IsSliding = false;
+            this.Slide = false;
+            this.Dashing = false;
+            this.Dash = false;
         }
         else
         {
@@ -417,6 +426,36 @@ public class PlayerMovement : MonoBehaviour
             this.right = false;
             this.running = false;
         }
+    }
+
+    public void HoldOnDash()
+    {
+        this.rg.AddForce(this.transform.up * this.DashingForceUp);
+        this.rg.velocity = Vector3.zero;
+
+        StartCoroutine(this.DashWithoutGravity());
+    }
+
+    private IEnumerator DashWithoutGravity()
+    {
+        this.rg.useGravity = false;
+
+        yield return new WaitForSecondsRealtime(0.4f);
+
+        // TODO: When you add artificial gravity make sure to change this one
+        this.rg.useGravity = true;
+    }
+
+    public void ReloadDash()
+    {
+        StartCoroutine(this.WaitForReloadDash());
+    }
+
+    private IEnumerator WaitForReloadDash()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
+        this.CanDash = true;
     }
 
     /// <summary>
@@ -436,8 +475,8 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("CanStopSliding", this.CanStopSliding);
         this.animator.SetBool("IsInAir", this.isInAir);
         this.animator.SetBool("Move", this.move);
-        this.animator.SetBool("Dodge", this.Dodge);
-        this.animator.SetBool("IsDodging", this.Dodging);
+        this.animator.SetBool("Dash", this.Dash);
+        this.animator.SetBool("IsDashing", this.Dashing);
     }
 
     #endregion

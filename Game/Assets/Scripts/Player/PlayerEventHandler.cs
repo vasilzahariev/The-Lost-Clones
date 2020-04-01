@@ -21,6 +21,8 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.IsSliding = true;
         this.playerMovement.CanStopSliding = true;
 
+        this.playerMovement.MakeThemZero();
+
         this.gameObject.GetComponent<CapsuleCollider>().height /= 2;
         this.gameObject.GetComponent<CapsuleCollider>().center /= 2;
     }
@@ -50,17 +52,31 @@ public class PlayerEventHandler : MonoBehaviour
 
     #endregion
 
-    #region Dodge
+    #region Dash
 
-    public void StartDodge()
+    public void StartDash()
     {
-        this.playerMovement.Dodging = true;
+        this.playerMovement.Dashing = true;
+        this.playerMovement.CanDash = false;
+
+        this.playerMovement.HoldOnDash();
     }
 
-    public void EndDodge()
+    public void EndDash()
     {
-        this.playerMovement.Dodge = false;
-        this.playerMovement.Dodging = false;
+        this.playerMovement.Dash = false;
+        this.playerMovement.Dashing = false;
+
+        this.playerMovement.ReloadDash();
+    }
+
+    #endregion
+
+    #region WeaponEqipment
+
+    public void EqiptDual()
+    {
+        //
     }
 
     #endregion
