@@ -23,8 +23,7 @@ public class PlayerEventHandler : MonoBehaviour
 
         this.playerMovement.MakeThemZero();
 
-        this.gameObject.GetComponent<CapsuleCollider>().height /= 2;
-        this.gameObject.GetComponent<CapsuleCollider>().center /= 2;
+        this.playerMovement.StartSlideResize();
     }
 
     public void EndSlide()
@@ -32,8 +31,7 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.Slide = false;
         this.playerMovement.IsSliding = false;
 
-        this.gameObject.GetComponent<CapsuleCollider>().height *= 2;
-        this.gameObject.GetComponent<CapsuleCollider>().center *= 2;
+        this.playerMovement.EndSlideResize();
     }
 
     #endregion
@@ -72,11 +70,19 @@ public class PlayerEventHandler : MonoBehaviour
 
     #endregion
 
-    #region WeaponEqipment
+    #region Dodge
 
-    public void EqiptDual()
+    public void StartDodge()
     {
-        //
+        this.playerMovement.Dodging = true;
+    }
+
+    public void EndDodge()
+    {
+        this.playerMovement.Dodge = false;
+        this.playerMovement.Dodging = false;
+
+        this.playerMovement.ReloadDash();
     }
 
     #endregion

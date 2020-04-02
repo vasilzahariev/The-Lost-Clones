@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab) &&
             !this.playerMovement.Slide &&
             !this.playerMovement.Dashing &&
-            !this.playerMovement.Jumping)
+            !this.playerMovement.Dodging)
         {
             this.IsTargetAcquired = !this.IsTargetAcquired;
 

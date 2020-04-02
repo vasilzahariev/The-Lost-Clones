@@ -531,7 +531,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.72549015
+      - time: 0.4983239
         functionName: EndDodge
         data: 
         objectReferenceParameter: {instanceID: 0}

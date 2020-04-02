@@ -39,6 +39,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public bool CanDash;
 
+    [HideInInspector]
+    public bool Dodge;
+
+    [HideInInspector]
+    public bool Dodging;
+
+    [HideInInspector]
+    public bool CanDodge;
+
     #endregion
 
     #region Fields
@@ -117,7 +126,9 @@ public class PlayerMovement : MonoBehaviour
             !this.Jumping &&
             !this.isInAir &&
             !this.Dashing &&
-            !this.Dash)
+            !this.Dash &&
+            !this.player.IsTargetAcquired &&
+            this.running)
         {
             this.Slide = true;
         }
@@ -130,7 +141,18 @@ public class PlayerMovement : MonoBehaviour
             !this.Slide &&
             !this.player.IsTargetAcquired)
         {
-            this.Dash = true;
+                this.Dash = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) &&
+            !this.Dodge &&
+            !this.Dodging &&
+            !this.isInAir &&
+            !this.jump &&
+            !this.Jumping &&
+            this.IsMovingAtADirection())
+        {
+            this.Dodge = true;
         }
 
         if (Input.GetButtonDown("Jump") &&
@@ -139,12 +161,14 @@ public class PlayerMovement : MonoBehaviour
             !this.Slide &&
             !this.Dash &&
             !this.Dashing &&
-            !this.isInAir)
+            !this.isInAir &&
+            !this.Dodge &&
+            !this.Dodging)
         {
             this.jump = true;
         }
 
-        if (this.CanStopSliding && this.IsSliding && !this.Slide)
+        if (this.CanStopSliding && this.IsSliding && !this.Slide && !this.player.IsTargetAcquired)
         {
             this.Slide = true;
         }
@@ -163,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (this.Dashing)
+        if (this.Dashing && !this.player.IsTargetAcquired)
         {
             this.rg.AddForce(this.transform.forward * this.DashingForce);
         }
@@ -328,21 +352,6 @@ public class PlayerMovement : MonoBehaviour
         {
             this.running = false;
         }
-
-        if (!this.IsSliding)
-        {
-            if (!this.running)
-            {
-                this.Slide = false;
-            }
-            else
-            {
-                if (this.Slide && (this.backwards || this.left || this.right))
-                {
-                    this.Slide = false;
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -389,9 +398,6 @@ public class PlayerMovement : MonoBehaviour
                             (this.transform.right * this.h * speed * Time.fixedDeltaTime));
     }
 
-    /// <summary>
-    /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
-    /// </summary>
     private void Land()
     {
         this.jump = false;
@@ -400,6 +406,21 @@ public class PlayerMovement : MonoBehaviour
         this.currentJumpForce = 0f;
     }
 
+    private bool IsMovingAtADirection()
+    {
+        return (this.forward && !this.backwards && !this.left && !this.right) ||
+               (!this.forward && this.backwards && !this.left && !this.right) ||
+               (!this.forward && !this.backwards && this.left && !this.right) ||
+               (!this.forward && !this.backwards && !this.left && this.right) ||
+               (this.forward && !this.backwards && !this.left && this.right) ||
+               (this.forward && !this.backwards && this.left && !this.right) ||
+               (!this.forward && this.backwards && !this.left && this.right) ||
+               (!this.forward && this.backwards && this.left && !this.right);
+    }
+
+    /// <summary>
+    /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
+    /// </summary>
     public void MakeTheJump()
     {
         this.rg.AddForce(this.transform.up * this.JumpForce);
@@ -430,7 +451,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void HoldOnDash()
     {
-        this.rg.AddForce(this.transform.up * this.DashingForceUp);
+        if (this.isInAir || this.Jumping)
+        {
+            this.rg.AddForce(this.transform.up * this.DashingForceUp);
+        }
+        else
+        {
+            this.rg.AddForce(this.transform.up * this.DashingForceUp / 2f);
+        }
+
         this.rg.velocity = Vector3.zero;
 
         StartCoroutine(this.DashWithoutGravity());
@@ -458,6 +487,18 @@ public class PlayerMovement : MonoBehaviour
         this.CanDash = true;
     }
 
+    public void StartSlideResize()
+    {
+        this.gameObject.GetComponent<CapsuleCollider>().height /= 2;
+        this.gameObject.GetComponent<CapsuleCollider>().center /= 2;
+    }
+
+    public void EndSlideResize()
+    {
+        this.gameObject.GetComponent<CapsuleCollider>().height *= 2;
+        this.gameObject.GetComponent<CapsuleCollider>().center *= 2;
+    }
+
     /// <summary>
     /// This method controls what values the animation controller parameters have
     /// </summary>
@@ -477,6 +518,8 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("Move", this.move);
         this.animator.SetBool("Dash", this.Dash);
         this.animator.SetBool("IsDashing", this.Dashing);
+        this.animator.SetBool("Dodge", this.Dodge);
+        this.animator.SetBool("IsDodging", this.Dodging);
     }
 
     #endregion
