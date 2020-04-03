@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.player.IsTargetAcquired)
         {
-            if (this.move || this.isInAir || this.Jumping)
+            if ((this.move || this.isInAir || this.Jumping))
             {
                 this.Rotate();
             }
@@ -435,6 +435,23 @@ public class PlayerMovement : MonoBehaviour
                (!this.forward && this.backwards && this.left && !this.right);
     }
 
+    private bool CheckIfTheCollisionIsFromUnder(Collision collision)
+    {
+        bool down = false;
+
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            ContactPoint contact = collision.GetContact(i);
+
+            if (contact.normal.y >= 0.9f)
+            {
+                down = true;
+            }
+        }
+
+        return down;
+    }
+
     /// <summary>
     /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
     /// </summary>
@@ -544,6 +561,7 @@ public class PlayerMovement : MonoBehaviour
         this.animator.SetBool("IsJumping", this.Jumping);
         this.animator.SetBool("CanStopSliding", this.CanStopSliding);
         this.animator.SetBool("IsInAir", this.isInAir);
+        this.animator.SetBool("WasInAir", this.wasInAir);
         this.animator.SetBool("Move", this.move);
         this.animator.SetBool("Dash", this.Dash);
         this.animator.SetBool("IsDashing", this.Dashing);
@@ -556,7 +574,8 @@ public class PlayerMovement : MonoBehaviour
     #region Collision
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") ||
+        if (this.CheckIfTheCollisionIsFromUnder(collision) &&
+            collision.gameObject.CompareTag("Ground") ||
             collision.gameObject.CompareTag("SlideArea"))
         {
             if (this.Jumping)
@@ -573,8 +592,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") ||
-            collision.gameObject.CompareTag("SlideArea"))
+        if (this.CheckIfTheCollisionIsFromUnder(collision) &&
+            (collision.gameObject.CompareTag("Ground") ||
+            collision.gameObject.CompareTag("SlideArea")))
         {
             if (this.Jumping)
             {
@@ -584,6 +604,8 @@ public class PlayerMovement : MonoBehaviour
             if (this.isInAir)
             {
                 this.Land();
+
+                this.wasInAir = true;
             }
         }
     }
@@ -592,9 +614,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((collision.gameObject.CompareTag("Ground") ||
             collision.gameObject.CompareTag("SlideArea")) &&
-            !this.isInAir && !this.Jumping)
+            !this.isInAir &&
+            !this.Jumping)
         {
             this.isInAir = true;
+            this.wasInAir = false;
         }
     }
 
