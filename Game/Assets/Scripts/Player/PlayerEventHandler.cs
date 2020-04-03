@@ -75,6 +75,7 @@ public class PlayerEventHandler : MonoBehaviour
     public void StartDodge()
     {
         this.playerMovement.Dodging = true;
+        this.playerMovement.CanDodge = false;
     }
 
     public void EndDodge()
@@ -82,7 +83,7 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.Dodge = false;
         this.playerMovement.Dodging = false;
 
-        this.playerMovement.ReloadDash();
+        this.playerMovement.ReloadDodge();
     }
 
     #endregion

@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private float h;
     private float v;
     private float rotVal;
-    private float currentJumpForce;
+    private float dodgePressedTime;
 
     private bool forward;
     private bool backwards;
@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isInAir;
     private bool wasInAir;
     private bool move;
+    private bool isDodgePressed;
+    private bool resetDodgePressed;
 
     #endregion
 
@@ -83,9 +85,8 @@ public class PlayerMovement : MonoBehaviour
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
 
-        this.currentJumpForce = 0f;
-
         this.CanDash = true;
+        this.CanDodge = true;
     }
 
     void Update()
@@ -119,54 +120,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Slide") &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.jump &&
-            !this.Jumping &&
-            !this.isInAir &&
-            !this.Dashing &&
-            !this.Dash &&
-            !this.player.IsTargetAcquired &&
-            this.running)
-        {
-            this.Slide = true;
-        }
+        this.SlideInput();
 
-        if (Input.GetKeyDown(KeyCode.C) &&
-            this.CanDash &&
-            !this.Dashing &&
-            !this.Dash &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.player.IsTargetAcquired)
-        {
-                this.Dash = true;
-        }
+        this.DashDodgeRollInput();
 
-        if (Input.GetKeyDown(KeyCode.C) &&
-            !this.Dodge &&
-            !this.Dodging &&
-            !this.isInAir &&
-            !this.jump &&
-            !this.Jumping &&
-            this.IsMovingAtADirection())
-        {
-            this.Dodge = true;
-        }
-
-        if (Input.GetButtonDown("Jump") &&
-            !this.jump &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.Dash &&
-            !this.Dashing &&
-            !this.isInAir &&
-            !this.Dodge &&
-            !this.Dodging)
-        {
-            this.jump = true;
-        }
+        this.JumpInput();
 
         if (this.CanStopSliding && this.IsSliding && !this.Slide && !this.player.IsTargetAcquired)
         {
@@ -293,6 +251,66 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void SlideInput()
+    {
+        if (Input.GetButtonDown("Slide") &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.jump &&
+            !this.Jumping &&
+            !this.isInAir &&
+            !this.Dashing &&
+            !this.Dash &&
+            !this.player.IsTargetAcquired &&
+            this.running)
+        {
+            this.Slide = true;
+        }
+    }
+
+    private void DashDodgeRollInput()
+    {
+        if (Input.GetKeyDown(KeyCode.C) &&
+            this.CanDash &&
+            !this.Dashing &&
+            !this.Dash &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.player.IsTargetAcquired)
+        {
+            this.Dash = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) &&
+            !this.Dodge &&
+            !this.Dodging &&
+            !this.isInAir &&
+            !this.jump &&
+            !this.Jumping &&
+            this.player.IsTargetAcquired &&
+            this.IsMovingAtADirection() &&
+            this.CanDodge)
+        {
+            this.Dodge = true;
+        }
+    }
+
+    private void JumpInput()
+    {
+        if (Input.GetButtonDown("Jump") &&
+            !this.jump &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.Dash &&
+            !this.Dashing &&
+            !this.isInAir &&
+            !this.Dodge &&
+            !this.Dodging)
+        {
+            this.jump = true;
+        }
+    }
+
     /// <summary>
     /// This method controls the rotation of the player, using the rotation of the camera and mouse.
     /// </summary>
@@ -403,7 +421,6 @@ public class PlayerMovement : MonoBehaviour
         this.jump = false;
         this.Jumping = false;
         this.isInAir = false;
-        this.currentJumpForce = 0f;
     }
 
     private bool IsMovingAtADirection()
@@ -485,6 +502,18 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         this.CanDash = true;
+    }
+
+    public void ReloadDodge()
+    {
+        StartCoroutine(this.WaitForReloadDodge());
+    }
+
+    private IEnumerator WaitForReloadDodge()
+    {
+        yield return new WaitForSecondsRealtime(0f);
+
+        this.CanDodge = true;
     }
 
     public void StartSlideResize()
