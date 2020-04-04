@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
     #region Properties
 
+    public Camera Camera;
+    public CinemachineFreeLook freeLook;
     public Console Console;
     public GameObject Lightsaber;
+    public GameObject Target;
 
     public bool IsTargetAcquired;
 
@@ -54,9 +58,29 @@ public class Player : MonoBehaviour
             !this.playerMovement.Dashing &&
             !this.playerMovement.Dodging)
         {
-            this.IsTargetAcquired = !this.IsTargetAcquired;
+            if (!this.IsTargetAcquired && this.CanGetTarget())
+            {
+                this.IsTargetAcquired = true;
 
-            this.playerMovement.MakeThemZero();
+                this.playerMovement.MakeThemZero();
+
+                this.GetTarget();
+                this.freeLook.gameObject.SetActive(false);
+            }
+            else if (this.IsTargetAcquired)
+            {
+                this.IsTargetAcquired = false;
+
+                this.playerMovement.MakeThemZero();
+
+                this.freeLook.gameObject.SetActive(true);
+                this.Target = null;
+            }
+        }
+
+        if (this.IsTargetAcquired)
+        {
+            this.Camera.transform.LookAt(this.Target.GetComponent<Renderer>().bounds.center);
         }
 
         //Debug.Log($"{this.IsTargetAcquired} {this.playerMovement.Dashing} {this.playerMovement.IsSliding}");
@@ -78,6 +102,28 @@ public class Player : MonoBehaviour
     private void AnimationParser()
     {
         this.animator.SetBool("Target", this.IsTargetAcquired);
+    }
+
+    private bool CanGetTarget()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(this.Camera.transform.position, this.Camera.transform.forward, out hit, 25f))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void GetTarget()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(this.Camera.transform.position, this.Camera.transform.forward, out hit, 25f))
+        {
+            this.Target = hit.transform.gameObject;
+        }
     }
 
     #endregion

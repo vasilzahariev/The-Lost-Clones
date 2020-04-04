@@ -443,7 +443,7 @@ public class PlayerMovement : MonoBehaviour
         {
             ContactPoint contact = collision.GetContact(i);
 
-            if (contact.normal.y >= 0.9f)
+            if (contact.normal.y >= 0.7f)
             {
                 down = true;
             }
@@ -472,6 +472,8 @@ public class PlayerMovement : MonoBehaviour
             this.Slide = false;
             this.Dashing = false;
             this.Dash = false;
+
+            this.transform.Rotate(0f, this.rotVal, 0f);
         }
         else
         {
@@ -481,6 +483,12 @@ public class PlayerMovement : MonoBehaviour
             this.right = false;
             this.running = false;
         }
+    }
+
+    public void MakeThemZeroWhenSliding()
+    {
+        this.move = false;
+        this.running = false;
     }
 
     public void HoldOnDash()
@@ -575,8 +583,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (this.CheckIfTheCollisionIsFromUnder(collision) &&
-            collision.gameObject.CompareTag("Ground") ||
-            collision.gameObject.CompareTag("SlideArea"))
+            collision.gameObject.CompareTag("Ground"))
         {
             if (this.Jumping)
             {
@@ -593,8 +600,7 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         if (this.CheckIfTheCollisionIsFromUnder(collision) &&
-            (collision.gameObject.CompareTag("Ground") ||
-            collision.gameObject.CompareTag("SlideArea")))
+            (collision.gameObject.CompareTag("Ground")))
         {
             if (this.Jumping)
             {

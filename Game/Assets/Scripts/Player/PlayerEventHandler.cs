@@ -21,7 +21,7 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.IsSliding = true;
         this.playerMovement.CanStopSliding = true;
 
-        this.playerMovement.MakeThemZero();
+        this.playerMovement.MakeThemZeroWhenSliding();
 
         this.playerMovement.StartSlideResize();
     }
