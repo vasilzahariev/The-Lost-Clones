@@ -553,6 +553,21 @@ public class PlayerMovement : MonoBehaviour
         this.gameObject.GetComponent<CapsuleCollider>().center *= 2;
     }
 
+    public bool IsMoving()
+    {
+        return this.move || this.forward || this.backwards || this.left || this.right;
+    }
+
+    public bool IsRunning()
+    {
+        return this.running;
+    }
+
+    public bool IsInAir()
+    {
+        return this.isInAir;
+    }
+
     /// <summary>
     /// This method controls what values the animation controller parameters have
     /// </summary>
@@ -585,15 +600,7 @@ public class PlayerMovement : MonoBehaviour
         if (this.CheckIfTheCollisionIsFromUnder(collision) &&
             collision.gameObject.CompareTag("Ground"))
         {
-            if (this.Jumping)
-            {
-                this.Land();
-            }
-
-            if (this.isInAir)
-            {
-                this.Land();
-            }
+            this.Land();
         }
     }
 

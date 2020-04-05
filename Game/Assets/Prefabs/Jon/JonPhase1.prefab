@@ -695,7 +695,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619465063049388619}
-  m_LocalRotation: {x: 0.07353775, y: 0.034347758, z: -0.0025342258, w: 0.9966976}
+  m_LocalRotation: {x: 0.07352712, y: 0.038303122, z: -0.0028260578, w: 0.9965534}
   m_LocalPosition: {x: -2.7783077, y: 1.5, z: -1.9546232}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -752,7 +752,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619465063049388619}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &6872924465985998926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2600,6 +2600,7 @@ GameObject:
   - component: {fileID: 4870461129725125674}
   - component: {fileID: 5615480651030953362}
   - component: {fileID: 2701449091509959646}
+  - component: {fileID: 9203568187722495699}
   m_Layer: 2
   m_Name: JonPhase1
   m_TagString: Untagged
@@ -2737,6 +2738,14 @@ MonoBehaviour:
   Target: {fileID: 0}
   IsTargetAcquired: 0
   IsConsoleActive: 0
+--- !u!81 &9203568187722495699
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108230101769887716}
+  m_Enabled: 1
 --- !u!1 &9175530442933232317
 GameObject:
   m_ObjectHideFlags: 0
