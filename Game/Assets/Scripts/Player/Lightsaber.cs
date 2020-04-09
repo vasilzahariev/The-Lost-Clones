@@ -7,6 +7,7 @@ public class Lightsaber : MonoBehaviour
     #region Properties
 
     public GameObject Blade;
+    public Player player;
 
     #endregion
 
@@ -26,6 +27,11 @@ public class Lightsaber : MonoBehaviour
 
     void Update()
     {
+        if (this.player.IsConsoleActive)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             this.TurnTheBaldeOff();

@@ -9,6 +9,7 @@ public class PlayerEventHandler : MonoBehaviour
 
     private bool move;
     private bool canMove;
+    private bool wasPlayingJumpRumble;
 
     #region MonoMethods
 
@@ -20,34 +21,17 @@ public class PlayerEventHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!this.playerMovement.Jumping &&
-            !this.playerMovement.Dashing &&
-            !this.playerMovement.IsSliding &&
-            !this.playerMovement.Dodging &&
-            !this.playerMovement.IsInAir() &&
-            !this.audioManager.IsPlaying("RockLand") &&
-            this.move)
+        if (!this.playerMovement.IsMoving() && this.audioManager.IsPlaying("RockWalk"))
         {
-            if (this.playerMovement.IsMoving() && !this.playerMovement.IsRunning() && !this.audioManager.IsPlaying("RockWalk"))
-            {
-                this.audioManager.Play("RockWalk");
-            }
-            else if (!this.playerMovement.IsMoving() && !this.playerMovement.IsRunning() && this.audioManager.IsPlaying("RockWalk"))
-            {
-                this.audioManager.Stop("RockWalk");
-            }
-
-            if (this.playerMovement.IsMoving() && this.playerMovement.IsRunning() && !this.audioManager.IsPlaying("RockSprint"))
-            {
-                this.audioManager.Play("RockSprint");
-            }
-            else if ((!this.playerMovement.IsMoving() ^ !this.playerMovement.IsRunning()) && this.audioManager.IsPlaying("RockSprint"))
-            {
-                this.audioManager.Stop("RockSprint");
-            }
+            this.audioManager.Stop("RockWalk");
         }
 
-        if (this.playerMovement.IsInAir() && !this.audioManager.IsPlaying("ForceJumpRumble") && !this.playerMovement.Jumping)
+        if (!this.playerMovement.IsRunning() && this.audioManager.IsPlaying("RockSprint"))
+        {
+            this.audioManager.Stop("RockSprint");
+        }
+
+        if (this.playerMovement.IsInAir() && !this.audioManager.IsPlaying("ForceJumpRumble") && !this.playerMovement.Jumping && !this.playerMovement.Dashing)
         {
             this.audioManager.Play("ForceJumpRumble");
         }
@@ -61,22 +45,16 @@ public class PlayerEventHandler : MonoBehaviour
 
     #region Move
 
-    public void StartMove()
+    public void Step()
     {
-        this.move = true;
-    }
-
-    public void EndMove()
-    {
-        if (!this.playerMovement.IsMoving())
+        if (this.playerMovement.IsRunning())
         {
-            this.move = false;
+            this.audioManager.Play("RockSprint");
         }
-    }
-
-    public void CanMove()
-    {
-        this.move = true;
+        else
+        {
+            this.audioManager.Play("RockWalk");
+        }
     }
 
     #endregion
@@ -144,15 +122,30 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.HoldOnDash();
 
         this.canMove = false;
+
+        this.wasPlayingJumpRumble = this.audioManager.IsPlaying("ForceJumpRumble");
+        this.audioManager.Stop("ForceJumpRumble");
     }
 
     public void EndDash()
     {
+        if (this.playerMovement.Jumping && this.playerMovement.IsInAir())
+        {
+            this.playerMovement.SetInAir(false);
+        }
+
         this.playerMovement.Dash = false;
         this.playerMovement.Dashing = false;
 
         this.playerMovement.ReloadDash();
-        this.CanMove();
+        //this.CanMove();
+
+        if (this.wasPlayingJumpRumble)
+        {
+            this.audioManager.Play("ForceJumpRumble");
+
+            this.wasPlayingJumpRumble = false;
+        }
     }
 
     #endregion

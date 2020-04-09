@@ -134,6 +134,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+        if (this.Jumping && this.isInAir)
+        {
+            this.isInAir = false;
+        }
+
         if (this.player.IsConsoleActive)
         {
             this.forward = false;
@@ -202,50 +208,50 @@ public class PlayerMovement : MonoBehaviour
             this.move = false;
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
         {
             this.move = true;
 
             this.rotVal = 0f;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
         {
             this.move = true;
 
             this.rotVal = 180f;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             this.move = true;
 
             this.rotVal = -90f;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
             this.move = true;
 
             this.rotVal = 90f;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
         {
             this.rotVal = 45f;
         }
 
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
             this.rotVal = -45f;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A))
         {
             this.rotVal = 135f;
         }
 
-        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
         {
             this.rotVal = -135f;
         }
@@ -568,6 +574,11 @@ public class PlayerMovement : MonoBehaviour
         return this.isInAir;
     }
 
+    public void SetInAir(bool value)
+    {
+        this.isInAir = value;
+    }
+
     /// <summary>
     /// This method controls what values the animation controller parameters have
     /// </summary>
@@ -600,6 +611,7 @@ public class PlayerMovement : MonoBehaviour
         if (this.CheckIfTheCollisionIsFromUnder(collision) &&
             collision.gameObject.CompareTag("Ground"))
         {
+            //Debug.Log($"Test at {Time.time}");
             this.Land();
         }
     }

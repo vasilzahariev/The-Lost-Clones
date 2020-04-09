@@ -13,6 +13,7 @@ public class Console : MonoBehaviour
     public Image ConsoleBackground;
     public TMP_InputField ConsoleInput;
     public TMP_Text ConsoleOutput;
+    public TMP_Text FPS;
 
     public GameObject Player;
 
@@ -25,6 +26,11 @@ public class Console : MonoBehaviour
 
     private List<string> commands;
     private List<string> setableVariables;
+    private List<string> previousInputs;
+
+    private int page;
+    private int pages;
+    private int inputIndex;
 
     #endregion
 
@@ -34,31 +40,44 @@ public class Console : MonoBehaviour
     {
         this.commands = new List<string>();
         this.setableVariables = new List<string>();
+        this.previousInputs = new List<string>();
 
         this.commands.Add("help - Shows all comands");
         this.commands.Add("tp <x> <y> <z> - Teleports you to the given coordinates");
         this.commands.Add("clr - Clears the console");
         this.commands.Add("set <variable> <newValue> - Sets the given variable to the given value");
-        this.commands.Add("sethelp - Shows all variables that can be changed");
+        this.commands.Add("set_help - Shows all variables that can be changed");
+        this.commands.Add("show_fps <val> - Shows(val = 0) or hides(val = 1) the fps counter");
+        this.commands.Add("previous - Goes to the previous console page");
+        this.commands.Add("next - Goes to the previous console page");
 
         this.commands.Sort();
 
-        this.setableVariables.Add("jumpforce");
-        this.setableVariables.Add("dashingforce");
-        this.setableVariables.Add("dashingforceup");
+        this.setableVariables.Add("jump_force");
+        this.setableVariables.Add("dashing_force");
+        this.setableVariables.Add("dashing_force_up");
 
         this.setableVariables.Sort();
 
         this.player = this.Player.GetComponent<Player>();
         this.playerMovement = this.Player.GetComponent<PlayerMovement>();
+
+        this.page = 1;
+        this.pages = 1;
+        this.inputIndex = -1;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            this.FillInput(Input.GetKeyDown(KeyCode.UpArrow) ? "up" : "down");
+        }
 
         if (Input.GetButtonDown("Enter"))
         {
             this.ReadInput();
+            this.inputIndex = -1;
         }
     }
 
@@ -81,16 +100,6 @@ public class Console : MonoBehaviour
     {
         string input = this.ConsoleInput.text;
 
-        if (!input.StartsWith(">"))
-        {
-            this.ConsoleInput.text = this.ConsoleInput.text.Insert(0, ">");
-        }
-
-        if (input.Count(c => c == '>') > 1)
-        {
-            this.ConsoleInput.text = ">" + this.ConsoleInput.text.Replace(">", "");
-        }
-
         if (input.Contains('`'))
         {
             this.ConsoleInput.text = this.ConsoleInput.text.Replace("`", "");
@@ -99,12 +108,40 @@ public class Console : MonoBehaviour
 
     public void OnSelect()
     {
-        if (string.IsNullOrEmpty(this.ConsoleInput.text))
+        this.Focus();
+    }
+
+    private void FillInput(string direction)
+    {
+        if (direction == "up")
         {
-            this.ConsoleInput.text += ">";
+            if (inputIndex < this.previousInputs.Count - 1)
+            {
+                this.inputIndex++;
+
+                this.ConsoleInput.text = this.previousInputs[this.previousInputs.Count - 1 - inputIndex];
+                this.ConsoleInput.caretPosition = this.ConsoleInput.text.Length;
+            }
+        }
+        else if (direction == "down")
+        {
+            if (inputIndex > 0)
+            {
+                this.inputIndex--;
+
+                this.ConsoleInput.text = this.previousInputs[this.previousInputs.Count - 1 - inputIndex];
+                this.ConsoleInput.caretPosition = this.ConsoleInput.text.Length;
+            }
+            else if (inputIndex == 0)
+            {
+                this.inputIndex--;
+
+                this.ConsoleInput.text = "";
+                this.ConsoleInput.caretPosition = this.ConsoleInput.text.Length;
+            }
         }
 
-        this.Focus();
+        return;
     }
 
     private void ReadInput()
@@ -112,18 +149,23 @@ public class Console : MonoBehaviour
         string input = this.ConsoleInput.text.ToLower();
         string output = "";
 
-        this.ConsoleInput.text = ">";
+        this.ConsoleInput.text = "";
 
-        if (input == ">" || string.IsNullOrEmpty(input))
+        if (string.IsNullOrEmpty(input))
         {
             return;
+        }
+
+        if (this.previousInputs.Count == 0 || this.previousInputs.Last() != input)
+        {
+            this.previousInputs.Add(input);
         }
 
         string[] inputArgs = input.Split(' ').ToArray();
 
         switch (inputArgs[0])
         {
-            case ">help":
+            case "help":
                 if (inputArgs.Length != 1)
                 {
                     output = "Invalid number of arguments" + "\n";
@@ -134,7 +176,7 @@ public class Console : MonoBehaviour
                 output = this.Help();
 
                 break;
-            case ">tp":
+            case "tp":
                 if (inputArgs.Length != 4)
                 {
                     output = "Invalid number of arguments" +
@@ -157,7 +199,7 @@ public class Console : MonoBehaviour
                 }
 
                 break;
-            case ">clr":
+            case "clr":
                 if (inputArgs.Length != 1)
                 {
                     output = "Invalid number of arguments" + "\n";
@@ -168,7 +210,7 @@ public class Console : MonoBehaviour
                 this.Clear();
 
                 break;
-            case ">set":
+            case "set":
                 if (inputArgs.Length != 3)
                 {
                     output = "Invalid number of arguments" + "\n";
@@ -189,7 +231,7 @@ public class Console : MonoBehaviour
                 }
 
                 break;
-            case ">sethelp":
+            case "set_help":
                 if (inputArgs.Length != 1)
                 {
                     output = "Invalid number of arguments" + "\n";
@@ -200,19 +242,62 @@ public class Console : MonoBehaviour
                 output = this.SetHelp();
 
                 break;
+            case "show_fps":
+                if (inputArgs.Length == 1)
+                {
+                    output += this.ShowFPS(true) + "\n";
+                }
+                else if (inputArgs.Length == 2)
+                {
+                    output += this.ShowFPS(inputArgs[1] == "0" ? true : false) + "\n";
+                }
+                else
+                {
+                    output = "Invalid number of argments\n";
+                }
+
+                break;
+            case "previous":
+                if (inputArgs.Length != 1)
+                {
+                    output = "Invalid number of arguments\n";
+
+                    break;
+                }
+
+                this.Previous();
+
+                break;
+            case "next":
+                if (inputArgs.Length != 1)
+                {
+                    output = "Invalid number of arguments\n";
+
+                    break;
+                }
+
+                this.Next();
+
+                break;
             default:
-                if (input.StartsWith(">"))
+                if (!string.IsNullOrEmpty(input))
                 {
                     output = "Invalid command" + "\n";
                 }
-                else if (!string.IsNullOrEmpty(input))
-                {
-                    output = "Invalid input! Every command must begins with '>'" + "\n";
-                }
+
                 break;
         }
 
         this.ConsoleOutput.text += output;
+
+        if (this.ConsoleOutput.textInfo.pageCount != this.pages)
+        {
+            this.pages = this.ConsoleOutput.textInfo.pageCount;
+
+            this.page = this.pages;
+        }
+
+        this.ConsoleOutput.pageToDisplay = this.page;
 
         this.Focus();
     }
@@ -250,7 +335,7 @@ public class Console : MonoBehaviour
     {
         string output = "";
 
-        if (variable == "jumpforce")
+        if (variable == "jump_force")
         {
             float val = float.Parse(newValue);
 
@@ -258,7 +343,7 @@ public class Console : MonoBehaviour
 
             output = $"Player's jump force was changed to {val}\n";
         }
-        else if (variable == "dashingforce")
+        else if (variable == "dashing_force")
         {
             float val = float.Parse(newValue);
 
@@ -266,7 +351,7 @@ public class Console : MonoBehaviour
 
             output = $"Player's dashing force was changed to {val}\n";
         }
-        else if (variable == "dashingforceup")
+        else if (variable == "dashing_force_up")
         {
             float val = float.Parse(newValue);
 
@@ -294,6 +379,31 @@ public class Console : MonoBehaviour
         }
 
         return output;
+    }
+
+    private string ShowFPS(bool active)
+    {
+        this.FPS.gameObject.SetActive(active);
+
+        string returner = active ? "activated" : "deativated";
+
+        return $"The FPS counter was {returner}";
+    }
+
+    private void Previous()
+    {
+        if (this.page > 1)
+        {
+            this.page--;
+        }
+    }
+
+    private void Next()
+    {
+        if (this.page < this.pages)
+        {
+            this.page++;
+        }
     }
 
     #endregion

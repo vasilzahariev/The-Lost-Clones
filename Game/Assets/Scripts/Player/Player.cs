@@ -50,7 +50,15 @@ public class Player : MonoBehaviour
 
             this.Console.gameObject.SetActive(this.IsConsoleActive);
 
-            this.Console.Focus();
+            if (this.IsConsoleActive)
+            {
+                this.Console.Focus();
+            }
+        }
+
+        if (this.IsConsoleActive)
+        {
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.Tab) &&
