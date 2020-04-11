@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerEventHandler : MonoBehaviour
 {
+    private Player player;
     private PlayerMovement playerMovement;
     private AudioManager audioManager;
 
@@ -15,6 +16,7 @@ public class PlayerEventHandler : MonoBehaviour
 
     void Awake()
     {
+        this.player = this.gameObject.GetComponent<Player>();
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         this.audioManager = FindObjectsOfType<AudioManager>()[0];
     }
@@ -119,7 +121,10 @@ public class PlayerEventHandler : MonoBehaviour
 
         this.audioManager.Play("ForceDash");
 
-        this.playerMovement.HoldOnDash();
+        if (!this.player.ArtificialGravity)
+        {
+            this.playerMovement.HoldOnDash();
+        }
 
         this.canMove = false;
 

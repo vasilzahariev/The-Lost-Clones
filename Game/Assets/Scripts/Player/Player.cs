@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -19,13 +20,22 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool IsConsoleActive;
 
+    [HideInInspector]
+    public bool ArtificialGravity;
+
+    [HideInInspector]
+    public float Health;
+
     #endregion
 
     #region Fields
 
     private Animator animator;
+    private Rigidbody rg;
 
     private PlayerMovement playerMovement;
+
+    private bool canUseArtificialGravity;
 
     #endregion
 
@@ -33,12 +43,17 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        this.Health = 100f;
+
         Cursor.lockState = CursorLockMode.Locked;
 
         this.IsTargetAcquired = false;
         this.IsConsoleActive = false;
 
+        this.ArtificialGravity = false;
+
         this.animator = this.gameObject.GetComponent<Animator>();
+        this.rg = this.gameObject.GetComponent<Rigidbody>();
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
     }
 
@@ -91,11 +106,20 @@ public class Player : MonoBehaviour
             this.Camera.transform.LookAt(this.Target.GetComponent<Renderer>().bounds.center);
         }
 
-        //Debug.Log($"{this.IsTargetAcquired} {this.playerMovement.Dashing} {this.playerMovement.IsSliding}");
+        if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
+        {
+            this.rg.useGravity = !this.rg.useGravity;
+            this.ArtificialGravity = !this.ArtificialGravity;
+        }
     }
 
     private void FixedUpdate()
     {
+        if (!this.canUseArtificialGravity && this.ArtificialGravity)
+        {
+            this.rg.useGravity = true;
+            this.ArtificialGravity = false;
+        }
     }
 
     private void LateUpdate()
@@ -132,6 +156,22 @@ public class Player : MonoBehaviour
         {
             this.Target = hit.transform.gameObject;
         }
+    }
+
+    #endregion
+
+    #region Collision
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Space"))
+            this.canUseArtificialGravity = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Space"))
+            this.canUseArtificialGravity = false;
     }
 
     #endregion

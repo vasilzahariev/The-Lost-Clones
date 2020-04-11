@@ -134,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (this.Jumping && this.isInAir)
         {
             this.isInAir = false;
@@ -519,7 +518,6 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.4f);
 
-        // TODO: When you add artificial gravity make sure to change this one
         this.rg.useGravity = true;
     }
 
