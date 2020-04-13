@@ -56,6 +56,8 @@ public class Console : MonoBehaviour
         this.setableVariables.Add("jump_force");
         this.setableVariables.Add("dashing_force");
         this.setableVariables.Add("dashing_force_up");
+        // TODO: Add
+        this.setableVariables.Add("gravity - TODO");
 
         this.setableVariables.Sort();
 
