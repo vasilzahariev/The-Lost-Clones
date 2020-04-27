@@ -7,13 +7,20 @@ public class Lightsaber : MonoBehaviour
     #region Properties
 
     public GameObject Blade;
-    public Player player;
+
+    [HideInInspector]
+    public float Damage;
+
+    [HideInInspector]
+    public bool CanDealDamage;
 
     #endregion
 
     #region Fields
 
-    ///
+    private Player player;
+
+    private bool isAttacking;
 
     #endregion
 
@@ -21,7 +28,9 @@ public class Lightsaber : MonoBehaviour
 
     void Start()
     {
-        //
+        this.player = Object.FindObjectOfType<Player>();
+
+        this.CanDealDamage = false;
     }
 
 
@@ -30,11 +39,6 @@ public class Lightsaber : MonoBehaviour
         if (this.player.IsConsoleActive)
         {
             return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            this.TurnTheBaldeOff();
         }
     }
 
@@ -51,7 +55,13 @@ public class Lightsaber : MonoBehaviour
 
     #region Collision
 
-    //
+    public void OnTriggerEnter(Collider other)
+    {
+        if (this.CanDealDamage && other.gameObject.CompareTag("Enemy"))
+        {
+            //
+        }
+    }
 
     #endregion
 }

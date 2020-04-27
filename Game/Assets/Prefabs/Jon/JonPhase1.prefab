@@ -292,6 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6058497006278135818}
+  - component: {fileID: 7705223886525580015}
   m_Layer: 2
   m_Name: Lightsaber
   m_TagString: Untagged
@@ -315,6 +316,22 @@ Transform:
   m_Father: {fileID: 6775703480440695444}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7705223886525580015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265012843088609937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0fb37d7a22266d4492f300236409edf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Attacking: 0
+  CurrentAttack: 0
+  CurrentlyPlayingAttack: 0
+  CanTransitionAttack: 0
 --- !u!1 &1350410800013570402
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +712,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2619465063049388619}
-  m_LocalRotation: {x: 0.07354629, y: 0.030812403, z: -0.0022733826, w: 0.9968132}
+  m_LocalRotation: {x: 0.07354628, y: 0.030815132, z: -0.0022735843, w: 0.99681306}
   m_LocalPosition: {x: -6.0783076, y: 1.5, z: 7.945378}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2739,7 +2756,8 @@ MonoBehaviour:
   IsTargetAcquired: 0
   IsConsoleActive: 0
   ArtificialGravity: 0
-  Health: 0
+  Health: 100
+  LightsaberStamina: 100
 --- !u!81 &9203568187722495699
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3024,7 +3042,7 @@ PrefabInstance:
     - target: {fileID: 6557579573459701524, guid: 0a6052a7d8148f849877e6468e49cb78,
         type: 3}
       propertyPath: m_Name
-      value: LukeLightsaber (1)
+      value: LukeLightsaber
       objectReference: {fileID: 0}
     - target: {fileID: 6557579573459701524, guid: 0a6052a7d8148f849877e6468e49cb78,
         type: 3}

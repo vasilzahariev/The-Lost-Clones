@@ -23,8 +23,11 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool ArtificialGravity;
 
-    [HideInInspector]
+    [Range(0, 500)]
     public float Health;
+
+    [Range(0, 500)]
+    public float LightsaberStamina;
 
     #endregion
 

@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7879727286956244231}
   - component: {fileID: 5475097656244080656}
+  - component: {fileID: 2700969662814045816}
   m_Layer: 0
   m_Name: LukeLightsaber
   m_TagString: Untagged
@@ -167,6 +168,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Blade: {fileID: 6532264321239740768}
+  player: {fileID: 0}
+--- !u!136 &2700969662814045816
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557579573459701524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.0028834688
+  m_Height: 0.36384574
+  m_Direction: 2
+  m_Center: {x: -0.00009673595, y: 0.0016732799, z: 0.13129841}
 --- !u!1001 &8975179934549138425
 PrefabInstance:
   m_ObjectHideFlags: 0

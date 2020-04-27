@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RedBlade
-  m_Shader: {fileID: -6465566751694194690, guid: bd7a04f8eba841c4f8141e9dace96746,
+  m_Shader: {fileID: -6465566751694194690, guid: 04c4106b46de7cd40aaaed3801a410ba,
     type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
@@ -50,8 +50,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_33304130: 0
+    - Vector1_C1C76C8A: 130.77
     - Vector1_C58D03E3: 0
     - Vector1_C6EC67F5: 0
+    - Vector1_D4EC03B2: 0.39
+    - Vector1_E27C748C: -0.79
     - _AlphaClip: 0
     - _Blend: 0
     - _BlendOp: 0
@@ -73,9 +76,12 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _InnerGlow: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
+    - _OuterGlow: 10
+    - _PulseSpeed: 60
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -88,7 +94,9 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - __dirty: 1
     m_Colors:
+    - Color_39BCFD65: {r: 1, g: 0, b: 0, a: 0}
     - Color_4AACC32A: {r: 0, g: 2.0078433, b: 16, a: 0}
     - Color_753765FD: {r: 32, g: 0, b: 0, a: 0}
     - Color_DC42B3B6: {r: 0, g: 11.560208, b: 31.999996, a: 0}
@@ -96,7 +104,7 @@ Material:
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _EmissionColor: {r: 0, g: 2.6210637, b: 4.241645, a: 1}
+    - _EmissionColor: {r: 0.7490196, g: 0, b: 0.07797704, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
 --- !u!114 &2737089177869754684

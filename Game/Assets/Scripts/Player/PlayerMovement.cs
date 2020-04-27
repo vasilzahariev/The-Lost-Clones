@@ -54,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Player player;
 
+    private LightsaberController lightsaberController;
+
     private Animator animator;
     private Rigidbody rg;
 
@@ -81,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         this.player = this.gameObject.GetComponent<Player>();
+        this.lightsaberController = this.player.GetComponentInChildren<LightsaberController>();
 
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
@@ -150,6 +153,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (this.lightsaberController.Attacking)
+        {
+            this.move = false;
+        }
+
         if (this.Dashing && !this.player.IsTargetAcquired)
         {
             this.rg.AddForce(this.transform.forward * this.DashingForce);
@@ -157,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.player.IsTargetAcquired)
         {
-            if ((this.move || this.isInAir || this.Jumping))
+            if (this.move || this.isInAir || this.Jumping)
             {
                 this.Rotate();
             }
@@ -199,6 +207,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void NoTargetMovementInput()
     {
+        if (this.lightsaberController.Attacking)
+        {
+            return;
+        }
+
         if (Input.GetKeyUp(KeyCode.W) ||
             Input.GetKeyUp(KeyCode.S) ||
             Input.GetKeyUp(KeyCode.A) ||
@@ -267,7 +280,8 @@ public class PlayerMovement : MonoBehaviour
             !this.Dashing &&
             !this.Dash &&
             !this.player.IsTargetAcquired &&
-            this.running)
+            this.running &&
+            !this.lightsaberController.Attacking)
         {
             this.Slide = true;
         }
@@ -281,7 +295,8 @@ public class PlayerMovement : MonoBehaviour
             !this.Dash &&
             !this.IsSliding &&
             !this.Slide &&
-            !this.player.IsTargetAcquired)
+            !this.player.IsTargetAcquired &&
+            !this.lightsaberController.Attacking)
         {
             this.Dash = true;
         }
@@ -294,7 +309,8 @@ public class PlayerMovement : MonoBehaviour
             !this.Jumping &&
             this.player.IsTargetAcquired &&
             this.IsMovingAtADirection() &&
-            this.CanDodge)
+            this.CanDodge &&
+            !this.lightsaberController.Attacking)
         {
             this.Dodge = true;
         }
@@ -310,7 +326,8 @@ public class PlayerMovement : MonoBehaviour
             !this.Dashing &&
             !this.isInAir &&
             !this.Dodge &&
-            !this.Dodging)
+            !this.Dodging &&
+            !this.lightsaberController.Attacking)
         {
             this.jump = true;
         }
@@ -642,6 +659,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.isInAir = true;
             this.wasInAir = false;
+            this.lightsaberController.MakeThemZero();
         }
     }
 

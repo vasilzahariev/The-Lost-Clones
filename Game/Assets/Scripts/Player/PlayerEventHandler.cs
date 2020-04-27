@@ -7,9 +7,8 @@ public class PlayerEventHandler : MonoBehaviour
     private Player player;
     private PlayerMovement playerMovement;
     private AudioManager audioManager;
+    private LightsaberController lightsaberController;
 
-    private bool move;
-    private bool canMove;
     private bool wasPlayingJumpRumble;
 
     #region MonoMethods
@@ -19,6 +18,7 @@ public class PlayerEventHandler : MonoBehaviour
         this.player = this.gameObject.GetComponent<Player>();
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         this.audioManager = FindObjectsOfType<AudioManager>()[0];
+        this.lightsaberController = this.player.GetComponentInChildren<LightsaberController>();
     }
 
     private void Update()
@@ -72,8 +72,6 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.StartSlideResize();
 
         this.audioManager.Play("ForceDash");
-
-        this.canMove = false;
     }
 
     public void EndSlide()
@@ -100,8 +98,6 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.Jumping = true;
 
         this.audioManager.Play("ForceJumpRumble");
-
-        this.canMove = false;
     }
 
     public void EndJump()
@@ -126,8 +122,6 @@ public class PlayerEventHandler : MonoBehaviour
             this.playerMovement.HoldOnDash();
         }
 
-        this.canMove = false;
-
         this.wasPlayingJumpRumble = this.audioManager.IsPlaying("ForceJumpRumble");
         this.audioManager.Stop("ForceJumpRumble");
     }
@@ -143,7 +137,6 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.Dashing = false;
 
         this.playerMovement.ReloadDash();
-        //this.CanMove();
 
         if (this.wasPlayingJumpRumble)
         {
@@ -161,8 +154,6 @@ public class PlayerEventHandler : MonoBehaviour
     {
         this.playerMovement.Dodging = true;
         this.playerMovement.CanDodge = false;
-
-        this.canMove = false;
     }
 
     public void PlayDodgeSound()
@@ -176,8 +167,29 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement.Dodging = false;
 
         this.playerMovement.ReloadDodge();
+    }
 
-        this.move = true;
+    #endregion
+
+    #region Attacks
+
+    public void StartAttack()
+    {
+        this.lightsaberController.CurrentlyPlayingAttack = this.lightsaberController.CurrentAttack;
+
+        this.lightsaberController.CanTransitionAttack = false;
+    }
+
+    public void StopAttack()
+    {
+        if (this.lightsaberController.CurrentlyPlayingAttack == this.lightsaberController.CurrentAttack)
+        {
+            this.lightsaberController.Attacking = false;
+            this.lightsaberController.CurrentAttack = 0;
+            this.lightsaberController.CurrentlyPlayingAttack = 0;
+        }
+
+        this.lightsaberController.CanTransitionAttack = true;
     }
 
     #endregion
