@@ -15,6 +15,11 @@ public class Player : MonoBehaviour
     public GameObject Lightsaber;
     public GameObject Target;
 
+    public Vector3 CameraOffset;
+
+    [Range(0f, 1f)]
+    public float T;
+
     public bool IsTargetAcquired;
 
     [HideInInspector]
@@ -23,10 +28,10 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public bool ArtificialGravity;
 
-    [Range(0, 500)]
+    [Range(0f, 500f)]
     public float Health;
 
-    [Range(0, 500)]
+    [Range(0f, 500f)]
     public float LightsaberStamina;
 
     #endregion
@@ -106,7 +111,33 @@ public class Player : MonoBehaviour
 
         if (this.IsTargetAcquired)
         {
-            this.Camera.transform.LookAt(this.Target.GetComponent<Renderer>().bounds.center);
+            Transform target = this.Target.GetComponent<ITargetable>().GetLookAt();
+
+            float distance = Vector3.Distance(this.transform.position, target.position);
+
+            Vector3 newCameraPos = new Vector3(this.transform.position.x + distance,
+                                               this.transform.position.y + distance / 2,
+                                               this.transform.position.z + -distance);
+
+            Quaternion newCameraRot = new Quaternion(this.transform.rotation.x,
+                                                     this.transform.rotation.y,
+                                                     this.transform.rotation.z,
+                                                     this.transform.rotation.w);
+
+
+            Quaternion playerRot = this.transform.rotation;
+            
+            this.transform.LookAt(target);
+
+            this.transform.rotation = new Quaternion(0f,
+                                                     this.transform.rotation.y,
+                                                     0f,
+                                                     this.transform.rotation.w);
+            this.Camera.transform.LookAt(target);
+            //this.Camera.transform.position = newCameraPos;
+            //this.Camera.transform.position = Vector3.Lerp(this.Camera.transform.position, newCameraPos, this.T);
+            //this.Camera.transform.rotation = newCameraRot;
+            //this.Camera.transform.LookAt(this.Target.GetComponent<ITargetable>().GetLookAt());
         }
 
         if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
@@ -145,6 +176,11 @@ public class Player : MonoBehaviour
 
         if (Physics.Raycast(this.Camera.transform.position, this.Camera.transform.forward, out hit, 25f))
         {
+            if (hit.transform.gameObject.GetComponent<ITargetable>() == null)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -159,6 +195,27 @@ public class Player : MonoBehaviour
         {
             this.Target = hit.transform.gameObject;
         }
+
+        Transform target = this.Target.GetComponent<ITargetable>().GetLookAt();
+
+        Quaternion playerRot = this.transform.rotation;
+
+        this.transform.LookAt(target);
+
+        this.transform.rotation = new Quaternion(0f,
+                                                 this.transform.rotation.y,
+                                                 0f,
+                                                 this.transform.rotation.w);
+
+        float distance = Vector3.Distance(this.transform.position, target.position);
+
+        Vector3 newCameraPos = new Vector3(this.Camera.transform.position.x + this.CameraOffset.x,
+                                           this.transform.position.y + this.CameraOffset.y,
+                                           this.Camera.transform.position.z);
+
+        //Vector3 newCameraPos = this.Camera.transform.position;
+
+        this.Camera.transform.position = newCameraPos;
     }
 
     #endregion

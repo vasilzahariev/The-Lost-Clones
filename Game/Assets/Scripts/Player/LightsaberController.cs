@@ -106,8 +106,6 @@ public class LightsaberController : MonoBehaviour
             this.firstLightsaber.TurnTheBaldeOff();
             this.secondLightsaber.TurnTheBaldeOff();
         }
-
-        Debug.Log($"{this.CurrentAttack} {this.CurrentlyPlayingAttack}");
     }
 
     private void FixedUpdate()

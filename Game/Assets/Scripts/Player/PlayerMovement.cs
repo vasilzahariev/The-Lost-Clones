@@ -184,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            this.Rotate();
+            //this.Rotate();
 
             if (this.Jumping || this.isInAir)
             {
