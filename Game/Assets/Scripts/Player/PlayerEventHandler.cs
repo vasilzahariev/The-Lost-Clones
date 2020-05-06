@@ -178,6 +178,16 @@ public class PlayerEventHandler : MonoBehaviour
         this.lightsaberController.CurrentlyPlayingAttack = this.lightsaberController.CurrentAttack;
 
         this.lightsaberController.CanTransitionAttack = false;
+
+        if (this.playerMovement.Jumping || this.playerMovement.IsInAir())
+        {
+            Rigidbody rg = this.gameObject.GetComponent<Rigidbody>();
+
+            rg.velocity = Vector3.zero;
+            rg.useGravity = false;
+
+            this.lightsaberController.AirAttack = true;
+        }
     }
 
     public void StopAttack()
@@ -187,9 +197,33 @@ public class PlayerEventHandler : MonoBehaviour
             this.lightsaberController.Attacking = false;
             this.lightsaberController.CurrentAttack = 0;
             this.lightsaberController.CurrentlyPlayingAttack = 0;
+
+            if (this.playerMovement.Jumping || this.playerMovement.IsInAir())
+            {
+                Rigidbody rg = this.gameObject.GetComponent<Rigidbody>();
+
+                rg.useGravity = true;
+
+                this.lightsaberController.AirAttack = this.player.ArtificialGravity;
+            }
         }
 
         this.lightsaberController.CanTransitionAttack = true;
+    }
+
+    public void StartHeavyAttack()
+    {
+        this.lightsaberController.HeavyAttacking = true;
+    }
+
+    public void StopHeavyAttack()
+    {
+        this.lightsaberController.HeavyAttacking = false;
+    }
+
+    public void ChangeHand(string hand)
+    {
+        this.lightsaberController.SetToHand(hand);
     }
 
     #endregion

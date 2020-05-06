@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class LightsaberController : MonoBehaviour
 {
+    #region Consts
+
+    const int BASICCOMBOANIMCOUNT = 3;
+    const int AIRCOMBOANIMCOUNT = 2;
+
+    #endregion
+
     #region Properties
+
+    public GameObject LeftHand;
+    public GameObject RightHand;
+
+    public Transform LeftHandTransform;
+    public Transform RightHandTransform;
 
     [HideInInspector]
     public bool Attacking;
@@ -18,6 +31,12 @@ public class LightsaberController : MonoBehaviour
     [HideInInspector]
     public bool CanTransitionAttack;
 
+    [HideInInspector]
+    public bool HeavyAttacking;
+
+    [HideInInspector]
+    public bool AirAttack;
+
     #endregion
 
     #region Fields
@@ -29,6 +48,8 @@ public class LightsaberController : MonoBehaviour
     private PlayerMovement playerMovement;
 
     private Animator animator;
+
+    private bool shouldExecuteAHeavyAttack;
 
     #endregion
 
@@ -58,13 +79,26 @@ public class LightsaberController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0) &&
-            this.player.LightsaberStamina > 0 &&
+            this.player.LightsaberStamina > 0f &&
             this.CurrentAttack < this.CurrentlyPlayingAttack + 1 &&
-            this.CurrentAttack < 4 &&
-            !this.playerMovement.IsInAir() &&
-            !this.playerMovement.Dashing)
+            this.CurrentAttack < (this.AirAttack ? AIRCOMBOANIMCOUNT : BASICCOMBOANIMCOUNT) &&
+            !this.playerMovement.Dashing &&
+            !this.HeavyAttacking &&
+            !this.shouldExecuteAHeavyAttack)
         {
             this.CurrentAttack++;
+        }
+
+        if (Input.GetMouseButtonDown(2) &&
+            this.player.LightsaberStamina > 0f &&
+            this.CurrentAttack == 0 &&
+            !this.HeavyAttacking &&
+            !this.Attacking &&
+            !this.playerMovement.IsInAir() &&
+            !this.playerMovement.Jumping &&
+            !this.playerMovement.Dashing)
+        {
+            this.shouldExecuteAHeavyAttack = true;
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -72,6 +106,8 @@ public class LightsaberController : MonoBehaviour
             this.firstLightsaber.TurnTheBaldeOff();
             this.secondLightsaber.TurnTheBaldeOff();
         }
+
+        Debug.Log($"{this.CurrentAttack} {this.CurrentlyPlayingAttack}");
     }
 
     private void FixedUpdate()
@@ -84,6 +120,11 @@ public class LightsaberController : MonoBehaviour
         if (this.CurrentAttack != 0)
         {
             this.Attacking = true;
+        }
+
+        if (this.HeavyAttacking)
+        {
+            this.shouldExecuteAHeavyAttack = false;
         }
     }
 
@@ -101,6 +142,8 @@ public class LightsaberController : MonoBehaviour
         this.animator.SetBool("IsAttacking", this.Attacking);
         this.animator.SetInteger("Attack", this.CurrentAttack);
         this.animator.SetBool("CanTransitionAttack", this.CanTransitionAttack);
+        this.animator.SetBool("ShouldExecuteAHeavyAttack", this.shouldExecuteAHeavyAttack);
+        this.animator.SetBool("HeavyAttacking", this.HeavyAttacking);
     }
 
     public void MakeThemZero()
@@ -108,6 +151,24 @@ public class LightsaberController : MonoBehaviour
         this.Attacking = false;
         this.CurrentAttack = 0;
         this.CurrentlyPlayingAttack = 0;
+    }
+
+    public void SetToHand(string hand)
+    {
+        if (hand == "left")
+        {
+            this.gameObject.transform.parent = this.LeftHand.transform;
+
+            this.gameObject.transform.position = this.LeftHandTransform.position;
+            this.gameObject.transform.rotation = this.LeftHandTransform.rotation;
+        }
+        else if (hand == "right")
+        {
+            this.gameObject.transform.parent = this.RightHand.transform;
+
+            this.gameObject.transform.position = this.RightHandTransform.position;
+            this.gameObject.transform.rotation = this.RightHandTransform.rotation;
+        }
     }
 
     #endregion
