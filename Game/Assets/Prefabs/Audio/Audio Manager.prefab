@@ -74,7 +74,7 @@ MonoBehaviour:
     Source: {fileID: 0}
   - Name: RockWalk
     Type: 0
-    Clip: {fileID: 8300000, guid: 053db396a5a6d684e96c6218e5e53cde, type: 3}
+    Clip: {fileID: 8300000, guid: 5cf8512f48d62514dbe6b9d2b202b6ed, type: 3}
     Volume: 0.01
     Pitch: 1
     Loop: 0

@@ -91,53 +91,17 @@ public class Player : MonoBehaviour
         {
             if (!this.IsTargetAcquired && this.CanGetTarget())
             {
-                this.IsTargetAcquired = true;
-
-                this.playerMovement.MakeThemZero();
-
-                this.GetTarget();
-                this.freeLook.gameObject.SetActive(false);
+                this.LockOnTarget();
             }
             else if (this.IsTargetAcquired)
             {
-                this.IsTargetAcquired = false;
-
-                this.playerMovement.MakeThemZero();
-
-                this.freeLook.gameObject.SetActive(true);
-                this.Target = null;
+                this.UnlockTarget();
             }
         }
 
         if (this.IsTargetAcquired)
         {
-            Transform target = this.Target.GetComponent<ITargetable>().GetLookAt();
-
-            float distance = Vector3.Distance(this.transform.position, target.position);
-
-            Vector3 newCameraPos = new Vector3(this.transform.position.x + distance,
-                                               this.transform.position.y + distance / 2,
-                                               this.transform.position.z + -distance);
-
-            Quaternion newCameraRot = new Quaternion(this.transform.rotation.x,
-                                                     this.transform.rotation.y,
-                                                     this.transform.rotation.z,
-                                                     this.transform.rotation.w);
-
-
-            Quaternion playerRot = this.transform.rotation;
-            
-            this.transform.LookAt(target);
-
-            this.transform.rotation = new Quaternion(0f,
-                                                     this.transform.rotation.y,
-                                                     0f,
-                                                     this.transform.rotation.w);
-            this.Camera.transform.LookAt(target);
-            //this.Camera.transform.position = newCameraPos;
-            //this.Camera.transform.position = Vector3.Lerp(this.Camera.transform.position, newCameraPos, this.T);
-            //this.Camera.transform.rotation = newCameraRot;
-            //this.Camera.transform.LookAt(this.Target.GetComponent<ITargetable>().GetLookAt());
+            this.LookAtTarget();
         }
 
         if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
@@ -153,6 +117,11 @@ public class Player : MonoBehaviour
         {
             this.rg.useGravity = true;
             this.ArtificialGravity = false;
+        }
+
+        if (this.canUseArtificialGravity && this.ArtificialGravity && !this.rg.useGravity)
+        {
+            this.rg.useGravity = true;
         }
     }
 
@@ -195,6 +164,44 @@ public class Player : MonoBehaviour
         {
             this.Target = hit.transform.gameObject;
         }
+    }
+
+    private void LookAtTarget()
+    {
+        Transform target = this.Target.GetComponent<ITargetable>().GetLookAt();
+
+        float distance = Vector3.Distance(this.transform.position, target.position);
+
+        Vector3 newCameraPos = new Vector3(this.transform.position.x + distance,
+                                           this.transform.position.y + distance / 2,
+                                           this.transform.position.z + -distance);
+
+        Quaternion newCameraRot = new Quaternion(this.transform.rotation.x,
+                                                 this.transform.rotation.y,
+                                                 this.transform.rotation.z,
+                                                 this.transform.rotation.w);
+
+
+        Quaternion playerRot = this.transform.rotation;
+
+        this.transform.LookAt(target);
+
+        this.transform.rotation = new Quaternion(0f,
+                                                 this.transform.rotation.y,
+                                                 0f,
+                                                 this.transform.rotation.w);
+        this.Camera.transform.LookAt(target);
+    }
+
+    private void LockOnTarget()
+    {
+        this.IsTargetAcquired = true;
+
+        this.playerMovement.MakeThemZero();
+
+        this.GetTarget();
+
+        this.freeLook.gameObject.SetActive(false);
 
         Transform target = this.Target.GetComponent<ITargetable>().GetLookAt();
 
@@ -209,13 +216,24 @@ public class Player : MonoBehaviour
 
         float distance = Vector3.Distance(this.transform.position, target.position);
 
-        Vector3 newCameraPos = new Vector3(this.Camera.transform.position.x + this.CameraOffset.x,
-                                           this.transform.position.y + this.CameraOffset.y,
-                                           this.Camera.transform.position.z);
-
-        //Vector3 newCameraPos = this.Camera.transform.position;
+        Vector3 newCameraPos = this.freeLook.transform.position;
 
         this.Camera.transform.position = newCameraPos;
+    }
+
+    private void UnlockTarget()
+    {
+        this.IsTargetAcquired = false;
+
+        this.playerMovement.MakeThemZero();
+
+        this.Target = null;
+
+        Vector3 cameraPos = this.Camera.transform.position;
+
+        this.freeLook.gameObject.SetActive(true);
+
+        this.freeLook.transform.position = cameraPos;
     }
 
     #endregion

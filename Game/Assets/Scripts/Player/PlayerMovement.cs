@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// This class controlls the movement of the player
+/// </summary>
 public class PlayerMovement : MonoBehaviour
 {
     #region Properties

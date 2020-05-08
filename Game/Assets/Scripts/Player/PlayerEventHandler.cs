@@ -10,6 +10,7 @@ public class PlayerEventHandler : MonoBehaviour
     private LightsaberController lightsaberController;
 
     private bool wasPlayingJumpRumble;
+    private bool wasArtificialGravityActivated;
 
     #region MonoMethods
 
@@ -181,6 +182,11 @@ public class PlayerEventHandler : MonoBehaviour
 
         if (this.playerMovement.Jumping || this.playerMovement.IsInAir())
         {
+            //if (this.lightsaberController.CurrentAttack == 1)
+            //{
+            //    this.wasArtificialGravityActivated = this.player.ArtificialGravity;
+            //}
+
             Rigidbody rg = this.gameObject.GetComponent<Rigidbody>();
 
             rg.velocity = Vector3.zero;
@@ -204,7 +210,9 @@ public class PlayerEventHandler : MonoBehaviour
 
                 rg.useGravity = true;
 
-                this.lightsaberController.AirAttack = this.player.ArtificialGravity;
+                //this.player.ArtificialGravity = this.wasArtificialGravityActivated;
+
+                //this.lightsaberController.AirAttack = this.player.ArtificialGravity;
             }
         }
 
