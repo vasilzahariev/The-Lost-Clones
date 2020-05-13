@@ -168,7 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Blade: {fileID: 6532264321239740768}
-  player: {fileID: 0}
+  Damage: 0
+  CanDealDamage: 0
 --- !u!136 &2700969662814045816
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4ec1d8c6c636f404191eb0c4aff58e0a, type: 2}
+      objectReference: {fileID: 2100000, guid: 38adf0f1a71a0e9458d84d830b4b1e9c, type: 2}
     - target: {fileID: 2749866845009881753, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,
         type: 3}
       propertyPath: m_Name
