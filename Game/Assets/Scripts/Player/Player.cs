@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using System;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable<float>
 {
     #region Properties
 
@@ -104,11 +104,18 @@ public class Player : MonoBehaviour
             this.LookAtTarget();
         }
 
-        if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
+        if (this.IsTargetAcquired && this.Target.GetComponent<IKillable>().isDead())
         {
-            this.rg.useGravity = !this.rg.useGravity;
-            this.ArtificialGravity = !this.ArtificialGravity;
+            this.UnlockTarget();
         }
+
+        Debug.Log(this.Health);
+
+        //if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
+        //{
+        //    this.rg.useGravity = !this.rg.useGravity;
+        //    this.ArtificialGravity = !this.ArtificialGravity;
+        //}
     }
 
     private void FixedUpdate()
@@ -163,6 +170,11 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(this.Camera.transform.position, this.Camera.transform.forward, out hit, 25f))
         {
             this.Target = hit.transform.gameObject;
+
+            if (this.Target.GetComponent<IKillable>().isDead())
+            {
+                this.Target = null;
+            }
         }
     }
 
@@ -195,11 +207,15 @@ public class Player : MonoBehaviour
 
     private void LockOnTarget()
     {
+        this.GetTarget();
+
+        if (this.Target == null)
+            return;
+
         this.IsTargetAcquired = true;
 
         this.playerMovement.MakeThemZero();
 
-        this.GetTarget();
 
         this.freeLook.gameObject.SetActive(false);
 
@@ -234,6 +250,15 @@ public class Player : MonoBehaviour
         this.freeLook.gameObject.SetActive(true);
 
         this.freeLook.transform.position = cameraPos;
+    }
+
+    #endregion
+
+    #region InterfaceMethods
+
+    public void TakeDamage(float damage)
+    {
+        this.Health -= damage;
     }
 
     #endregion

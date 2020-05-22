@@ -303,7 +303,8 @@ public class PlayerMovement : MonoBehaviour
             !this.Slide &&
             !this.player.IsTargetAcquired &&
             !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
+            !this.lightsaberController.HeavyAttacking &&
+            !this.lightsaberController.IsAttackRecovering)
         {
             this.Dash = true;
         }
@@ -318,7 +319,8 @@ public class PlayerMovement : MonoBehaviour
             this.IsMovingAtADirection() &&
             this.CanDodge &&
             !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
+            !this.lightsaberController.HeavyAttacking &&
+            !this.lightsaberController.IsAttackRecovering)
         {
             this.Dodge = true;
         }
@@ -408,7 +410,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void AirMove()
     {
-        if (this.lightsaberController.Attacking)
+        if (this.lightsaberController.AirAttacking)
         {
             return;
         }

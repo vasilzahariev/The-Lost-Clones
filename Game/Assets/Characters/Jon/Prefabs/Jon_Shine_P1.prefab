@@ -50,9 +50,13 @@ MonoBehaviour:
   Attacking: 0
   CurrentAttack: 0
   CurrentlyPlayingAttack: 0
+  CurrentAirAttack: 0
+  CurrentlyPlayingAirAttack: 0
   CanTransitionAttack: 0
   HeavyAttacking: 0
-  AirAttack: 0
+  AirAttacking: 0
+  IsAttackRecovering: 0
+  IsHeavyAttackRecovering: 0
 --- !u!1 &76589539848200489
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +227,7 @@ GameObject:
   - component: {fileID: 3388237268539744972}
   - component: {fileID: 6603479793172048486}
   - component: {fileID: 7888564257027256157}
+  - component: {fileID: 3569495703198269553}
   - component: {fileID: 5360192258343725051}
   m_Layer: 0
   m_Name: Jon_Shine_P1
@@ -365,6 +370,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835a52e4dbe553a49b6e00e6d69c2fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3569495703198269553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819706785193855676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b98a9f38ed7581488ab686c64997faf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  PlayerMovement: {fileID: 0}
+  LightsaberController: {fileID: 0}
 --- !u!81 &5360192258343725051
 AudioListener:
   m_ObjectHideFlags: 0
@@ -862,8 +882,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3020270045536593491}
-  m_LocalRotation: {x: 0.07355936, y: 0.036937777, z: -0.0019591518, w: 0.9966047}
-  m_LocalPosition: {x: 0, y: 675.67566, z: -1367.5675}
+  m_LocalRotation: {x: 0.07351555, y: 0.042186394, z: -0.003112572, w: 0.99639654}
+  m_LocalPosition: {x: 531.6216, y: 675.67566, z: -1394.0541}
   m_LocalScale: {x: 270.27026, y: 270.27026, z: 270.27023}
   m_Children: []
   m_Father: {fileID: 4412251250148767919}

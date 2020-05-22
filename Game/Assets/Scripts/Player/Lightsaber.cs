@@ -6,13 +6,11 @@ public class Lightsaber : MonoBehaviour
 {
     #region Properties
 
+    [HideInInspector]
     public GameObject Blade;
 
     [HideInInspector]
     public float Damage;
-
-    [HideInInspector]
-    public bool CanDealDamage;
 
     #endregion
 
@@ -20,17 +18,28 @@ public class Lightsaber : MonoBehaviour
 
     private Player player;
 
-    private bool isAttacking;
+    private GameObject trails;
+
+    private bool canDealDamage;
 
     #endregion
 
     #region MonoMethods
 
+    private void Awake()
+    {
+        this.Blade = UnityHelper.GetChildWithName(this.gameObject, "Blade");
+
+        this.trails = UnityHelper.GetChildWithName(this.Blade, "Trails");
+
+        this.trails.SetActive(false);
+    }
+
     void Start()
     {
         this.player = Object.FindObjectOfType<Player>();
 
-        this.CanDealDamage = false;
+        this.canDealDamage = false;
     }
 
 
@@ -48,7 +57,17 @@ public class Lightsaber : MonoBehaviour
 
     public void TurnTheBaldeOff()
     {
-        this.Blade.gameObject.SetActive(!this.Blade.activeSelf);
+        this.Blade.SetActive(!this.Blade.activeSelf);
+    }
+
+    public void TrailsOnOff(bool active)
+    {
+        this.trails.SetActive(active);
+    }
+
+    public void SetCanDealDamage(bool canDealDamage)
+    {
+        this.canDealDamage = canDealDamage;
     }
 
     #endregion
@@ -57,9 +76,14 @@ public class Lightsaber : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (this.CanDealDamage && other.gameObject.CompareTag("Enemy"))
+        if (this.canDealDamage && other.gameObject.CompareTag("Enemy"))
         {
-            //
+            IDamagable<float> enemy = other.GetComponent<IDamagable<float>>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(this.Damage);
+            }
         }
     }
 

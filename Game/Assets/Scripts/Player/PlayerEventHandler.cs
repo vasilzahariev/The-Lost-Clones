@@ -8,6 +8,7 @@ public class PlayerEventHandler : MonoBehaviour
     private PlayerMovement playerMovement;
     private AudioManager audioManager;
     private LightsaberController lightsaberController;
+    private Animator animator;
 
     private bool wasPlayingJumpRumble;
     private bool wasArtificialGravityActivated;
@@ -20,6 +21,7 @@ public class PlayerEventHandler : MonoBehaviour
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         this.audioManager = FindObjectsOfType<AudioManager>()[0];
         this.lightsaberController = this.player.GetComponentInChildren<LightsaberController>();
+        this.animator = this.player.gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -42,6 +44,36 @@ public class PlayerEventHandler : MonoBehaviour
         {
             this.audioManager.Stop("ForceJumpRumble");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (this.lightsaberController.IsHeavyAttackRecovering &&
+            !this.animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack_End") &&
+            !this.animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack"))
+        {
+            this.lightsaberController.IsHeavyAttackRecovering = false;
+        }
+
+        if (this.lightsaberController.Attacking ||
+            this.lightsaberController.AirAttacking ||
+            this.lightsaberController.HeavyAttacking)
+        {
+            this.TurnTrails("on");
+        }
+
+        if (!this.lightsaberController.AirAttacking &&
+            !this.player.gameObject.GetComponent<Rigidbody>().useGravity &&
+            !this.playerMovement.Dashing)
+        {
+            this.player.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        }
+
+        //if (!this.lightsaberController.Attacking &&
+        //    !this.lightsaberController.AirAttacking)
+        //{
+        //    this.TurnTrails("off");
+        //}
     }
 
     #endregion
@@ -177,23 +209,9 @@ public class PlayerEventHandler : MonoBehaviour
     public void StartAttack()
     {
         this.lightsaberController.CurrentlyPlayingAttack = this.lightsaberController.CurrentAttack;
+        this.lightsaberController.CanDealDamage(true);
 
         this.lightsaberController.CanTransitionAttack = false;
-
-        if (this.playerMovement.Jumping || this.playerMovement.IsInAir())
-        {
-            //if (this.lightsaberController.CurrentAttack == 1)
-            //{
-            //    this.wasArtificialGravityActivated = this.player.ArtificialGravity;
-            //}
-
-            Rigidbody rg = this.gameObject.GetComponent<Rigidbody>();
-
-            rg.velocity = Vector3.zero;
-            rg.useGravity = false;
-
-            this.lightsaberController.AirAttack = true;
-        }
     }
 
     public void StopAttack()
@@ -204,16 +222,7 @@ public class PlayerEventHandler : MonoBehaviour
             this.lightsaberController.CurrentAttack = 0;
             this.lightsaberController.CurrentlyPlayingAttack = 0;
 
-            if (this.playerMovement.Jumping || this.playerMovement.IsInAir())
-            {
-                Rigidbody rg = this.gameObject.GetComponent<Rigidbody>();
-
-                rg.useGravity = true;
-
-                //this.player.ArtificialGravity = this.wasArtificialGravityActivated;
-
-                //this.lightsaberController.AirAttack = this.player.ArtificialGravity;
-            }
+            this.lightsaberController.CanDealDamage(false);
         }
 
         this.lightsaberController.CanTransitionAttack = true;
@@ -222,16 +231,95 @@ public class PlayerEventHandler : MonoBehaviour
     public void StartHeavyAttack()
     {
         this.lightsaberController.HeavyAttacking = true;
+        this.lightsaberController.CanDealDamage(true);
     }
 
     public void StopHeavyAttack()
     {
         this.lightsaberController.HeavyAttacking = false;
+        this.lightsaberController.CanDealDamage(false);
+    }
+
+    public void StartAirAttack()
+    {
+        this.lightsaberController.CurrentlyPlayingAirAttack = this.lightsaberController.CurrentAirAttack;
+        this.lightsaberController.CanDealDamage(true);
+
+        if (this.lightsaberController.CurrentlyPlayingAirAttack == 1)
+        {
+            Rigidbody playerRigidbody = this.player.gameObject.GetComponent<Rigidbody>();
+
+            playerRigidbody.velocity = Vector3.zero;
+            playerRigidbody.useGravity = false;
+        }
+
+        this.lightsaberController.CanTransitionAttack = false;
+    }
+
+    public void StopAirAttack()
+    {
+        if (this.lightsaberController.CurrentlyPlayingAirAttack == this.lightsaberController.CurrentAirAttack)
+        {
+            this.lightsaberController.AirAttacking = false;
+            this.lightsaberController.CurrentAirAttack = 0;
+            this.lightsaberController.CurrentlyPlayingAirAttack = 0;
+            this.lightsaberController.CanDealDamage(false);
+
+            Rigidbody playerRigidbody = this.player.gameObject.GetComponent<Rigidbody>();
+
+            playerRigidbody.useGravity = true;
+        }
+
+        this.lightsaberController.CanTransitionAttack = true;
     }
 
     public void ChangeHand(string hand)
     {
         this.lightsaberController.SetToHand(hand);
+    }
+
+    public void StartAttackRecovery(string attackType)
+    {
+        if (attackType == "heavy")
+            this.lightsaberController.IsHeavyAttackRecovering = true;
+        else
+            this.lightsaberController.IsAttackRecovering = true;
+    }
+
+    public void EndAttackRecovery(string attackType)
+    {
+        if (attackType == "heavy")
+        {
+            this.lightsaberController.IsHeavyAttackRecovering = false;
+        }
+        else
+        {
+            this.lightsaberController.IsHeavyAttackRecovering = false;
+            this.lightsaberController.IsAttackRecovering = false;
+        }
+    }
+
+    #endregion
+
+    #region Lightsaber
+
+    public void TurnTrails(string activeState)
+    {
+        switch (activeState)
+        {
+            case "on":
+                this.lightsaberController.TrailsTurner(true);
+
+                break;
+            case "off":
+                this.lightsaberController.TrailsTurner(false);
+
+                break;
+            default:
+                Debug.LogError("The given active state is wrong");
+
+                break;
+        }
     }
 
     #endregion
