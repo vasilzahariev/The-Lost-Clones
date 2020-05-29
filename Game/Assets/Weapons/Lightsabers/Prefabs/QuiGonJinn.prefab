@@ -214,7 +214,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Blade: {fileID: 4051377607327975395}
   Damage: 0
-  CanDealDamage: 0
 --- !u!136 &1847420523256958688
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -793,12 +792,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1b808058f59c78488d617f2ac574fcd, type: 2}
+      objectReference: {fileID: 2100000, guid: d65d7e5e0cf53e546b7b789cc88fad5b, type: 2}
     - target: {fileID: 2749866845009881752, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1b808058f59c78488d617f2ac574fcd, type: 2}
+      objectReference: {fileID: 2100000, guid: d65d7e5e0cf53e546b7b789cc88fad5b, type: 2}
     - target: {fileID: 2749866845009881753, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,
         type: 3}
       propertyPath: m_Name
@@ -888,7 +887,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1b808058f59c78488d617f2ac574fcd, type: 2}
+      objectReference: {fileID: 2100000, guid: d65d7e5e0cf53e546b7b789cc88fad5b, type: 2}
     - target: {fileID: 7462781150322025578, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,
         type: 3}
       propertyPath: height

@@ -1,18 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Properties
+
+    public GameObject PlayerObject;
+
+    #endregion
+
+    #region Fields
+
+    private Player player;
+
+    private Slider health;
+
+    #endregion
+
+    private void Awake()
     {
-        
+        this.player = this.PlayerObject.GetComponent<Player>();
+        this.health = UnityHelper.GetChildWithName(this.gameObject, "Health").GetComponent<Slider>();
+
+        this.health.minValue = 0f;
+        this.health.maxValue = this.player.Health;
+        this.health.value = this.player.Health;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        this.health.value = this.player.Health;
     }
 }

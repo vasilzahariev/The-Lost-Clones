@@ -8,15 +8,18 @@ public class LightsaberController : MonoBehaviour
 
     const int BASICCOMBOANIMCOUNT = 3;
     const int AIRCOMBOANIMCOUNT = 2;
+    const float BLOCKRECOVERYSECONDS = 0.3f;
 
     #endregion
 
     #region Properties
 
+    [Header("Left Hand Information")]
     public GameObject LeftHand;
-    public GameObject RightHand;
-
     public Transform LeftHandTransform;
+
+    [Header("Right Hand Information")]
+    public GameObject RightHand;
     public Transform RightHandTransform;
 
     [HideInInspector]
@@ -49,6 +52,9 @@ public class LightsaberController : MonoBehaviour
     [HideInInspector]
     public bool IsHeavyAttackRecovering;
 
+    [HideInInspector]
+    public bool IsBlocking;
+
     #endregion
 
     #region Fields
@@ -62,6 +68,7 @@ public class LightsaberController : MonoBehaviour
     private Animator animator;
 
     private bool shouldExecuteAHeavyAttack;
+    private bool canBlock = true;
 
     #endregion
 
@@ -90,54 +97,20 @@ public class LightsaberController : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) &&
-            !this.playerMovement.IsInAir() &&
-            !this.playerMovement.Jumping &&
-            this.player.LightsaberStamina > 0f &&
-            this.CurrentAttack < this.CurrentlyPlayingAttack + 1 &&
-            this.CurrentAttack < BASICCOMBOANIMCOUNT &&
-            !this.playerMovement.Dashing &&
-            !this.HeavyAttacking &&
-            !this.shouldExecuteAHeavyAttack &&
-            !this.IsHeavyAttackRecovering)
+        if (Input.GetMouseButton(1) && !this.IsBlocking)
         {
-            this.CurrentAttack++;
+            this.TakeBlockingInput(true);
         }
 
-        if (Input.GetMouseButtonDown(0) &&
-            (this.playerMovement.IsInAir() ||
-            this.playerMovement.Jumping) &&
-            this.player.LightsaberStamina > 0f &&
-            this.CurrentAirAttack < this.CurrentlyPlayingAirAttack + 1 &&
-            this.CurrentAirAttack < AIRCOMBOANIMCOUNT &&
-            !this.playerMovement.Dashing &&
-            !this.HeavyAttacking &&
-            !this.shouldExecuteAHeavyAttack &&
-            !this.IsHeavyAttackRecovering)
-        {
-            this.CurrentAirAttack++;
-        }
+        
 
-        if (Input.GetMouseButtonDown(2) &&
-        this.player.LightsaberStamina > 0f &&
-        this.CurrentAttack == 0 &&
-        !this.HeavyAttacking &&
-        !this.Attacking &&
-        !this.playerMovement.IsInAir() &&
-        !this.playerMovement.Jumping &&
-        !this.playerMovement.Dashing &&
-        !this.IsHeavyAttackRecovering)
-        {
-            this.shouldExecuteAHeavyAttack = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    this.firstLightsaber.TurnTheBaldeOff();
+        //    this.secondLightsaber.TurnTheBaldeOff();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            this.firstLightsaber.TurnTheBaldeOff();
-            this.secondLightsaber.TurnTheBaldeOff();
-        }
-
-        //Debug.Log($"{this.CurrentAirAttack} {this.CurrentlyPlayingAirAttack} {this.AirAttacking}");
+        //Debug.Log($"{this.IsBlocking} {this.canBlock}");
     }
 
     private void FixedUpdate()
@@ -204,6 +177,122 @@ public class LightsaberController : MonoBehaviour
         this.animator.SetBool("CanTransitionAttack", this.CanTransitionAttack);
         this.animator.SetBool("ShouldExecuteAHeavyAttack", this.shouldExecuteAHeavyAttack);
         this.animator.SetBool("HeavyAttacking", this.HeavyAttacking);
+
+        this.animator.SetBool("IsBlocking", this.IsBlocking);
+    }
+
+    private IEnumerator WaitBeforeBeingAbleToBlockAgain()
+    {
+        yield return new WaitForSecondsRealtime(BLOCKRECOVERYSECONDS);
+
+        this.canBlock = true;
+    }
+
+    private void BasicAttacksInput()
+    {
+        if (!this.playerMovement.IsInAir() &&
+            !this.playerMovement.Jumping &&
+            this.player.LightsaberStamina > 0f &&
+            this.CurrentAttack < this.CurrentlyPlayingAttack + 1 &&
+            this.CurrentAttack < BASICCOMBOANIMCOUNT &&
+            !this.playerMovement.Dashing &&
+            !this.HeavyAttacking &&
+            !this.shouldExecuteAHeavyAttack &&
+            !this.IsHeavyAttackRecovering &&
+            !this.playerMovement.IsSliding &&
+            !this.playerMovement.Dodging &&
+            !this.IsBlocking)
+        {
+            this.CurrentAttack++;
+        }
+
+        if (Input.GetMouseButtonDown(2) &&
+        this.player.LightsaberStamina > 0f &&
+        this.CurrentAttack == 0 &&
+        !this.HeavyAttacking &&
+        !this.Attacking &&
+        !this.playerMovement.IsInAir() &&
+        !this.playerMovement.Jumping &&
+        !this.playerMovement.Dashing &&
+        !this.IsHeavyAttackRecovering)
+        {
+            this.shouldExecuteAHeavyAttack = true;
+        }
+    }
+
+    private void AirAttacksInput()
+    {
+        if ((this.playerMovement.IsInAir() ||
+            this.playerMovement.Jumping) &&
+            this.player.LightsaberStamina > 0f &&
+            this.CurrentAirAttack < this.CurrentlyPlayingAirAttack + 1 &&
+            this.CurrentAirAttack < AIRCOMBOANIMCOUNT &&
+            !this.playerMovement.Dashing &&
+            !this.HeavyAttacking &&
+            !this.shouldExecuteAHeavyAttack &&
+            !this.IsHeavyAttackRecovering &&
+            !this.playerMovement.IsSliding &&
+            !this.playerMovement.Dodging &&
+            !this.IsBlocking)
+        {
+            this.CurrentAirAttack++;
+        }
+    }
+
+    private void HeavyAttackInput()
+    {
+        if (this.player.LightsaberStamina > 0f &&
+            this.CurrentAttack == 0 &&
+            !this.HeavyAttacking &&
+            !this.Attacking &&
+            !this.playerMovement.IsInAir() &&
+            !this.playerMovement.Jumping &&
+            !this.playerMovement.Dashing &&
+            !this.IsHeavyAttackRecovering &&
+            !this.playerMovement.IsSliding &&
+            !this.playerMovement.Dodging &&
+            !this.IsBlocking)
+        {
+            this.shouldExecuteAHeavyAttack = true;
+        }
+    }
+
+    private void StartBlockingInput()
+    {
+        if (this.canBlock &&
+            !this.Attacking &&
+            !this.HeavyAttacking &&
+            !this.AirAttacking)
+        {
+            this.IsBlocking = true;
+        }
+    }
+
+    private void EndBlockingInput()
+    {
+        this.IsBlocking = false;
+        this.canBlock = false;
+
+        StartCoroutine(this.WaitBeforeBeingAbleToBlockAgain());
+    }
+
+    public void TakeAttacksInput()
+    {
+        this.BasicAttacksInput();
+        this.AirAttacksInput();
+    }
+
+    public void TakeHeavyAttackInput()
+    {
+        this.HeavyAttackInput();
+    }
+
+    public void TakeBlockingInput(bool value)
+    {
+        if (value)
+            this.StartBlockingInput();
+        else
+            this.EndBlockingInput();
     }
 
     public void MakeThemZero()
@@ -246,5 +335,6 @@ public class LightsaberController : MonoBehaviour
     #endregion
 
     #region Collision
+
     #endregion
 }

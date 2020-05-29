@@ -62,6 +62,10 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private Rigidbody rg;
 
+    private PlayerInput input;
+
+    private Vector2 movementInput;
+
     private float h;
     private float v;
     private float rotVal;
@@ -110,27 +114,10 @@ public class PlayerMovement : MonoBehaviour
             this.NoTargetMovementInput();
         }
 
-        if (!this.IsSliding)
+        if (!this.IsSliding && Input.GetButton("Run"))
         {
-            if (Input.GetButtonDown("Run"))
-            {
-                this.running = true;
-            }
-            else if (Input.GetButton("Run"))
-            {
-                this.running = true;
-            }
-            else if (Input.GetButtonUp("Run"))
-            {
-                this.running = false;
-            }
+            this.running = true;
         }
-
-        this.SlideInput();
-
-        this.DashDodgeRollInput();
-
-        this.JumpInput();
 
         if (this.CanStopSliding && this.IsSliding && !this.Slide && !this.player.IsTargetAcquired)
         {
@@ -164,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (this.Dashing && !this.player.IsTargetAcquired)
         {
-            this.rg.AddForce(this.transform.forward * this.DashingForce);
+            this.rg.AddForce(this.transform.forward * this.DashingForce * this.rg.mass);
         }
 
         if (!this.player.IsTargetAcquired)
@@ -271,76 +258,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
         {
             this.rotVal = -135f;
-        }
-    }
-
-    private void SlideInput()
-    {
-        if (Input.GetButtonDown("Slide") &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.jump &&
-            !this.Jumping &&
-            !this.isInAir &&
-            !this.Dashing &&
-            !this.Dash &&
-            !this.player.IsTargetAcquired &&
-            this.running &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
-        {
-            this.Slide = true;
-        }
-    }
-
-    private void DashDodgeRollInput()
-    {
-        if (Input.GetKeyDown(KeyCode.C) &&
-            this.CanDash &&
-            !this.Dashing &&
-            !this.Dash &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.player.IsTargetAcquired &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking &&
-            !this.lightsaberController.IsAttackRecovering)
-        {
-            this.Dash = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) &&
-            !this.Dodge &&
-            !this.Dodging &&
-            !this.isInAir &&
-            !this.jump &&
-            !this.Jumping &&
-            this.player.IsTargetAcquired &&
-            this.IsMovingAtADirection() &&
-            this.CanDodge &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking &&
-            !this.lightsaberController.IsAttackRecovering)
-        {
-            this.Dodge = true;
-        }
-    }
-
-    private void JumpInput()
-    {
-        if (Input.GetButtonDown("Jump") &&
-            !this.jump &&
-            !this.IsSliding &&
-            !this.Slide &&
-            !this.Dash &&
-            !this.Dashing &&
-            !this.isInAir &&
-            !this.Dodge &&
-            !this.Dodging &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
-        {
-            this.jump = true;
         }
     }
 
@@ -490,12 +407,92 @@ public class PlayerMovement : MonoBehaviour
         return down;
     }
 
+    public void TakeMovementInput(Vector2 newValues)
+    {
+        this.movementInput = newValues;
+    }
+
+    public void TakeRunInput(bool run)
+    {
+        if (!this.IsSliding)
+            this.running = run;
+    }
+
+    public void TakeSlideInput()
+    {
+        if (this.running &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.jump &&
+            !this.Jumping &&
+            !this.isInAir &&
+            !this.Dashing &&
+            !this.Dash &&
+            !this.player.IsTargetAcquired &&
+            !this.lightsaberController.Attacking &&
+            !this.lightsaberController.HeavyAttacking)
+        {
+            this.Slide = true;
+        }
+    }
+
+    public void TakeDashInput()
+    {
+        if (this.CanDash &&
+            !this.Dashing &&
+            !this.Dash &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.player.IsTargetAcquired &&
+            !this.lightsaberController.Attacking &&
+            !this.lightsaberController.HeavyAttacking &&
+            !this.lightsaberController.IsAttackRecovering)
+        {
+            this.Dash = true;
+        }
+    }
+
+    public void TakeRollInput()
+    {
+        if (!this.Dodge &&
+            !this.Dodging &&
+            !this.isInAir &&
+            !this.jump &&
+            !this.Jumping &&
+            this.player.IsTargetAcquired &&
+            this.IsMovingAtADirection() &&
+            this.CanDodge &&
+            !this.lightsaberController.Attacking &&
+            !this.lightsaberController.HeavyAttacking &&
+            !this.lightsaberController.IsAttackRecovering)
+        {
+            this.Dodge = true;
+        }
+    }
+
+    public void TakeJumpInput()
+    {
+        if (!this.jump &&
+            !this.IsSliding &&
+            !this.Slide &&
+            !this.Dash &&
+            !this.Dashing &&
+            !this.isInAir &&
+            !this.Dodge &&
+            !this.Dodging &&
+            !this.lightsaberController.Attacking &&
+            !this.lightsaberController.HeavyAttacking)
+        {
+            this.jump = true;
+        }
+    }
+
     /// <summary>
     /// This method is called when the jump_start animation is executed, so the player can jump using a rigidbody.
     /// </summary>
     public void MakeTheJump()
     {
-        this.rg.AddForce(this.transform.up * this.JumpForce);
+        this.rg.AddForce(this.transform.up * this.JumpForce * this.rg.mass);
     }
 
     public void MakeThemZero()
@@ -533,11 +530,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (this.isInAir || this.Jumping)
         {
-            this.rg.AddForce(this.transform.up * this.DashingForceUp);
+            this.rg.AddForce(this.transform.up * this.DashingForceUp * this.rg.mass);
         }
         else
         {
-            this.rg.AddForce(this.transform.up * this.DashingForceUp / 2f);
+            this.rg.AddForce(this.transform.up * this.DashingForceUp / 2f * this.rg.mass);
         }
 
         this.rg.velocity = Vector3.zero;

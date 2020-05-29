@@ -9,17 +9,31 @@ public class Player : MonoBehaviour, IDamagable<float>
 {
     #region Properties
 
+    [Header("Player Settings")]
+    [Range(0f, 500f)]
+    public float Health;
+
+    [Range(0f, 500f)]
+    public float LightsaberStamina;
+
+    [Header("Camera Elements")]
     public Camera Camera;
     public CinemachineFreeLook freeLook;
-    public Console Console;
-    public GameObject Lightsaber;
-    public GameObject Target;
-
     public Vector3 CameraOffset;
 
     [Range(0f, 1f)]
     public float T;
+    
+    [Header("UI Elements")]
+    public Console Console;
 
+    [Header("Lightsaber")]
+    public GameObject Lightsaber;
+
+    [HideInInspector]
+    public GameObject Target;
+
+    [HideInInspector]
     public bool IsTargetAcquired;
 
     [HideInInspector]
@@ -27,12 +41,6 @@ public class Player : MonoBehaviour, IDamagable<float>
 
     [HideInInspector]
     public bool ArtificialGravity;
-
-    [Range(0f, 500f)]
-    public float Health;
-
-    [Range(0f, 500f)]
-    public float LightsaberStamina;
 
     #endregion
 
@@ -42,6 +50,7 @@ public class Player : MonoBehaviour, IDamagable<float>
     private Rigidbody rg;
 
     private PlayerMovement playerMovement;
+    private LightsaberController lightsaberController;
 
     private bool canUseArtificialGravity;
 
@@ -49,7 +58,7 @@ public class Player : MonoBehaviour, IDamagable<float>
 
     #region MonoMethods
 
-    void Start()
+    void Awake()
     {
         this.Health = 100f;
 
@@ -62,41 +71,16 @@ public class Player : MonoBehaviour, IDamagable<float>
 
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
+
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
+        this.lightsaberController = this.gameObject.GetComponentInChildren<LightsaberController>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            this.IsConsoleActive = !this.IsConsoleActive;
-
-            this.Console.gameObject.SetActive(this.IsConsoleActive);
-
-            if (this.IsConsoleActive)
-            {
-                this.Console.Focus();
-            }
-        }
-
         if (this.IsConsoleActive)
         {
             return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Tab) &&
-            !this.playerMovement.Slide &&
-            !this.playerMovement.Dashing &&
-            !this.playerMovement.Dodging)
-        {
-            if (!this.IsTargetAcquired && this.CanGetTarget())
-            {
-                this.LockOnTarget();
-            }
-            else if (this.IsTargetAcquired)
-            {
-                this.UnlockTarget();
-            }
         }
 
         if (this.IsTargetAcquired)
@@ -108,28 +92,10 @@ public class Player : MonoBehaviour, IDamagable<float>
         {
             this.UnlockTarget();
         }
-
-        Debug.Log(this.Health);
-
-        //if (Input.GetKeyDown(KeyCode.T) && this.canUseArtificialGravity)
-        //{
-        //    this.rg.useGravity = !this.rg.useGravity;
-        //    this.ArtificialGravity = !this.ArtificialGravity;
-        //}
     }
 
     private void FixedUpdate()
     {
-        if (!this.canUseArtificialGravity && this.ArtificialGravity)
-        {
-            this.rg.useGravity = true;
-            this.ArtificialGravity = false;
-        }
-
-        if (this.canUseArtificialGravity && this.ArtificialGravity && !this.rg.useGravity)
-        {
-            this.rg.useGravity = true;
-        }
     }
 
     private void LateUpdate()
@@ -252,13 +218,43 @@ public class Player : MonoBehaviour, IDamagable<float>
         this.freeLook.transform.position = cameraPos;
     }
 
+    public void TakeConsoleInput()
+    {
+        this.IsConsoleActive = !this.IsConsoleActive;
+
+        this.Console.gameObject.SetActive(this.IsConsoleActive);
+
+        if (this.IsConsoleActive)
+        {
+            this.Console.Focus();
+        }
+    }
+
+    public void TakeTargetInput()
+    {
+        if (!this.playerMovement.Slide &&
+            !this.playerMovement.Dashing &&
+            !this.playerMovement.Dodging)
+        {
+            if (!this.IsTargetAcquired && this.CanGetTarget())
+            {
+                this.LockOnTarget();
+            }
+            else if (this.IsTargetAcquired)
+            {
+                this.UnlockTarget();
+            }
+        }
+    }
+
     #endregion
 
     #region InterfaceMethods
 
     public void TakeDamage(float damage)
     {
-        this.Health -= damage;
+        if (!this.lightsaberController.IsBlocking)
+            this.Health -= damage;
     }
 
     #endregion
@@ -267,14 +263,10 @@ public class Player : MonoBehaviour, IDamagable<float>
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Space"))
-            this.canUseArtificialGravity = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Space"))
-            this.canUseArtificialGravity = false;
     }
 
     #endregion

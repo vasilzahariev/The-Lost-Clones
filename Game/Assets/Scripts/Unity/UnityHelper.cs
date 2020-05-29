@@ -7,24 +7,21 @@ public static class UnityHelper
     public static GameObject GetChildWithName(GameObject parent, string childName)
     {
         GameObject child = null;
-        int count = parent.transform.childCount;
 
-        for (int index = 0; index < count; index++)
+        Transform[] children = parent.GetComponentsInChildren<Transform>();
+
+        foreach (Transform current in children)
         {
-            GameObject obj = parent.transform.GetChild(index).gameObject;
-
-            if (obj.name == childName)
+            if (current.gameObject.name == childName)
             {
-                child = obj;
+                child = current.gameObject;
 
                 break;
             }
         }
 
         if (child == null)
-        {
             Debug.LogError($"{parent.name} doesn't have a child with name: {childName}");
-        }
 
         return child;
     }
