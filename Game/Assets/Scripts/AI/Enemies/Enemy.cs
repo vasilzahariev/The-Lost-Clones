@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable
     [HideInInspector]
     public GameObject Target;
 
+    public Weapon Weapon;
+
     #endregion
 
     #region Fields

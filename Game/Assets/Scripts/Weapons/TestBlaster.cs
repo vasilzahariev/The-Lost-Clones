@@ -15,12 +15,15 @@ public class TestBlaster : Blaster
     private void Awake()
     {
         this.shootPoint = UnityHelper.GetChildWithName(this.gameObject, "ShootPoint");
-        this.bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab", typeof(GameObject));
+        this.bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab",
+                                                                       typeof(GameObject));
+
+        this.CanShoot = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (this.canShoot)
+        if (this.CanShoot && !this.Reloading)
             this.Shoot();
     }
 
@@ -28,21 +31,19 @@ public class TestBlaster : Blaster
 
     #region Methods
 
-    private IEnumerator Reload()
-    {
-        yield return new WaitForSecondsRealtime(3f);
-
-        this.canShoot = true;
-    }
-
     public override void Shoot()
     {
         base.Shoot();
-
-        this.canShoot = false;
-
-        StartCoroutine(this.Reload());
     }
+
+    //protected override IEnumerator Reload() 
+    //{
+    //    float seconds = this.GetSecondsBetweenShots();
+
+    //    yield return new WaitForSecondsRealtime(seconds);
+
+    //    this.canShoot = true;
+    //}
 
     #endregion
 }

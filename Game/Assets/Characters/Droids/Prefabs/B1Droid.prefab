@@ -2011,6 +2011,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 1
+  Target: {fileID: 0}
+  Weapon: {fileID: 0}
 --- !u!1 &8155911756023864289
 GameObject:
   m_ObjectHideFlags: 0

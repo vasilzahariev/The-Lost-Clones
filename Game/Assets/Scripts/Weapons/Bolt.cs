@@ -12,7 +12,7 @@ public class Bolt : MonoBehaviour
 
     #region Fields
 
-    private GameObject weapon;
+    private Blaster blaster;
 
     #endregion
 
@@ -20,9 +20,24 @@ public class Bolt : MonoBehaviour
 
     private void Awake()
     {
-        this.weapon = this.gameObject.GetComponentInParent<Weapon>().gameObject;
+        this.blaster = this.gameObject.GetComponentInParent<Blaster>();
+
+        this.transform.rotation = this.gameObject.transform.parent.rotation;
 
         this.gameObject.transform.parent = null;
+
+        Vector3 targetPos = this.blaster.GetWielder().Target.transform.position;
+
+        Vector3 lookAtPos = new Vector3(targetPos.x,
+                                        targetPos.y + this.transform.position.y,
+                                        targetPos.z);
+
+        this.transform.LookAt(lookAtPos, Vector3.up);
+    }
+
+    private void Update()
+    {
+        this.Speed = this.blaster.BulletSpeed;
     }
 
     private void FixedUpdate()
@@ -36,7 +51,7 @@ public class Bolt : MonoBehaviour
 
     private void Move()
     {
-        this.transform.Translate(-this.transform.right * this.Speed * Time.fixedDeltaTime);
+        this.transform.Translate(Vector3.forward * this.Speed * Time.fixedDeltaTime);
     }
 
     #endregion
@@ -45,8 +60,19 @@ public class Bolt : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != this.weapon)
-            Destroy(this.gameObject);
+        if (other.gameObject != this.blaster &&
+            !other.gameObject.CompareTag("Player"))
+            StartCoroutine(this.WaitBeforeDeath(0f));
+
+        if (other.gameObject.CompareTag("Player"))
+            StartCoroutine(this.WaitBeforeDeath(.05f));
+    }
+
+    private IEnumerator WaitBeforeDeath(float seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+
+        Destroy(this.gameObject);
     }
 
     #endregion

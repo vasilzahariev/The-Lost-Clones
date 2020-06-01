@@ -6,7 +6,8 @@ public class B1Droid : Enemy
 {
     #region Properties
 
-    public E5 Weapon;
+    [HideInInspector]
+    public E5 Blaster;
 
     #endregion
 
@@ -14,7 +15,6 @@ public class B1Droid : Enemy
 
     private bool aim;
     private bool shoot;
-    private bool reaload;
 
     #endregion
 
@@ -22,6 +22,9 @@ public class B1Droid : Enemy
 
     private void Awake()
     {
+        this.Blaster = this.GetComponentInChildren<E5>();
+        this.Weapon = this.Blaster;
+
         this.lookAt = UnityHelper.GetChildWithName(this.gameObject, "LookAt").transform;
         this.eyes = UnityHelper.GetChildWithName(this.gameObject, "Eyes").transform;
         this.animator = this.gameObject.GetComponent<Animator>();
@@ -34,7 +37,7 @@ public class B1Droid : Enemy
             this.Die();
         }
 
-        if (this.Target == null || this.reaload)
+        if (this.Target == null)
         {
             this.LookForTarget();
         }
