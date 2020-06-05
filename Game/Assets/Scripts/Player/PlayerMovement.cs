@@ -114,10 +114,13 @@ public class PlayerMovement : MonoBehaviour
             this.NoTargetMovementInput();
         }
 
-        if (!this.IsSliding && Input.GetButton("Run"))
+        if (!this.lightsaberController.IsBlocking && !this.IsSliding && Input.GetButton("Run"))
         {
             this.running = true;
         }
+
+        if (Input.GetButton("Run") && this.lightsaberController.IsBlocking)
+            this.running = false;
 
         if (this.CanStopSliding && this.IsSliding && !this.Slide && !this.player.IsTargetAcquired)
         {
@@ -415,7 +418,7 @@ public class PlayerMovement : MonoBehaviour
     public void TakeRunInput(bool run)
     {
         if (!this.IsSliding)
-            this.running = run;
+            this.running = this.lightsaberController.IsBlocking ? false : run;
     }
 
     public void TakeSlideInput()
@@ -446,7 +449,8 @@ public class PlayerMovement : MonoBehaviour
             !this.player.IsTargetAcquired &&
             !this.lightsaberController.Attacking &&
             !this.lightsaberController.HeavyAttacking &&
-            !this.lightsaberController.IsAttackRecovering)
+            !this.lightsaberController.IsAttackRecovering &&
+            !this.lightsaberController.IsBlocking)
         {
             this.Dash = true;
         }

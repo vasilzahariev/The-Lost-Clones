@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable
+public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable, IShootable
 {
     #region Properties
 
@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable
 
     protected Transform lookAt;
     protected Transform eyes;
+    protected Transform shootAt;
 
     protected Animator animator;
 
@@ -55,6 +56,11 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable
     public Transform GetLookAt()
     {
         return this.lookAt;
+    }
+
+    public Transform GetShootAt()
+    {
+        return this.shootAt;
     }
 
     protected virtual void LockOnTarget()

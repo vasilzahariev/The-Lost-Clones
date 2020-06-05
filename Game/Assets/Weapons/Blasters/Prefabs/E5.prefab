@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25767ed48a36acd44a06b352cb9bf8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamagePerHit: 0
+  DamagePerHit: 25
   StaminaPerHit: 0
-  BulletSpeed: 10
-  RateOfFire: 60
+  BulletSpeed: 15
+  RateOfFire: 120
   CanShoot: 0
   Reloading: 0
 --- !u!1 &6666684638423952435

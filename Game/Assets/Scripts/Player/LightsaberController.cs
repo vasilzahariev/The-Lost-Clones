@@ -8,7 +8,8 @@ public class LightsaberController : MonoBehaviour
 
     const int BASICCOMBOANIMCOUNT = 3;
     const int AIRCOMBOANIMCOUNT = 2;
-    const float BLOCKRECOVERYSECONDS = 0.3f;
+    const float BLOCKRECOVERYSECONDS = 0.4f;
+    public const float TIMETOPARRY = 0.3f;
 
     #endregion
 
@@ -54,6 +55,9 @@ public class LightsaberController : MonoBehaviour
 
     [HideInInspector]
     public bool IsBlocking;
+
+    [HideInInspector]
+    public float BlockingStarTime;
 
     #endregion
 
@@ -265,6 +269,7 @@ public class LightsaberController : MonoBehaviour
             !this.AirAttacking)
         {
             this.IsBlocking = true;
+            this.BlockingStarTime = Time.time;
         }
     }
 
@@ -289,6 +294,9 @@ public class LightsaberController : MonoBehaviour
 
     public void TakeBlockingInput(bool value)
     {
+        if (this.playerMovement.Dashing)
+            return;
+
         if (value)
             this.StartBlockingInput();
         else

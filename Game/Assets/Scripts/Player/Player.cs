@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using System;
 
-public class Player : MonoBehaviour, IDamagable<float>
+public class Player : MonoBehaviour, IDamagable<float>, IShootable
 {
     #region Properties
 
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour, IDamagable<float>
 
     private Animator animator;
     private Rigidbody rg;
+    private Transform shootAt;
 
     private PlayerMovement playerMovement;
     private LightsaberController lightsaberController;
@@ -71,6 +72,7 @@ public class Player : MonoBehaviour, IDamagable<float>
 
         this.animator = this.gameObject.GetComponent<Animator>();
         this.rg = this.gameObject.GetComponent<Rigidbody>();
+        this.shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
 
         this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
         this.lightsaberController = this.gameObject.GetComponentInChildren<LightsaberController>();
@@ -247,6 +249,11 @@ public class Player : MonoBehaviour, IDamagable<float>
         }
     }
 
+    public LightsaberController GetLightsaberController()
+    {
+        return this.lightsaberController;
+    }
+
     #endregion
 
     #region InterfaceMethods
@@ -255,6 +262,11 @@ public class Player : MonoBehaviour, IDamagable<float>
     {
         if (!this.lightsaberController.IsBlocking)
             this.Health -= damage;
+    }
+
+    public Transform GetShootAt()
+    {
+        return this.shootAt;
     }
 
     #endregion

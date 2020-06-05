@@ -27,6 +27,7 @@ public class B1Droid : Enemy
 
         this.lookAt = UnityHelper.GetChildWithName(this.gameObject, "LookAt").transform;
         this.eyes = UnityHelper.GetChildWithName(this.gameObject, "Eyes").transform;
+        this.shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
         this.animator = this.gameObject.GetComponent<Animator>();
     }
 
