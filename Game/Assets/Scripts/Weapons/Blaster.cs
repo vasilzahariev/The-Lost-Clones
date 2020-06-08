@@ -5,40 +5,39 @@ public class Blaster : Weapon
 {
     #region Properties
 
-    public float BulletSpeed;
+    public bool CanShoot { get; protected set; }
 
-    [Range(1f, 1000f)]
-    public float RateOfFire;
-
-    [HideInInspector]
-    public bool CanShoot;
-
-    [HideInInspector]
-    public bool Reloading;
+    public bool Reloading { get; protected set; }
 
     #endregion
 
     #region Fields
 
-    protected GameObject shootPoint;
-    protected GameObject bulletPrefab;
-    protected Enemy wielder;
+    public float BulletSpeed; // The speed of the bullet
+
+    [Range(1f, 1000f)]
+    public float RateOfFire;
+
+    protected GameObject _shootPoint; // The point where the bullet prefab is being instantiated
+    protected GameObject _bulletPrefab; // The bullet prefab
+
+    // TODO: The wielder could be a clone trooper, so this needs to be changed in the future
+    protected Enemy _wielder; // The AI that holds the weapon
 
     #endregion
-
 
     #region Methods
 
     public virtual void Shoot()
     {
-        Bolt bullet = Instantiate(this.bulletPrefab, this.shootPoint.transform).GetComponent<Bolt>();
+        Bolt bullet = Instantiate(this._bulletPrefab, this._shootPoint.transform).GetComponent<Bolt>();
 
         StartCoroutine(this.Reload());
     }
 
     public Enemy GetWielder()
     {
-        return this.wielder;
+        return this._wielder;
     }
 
     protected float GetSecondsBetweenShots()

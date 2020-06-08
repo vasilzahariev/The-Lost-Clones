@@ -14,8 +14,8 @@ public class TestBlaster : Blaster
 
     private void Awake()
     {
-        this.shootPoint = UnityHelper.GetChildWithName(this.gameObject, "ShootPoint");
-        this.bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab",
+        this._shootPoint = UnityHelper.GetChildWithName(this.gameObject, "ShootPoint");
+        this._bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab",
                                                                        typeof(GameObject));
 
         this.CanShoot = true;
