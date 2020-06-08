@@ -6,21 +6,19 @@ public class Lightsaber : MonoBehaviour
 {
     #region Properties
 
-    [HideInInspector]
-    public GameObject Blade;
+    public GameObject Blade { get; private set; }
 
-    [HideInInspector]
-    public float Damage;
+    public float Damage { get; set; }
 
     #endregion
 
     #region Fields
 
-    private Player player;
+    private Player _player;
 
-    private GameObject trails;
+    private GameObject _trails;
 
-    private bool canDealDamage;
+    private bool _canDealDamage;
 
     #endregion
 
@@ -30,22 +28,22 @@ public class Lightsaber : MonoBehaviour
     {
         this.Blade = UnityHelper.GetChildWithName(this.gameObject, "Blade");
 
-        this.trails = UnityHelper.GetChildWithName(this.Blade, "Trails");
+        this._trails = UnityHelper.GetChildWithName(this.Blade, "Trails");
 
-        this.trails.SetActive(false);
+        this._trails.SetActive(false);
     }
 
     void Start()
     {
-        this.player = Object.FindObjectOfType<Player>();
+        this._player = Object.FindObjectOfType<Player>();
 
-        this.canDealDamage = false;
+        this._canDealDamage = false;
     }
 
 
     void Update()
     {
-        if (this.player.IsConsoleActive)
+        if (this._player.IsConsoleActive)
         {
             return;
         }
@@ -62,12 +60,12 @@ public class Lightsaber : MonoBehaviour
 
     public void TrailsOnOff(bool active)
     {
-        this.trails.SetActive(active);
+        this._trails.SetActive(active);
     }
 
     public void SetCanDealDamage(bool canDealDamage)
     {
-        this.canDealDamage = canDealDamage;
+        this._canDealDamage = canDealDamage;
     }
 
     #endregion
@@ -76,7 +74,7 @@ public class Lightsaber : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (this.canDealDamage && other.gameObject.CompareTag("Enemy"))
+        if (this._canDealDamage && other.gameObject.CompareTag("Enemy"))
         {
             IDamagable<float> enemy = other.GetComponent<IDamagable<float>>();
 

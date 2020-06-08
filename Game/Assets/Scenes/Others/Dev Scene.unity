@@ -2058,12 +2058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15654ba1f55801948af043c268e90edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _consoleBackground: {fileID: 0}
-  ConsoleInput: {fileID: 640581506}
-  ConsoleOutput: {fileID: 1042418458}
-  _FPS: {fileID: 0}
-  Player: {fileID: 2090566523}
-  _canvas: {fileID: 0}
+  _playerObj: {fileID: 2090566523}
 --- !u!1001 &306053091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7608,12 +7603,12 @@ PrefabInstance:
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.05355056
+      value: 0.053550556
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.002559666
+      value: -0.0025596658
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
@@ -11350,8 +11345,6 @@ MonoBehaviour:
   StaminaPerHit: 0
   BulletSpeed: 10
   RateOfFire: 60
-  CanShoot: 0
-  Reloading: 0
 --- !u!1 &2090566523 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 819706785193855676, guid: d3354003796f9ed42bb8b44d26f569e9,

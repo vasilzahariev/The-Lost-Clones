@@ -9,7 +9,7 @@ public class PlayerAudioController : MonoBehaviour
 
     #region Fields
 
-    PlayerVarHolder playerVarHolder;
+    PlayerVarHolder _playerVarHolder;
 
     #endregion
 
@@ -17,7 +17,7 @@ public class PlayerAudioController : MonoBehaviour
 
     private void Awake()
     {
-        this.playerVarHolder = this.gameObject.GetComponent<PlayerVarHolder>();
+        this._playerVarHolder = this.gameObject.GetComponent<PlayerVarHolder>();
     }
 
     void Start()

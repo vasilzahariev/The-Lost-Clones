@@ -153,7 +153,7 @@ public class Bolt : MonoBehaviour
             {
                 Vector3 rotEulers;
 
-                if (Time.time - lightsaberController.BlockingStarTime < LightsaberController.TIMETOPARRY)
+                if (Time.time - lightsaberController.BlockingStarTime < LightsaberController.TIME_TO_PARRY)
                 {
                     Vector3 wielderPos = this._blaster.GetWielder().GetShootAt().position;
 
