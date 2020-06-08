@@ -13,12 +13,12 @@ public class FPS : MonoBehaviour
     /// </summary>
     #region Fields
 
-    private TMP_Text fpsText; // The text element
+    private TMP_Text _fpsText; // The text element
 
-    private float frameCount = 0f;
-    private float dt = 0f;
-    private float fps = 0f;
-    private float updateRate = 4f;
+    private float _frameCount = 0f;
+    private float _dt = 0f;
+    private float _fps = 0f;
+    private float _updateRate = 4f;
 
     #endregion
 
@@ -26,7 +26,7 @@ public class FPS : MonoBehaviour
 
     private void Awake()
     {
-        this.fpsText = this.GetComponent<TMP_Text>();
+        _fpsText = this.GetComponent<TMP_Text>();
     }
 
     private void Update()
@@ -42,25 +42,23 @@ public class FPS : MonoBehaviour
 
     private void UpTheFrame()
     {
-        this.frameCount++;
+        _frameCount++;
 
-        this.dt += Time.deltaTime;
+        _dt += Time.deltaTime;
 
-        if (this.dt > 1f / this.updateRate)
+        if (_dt > 1f / _updateRate)
         {
-            this.fps = this.frameCount / this.dt;
+            _fps = _frameCount / _dt;
 
-            this.frameCount = 0;
+            _frameCount = 0;
 
-            this.dt -= 1f / this.updateRate;
+            _dt -= 1f / _updateRate;
         }
-
-        Debug.Log(this.dt);
     }
 
     private void DisplayFPS()
     {
-        this.fpsText.text = $"{Mathf.Ceil(this.fps)} FPS";
+        _fpsText.text = $"{Mathf.Ceil(_fps)} FPS";
     }
 
     #endregion

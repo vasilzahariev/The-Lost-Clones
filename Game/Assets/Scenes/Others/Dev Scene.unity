@@ -2058,11 +2058,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15654ba1f55801948af043c268e90edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConsoleBackground: {fileID: 193564627}
+  _consoleBackground: {fileID: 0}
   ConsoleInput: {fileID: 640581506}
   ConsoleOutput: {fileID: 1042418458}
-  FPS: {fileID: 1547301976}
+  _FPS: {fileID: 0}
   Player: {fileID: 2090566523}
+  _canvas: {fileID: 0}
 --- !u!1001 &306053091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2866,7 +2867,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh18728
+  m_Name: pb_Mesh18596
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9232,7 +9233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d997aa822332046478fbc9c30c56e089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 1500
+  _jumpForce: 1000
 --- !u!43 &1682167077
 Mesh:
   m_ObjectHideFlags: 0
