@@ -9,17 +9,17 @@ public class E5 : Blaster
 
     private void Awake()
     {
-        this.shootPoint = UnityHelper.GetChildWithName(this.gameObject, "ShootPoint");
-        this.bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab",
+        this._shootPoint = UnityHelper.GetChildWithName(this.gameObject, "ShootPoint");
+        this._bulletPrefab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Weapons/Blasters/Prefabs/Red Bolt.prefab",
                                                                        typeof(GameObject));
 
-        this.wielder = this.gameObject.GetComponentInParent<Enemy>();
+        this._wielder = this.gameObject.GetComponentInParent<Enemy>();
         this.CanShoot = true;
     }
 
     private void FixedUpdate()
     {
-        if (this.CanShoot && !this.Reloading && this.wielder.Target != null)
+        if (this.CanShoot && !this.Reloading && this._wielder.Target != null)
             this.Shoot();
     }
 

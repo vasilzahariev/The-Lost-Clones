@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class JumpPlatform : MonoBehaviour
 {
-    public float JumpForce;
+    [SerializeField] private float _jumpForce;
 
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.GetComponent<Rigidbody>().AddForce(this.transform.up * this.JumpForce);
+        collision.gameObject.GetComponent<Rigidbody>().AddForce(this.transform.up * this._jumpForce);
     }
 }

@@ -4,69 +4,69 @@ using UnityEngine;
 
 public class PlayerEventHandler : MonoBehaviour
 {
-    private Player player;
-    private PlayerMovement playerMovement;
-    private AudioManager audioManager;
-    private LightsaberController lightsaberController;
-    private Animator animator;
+    private Player _player;
+    private PlayerMovement _playerMovement;
+    private AudioManager _audioManager;
+    private LightsaberController _lightsaberController;
+    private Animator _animator;
 
-    private bool wasPlayingJumpRumble;
-    private bool wasArtificialGravityActivated;
+    private bool _wasPlayingJumpRumble;
+    private bool _wasArtificialGravityActivated;
 
     #region MonoMethods
 
     void Awake()
     {
-        this.player = this.gameObject.GetComponent<Player>();
-        this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
-        this.audioManager = FindObjectsOfType<AudioManager>()[0];
-        this.lightsaberController = this.player.GetComponentInChildren<LightsaberController>();
-        this.animator = this.player.gameObject.GetComponent<Animator>();
+        this._player = this.gameObject.GetComponent<Player>();
+        this._playerMovement = this.gameObject.GetComponent<PlayerMovement>();
+        this._audioManager = FindObjectsOfType<AudioManager>()[0];
+        this._lightsaberController = this._player.GetComponentInChildren<LightsaberController>();
+        this._animator = this._player.gameObject.GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (!this.playerMovement.IsMoving() && this.audioManager.IsPlaying("RockWalk"))
+        if (!this._playerMovement.IsMoving() && this._audioManager.IsPlaying("RockWalk"))
         {
-            this.audioManager.Stop("RockWalk");
+            this._audioManager.Stop("RockWalk");
         }
 
-        if (!this.playerMovement.IsRunning() && this.audioManager.IsPlaying("RockSprint"))
+        if (!this._playerMovement.IsRunning() && this._audioManager.IsPlaying("RockSprint"))
         {
-            this.audioManager.Stop("RockSprint");
+            this._audioManager.Stop("RockSprint");
         }
 
-        if (this.playerMovement.IsInAir() && !this.audioManager.IsPlaying("ForceJumpRumble") && !this.playerMovement.Jumping && !this.playerMovement.Dashing)
+        if (this._playerMovement.IsInAir() && !this._audioManager.IsPlaying("ForceJumpRumble") && !this._playerMovement.Jumping && !this._playerMovement.Dashing)
         {
-            this.audioManager.Play("ForceJumpRumble");
+            this._audioManager.Play("ForceJumpRumble");
         }
-        else if (!this.playerMovement.IsInAir() && this.audioManager.IsPlaying("ForceJumpRumble") && !this.playerMovement.Jumping)
+        else if (!this._playerMovement.IsInAir() && this._audioManager.IsPlaying("ForceJumpRumble") && !this._playerMovement.Jumping)
         {
-            this.audioManager.Stop("ForceJumpRumble");
+            this._audioManager.Stop("ForceJumpRumble");
         }
     }
 
     private void FixedUpdate()
     {
-        if (this.lightsaberController.IsHeavyAttackRecovering &&
-            !this.animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack_End") &&
-            !this.animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack"))
+        if (this._lightsaberController.IsHeavyAttackRecovering &&
+            !this._animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack_End") &&
+            !this._animator.GetCurrentAnimatorStateInfo(0).IsName("Dual_HeavyAttack"))
         {
-            this.lightsaberController.IsHeavyAttackRecovering = false;
+            this._lightsaberController.IsHeavyAttackRecovering = false;
         }
 
-        if (this.lightsaberController.Attacking ||
-            this.lightsaberController.AirAttacking ||
-            this.lightsaberController.HeavyAttacking)
+        if (this._lightsaberController.Attacking ||
+            this._lightsaberController.AirAttacking ||
+            this._lightsaberController.HeavyAttacking)
         {
             this.TurnTrails("on");
         }
 
-        if (!this.lightsaberController.AirAttacking &&
-            !this.player.gameObject.GetComponent<Rigidbody>().useGravity &&
-            !this.playerMovement.Dashing)
+        if (!this._lightsaberController.AirAttacking &&
+            !this._player.gameObject.GetComponent<Rigidbody>().useGravity &&
+            !this._playerMovement.Dashing)
         {
-            this.player.gameObject.GetComponent<Rigidbody>().useGravity = true;
+            this._player.gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
 
         //if (!this.lightsaberController.Attacking &&
@@ -82,13 +82,13 @@ public class PlayerEventHandler : MonoBehaviour
 
     public void Step()
     {
-        if (this.playerMovement.IsRunning())
+        if (this._playerMovement.IsRunning())
         {
-            this.audioManager.Play("RockSprint");
+            this._audioManager.Play("RockSprint");
         }
         else
         {
-            this.audioManager.Play("RockWalk");
+            this._audioManager.Play("RockWalk");
         }
     }
 
@@ -97,22 +97,22 @@ public class PlayerEventHandler : MonoBehaviour
     #region Slide
     public void StartSliding()
     {
-        this.playerMovement.IsSliding = true;
-        this.playerMovement.CanStopSliding = true;
+        this._playerMovement.IsSliding = true;
+        this._playerMovement.CanStopSliding = true;
 
-        this.playerMovement.MakeThemZeroWhenSliding();
+        this._playerMovement.MakeThemZeroWhenSliding();
 
-        this.playerMovement.StartSlideResize();
+        this._playerMovement.StartSlideResize();
 
-        this.audioManager.Play("ForceDash");
+        this._audioManager.Play("ForceDash");
     }
 
     public void EndSlide()
     {
-        this.playerMovement.Slide = false;
-        this.playerMovement.IsSliding = false;
+        this._playerMovement.Slide = false;
+        this._playerMovement.IsSliding = false;
 
-        this.playerMovement.EndSlideResize();
+        this._playerMovement.EndSlideResize();
     }
 
     #endregion
@@ -121,22 +121,22 @@ public class PlayerEventHandler : MonoBehaviour
 
     public void StartJump()
     {
-        this.audioManager.Play("ForceJump");
+        this._audioManager.Play("ForceJump");
 
-        this.playerMovement.MakeTheJump();
+        this._playerMovement.MakeTheJump();
     }
 
     public void StartJumping()
     {
-        this.playerMovement.Jumping = true;
+        this._playerMovement.Jumping = true;
 
-        this.audioManager.Play("ForceJumpRumble");
+        this._audioManager.Play("ForceJumpRumble");
     }
 
     public void EndJump()
     {
-        this.audioManager.Play("RockLand");
-        this.audioManager.Stop("ForceJumpRumble");
+        this._audioManager.Play("RockLand");
+        this._audioManager.Stop("ForceJumpRumble");
     }
 
     #endregion
@@ -145,37 +145,37 @@ public class PlayerEventHandler : MonoBehaviour
 
     public void StartDash()
     {
-        this.playerMovement.Dashing = true;
-        this.playerMovement.CanDash = false;
+        this._playerMovement.Dashing = true;
+        this._playerMovement.CanDash = false;
 
-        this.audioManager.Play("ForceDash");
+        this._audioManager.Play("ForceDash");
 
-        if (!this.player.ArtificialGravity)
+        if (!this._player.ArtificialGravity)
         {
-            this.playerMovement.HoldOnDash();
+            this._playerMovement.HoldOnDash();
         }
 
-        this.wasPlayingJumpRumble = this.audioManager.IsPlaying("ForceJumpRumble");
-        this.audioManager.Stop("ForceJumpRumble");
+        this._wasPlayingJumpRumble = this._audioManager.IsPlaying("ForceJumpRumble");
+        this._audioManager.Stop("ForceJumpRumble");
     }
 
     public void EndDash()
     {
-        if (this.playerMovement.Jumping && this.playerMovement.IsInAir())
+        if (this._playerMovement.Jumping && this._playerMovement.IsInAir())
         {
-            this.playerMovement.SetInAir(false);
+            this._playerMovement.SetInAir(false);
         }
 
-        this.playerMovement.Dash = false;
-        this.playerMovement.Dashing = false;
+        this._playerMovement.Dash = false;
+        this._playerMovement.Dashing = false;
 
-        this.playerMovement.ReloadDash();
+        this._playerMovement.ReloadDash();
 
-        if (this.wasPlayingJumpRumble)
+        if (this._wasPlayingJumpRumble)
         {
-            this.audioManager.Play("ForceJumpRumble");
+            this._audioManager.Play("ForceJumpRumble");
 
-            this.wasPlayingJumpRumble = false;
+            this._wasPlayingJumpRumble = false;
         }
     }
 
@@ -185,21 +185,21 @@ public class PlayerEventHandler : MonoBehaviour
 
     public void StartDodge()
     {
-        this.playerMovement.Dodging = true;
-        this.playerMovement.CanDodge = false;
+        this._playerMovement.Dodging = true;
+        this._playerMovement.CanDodge = false;
     }
 
     public void PlayDodgeSound()
     {
-        this.audioManager.Play("RockRoll");
+        this._audioManager.Play("RockRoll");
     }
 
     public void EndDodge()
     {
-        this.playerMovement.Dodge = false;
-        this.playerMovement.Dodging = false;
+        this._playerMovement.Dodge = false;
+        this._playerMovement.Dodging = false;
 
-        this.playerMovement.ReloadDodge();
+        this._playerMovement.ReloadDodge();
     }
 
     #endregion
@@ -208,94 +208,94 @@ public class PlayerEventHandler : MonoBehaviour
 
     public void StartAttack()
     {
-        this.lightsaberController.CurrentlyPlayingAttack = this.lightsaberController.CurrentAttack;
-        this.lightsaberController.CanDealDamage(true);
+        this._lightsaberController.CurrentlyPlayingAttack = this._lightsaberController.CurrentAttack;
+        this._lightsaberController.CanDealDamage(true);
 
-        this.lightsaberController.CanTransitionAttack = false;
+        this._lightsaberController.CanTransitionAttack = false;
     }
 
     public void StopAttack()
     {
-        if (this.lightsaberController.CurrentlyPlayingAttack == this.lightsaberController.CurrentAttack)
+        if (this._lightsaberController.CurrentlyPlayingAttack == this._lightsaberController.CurrentAttack)
         {
-            this.lightsaberController.Attacking = false;
-            this.lightsaberController.CurrentAttack = 0;
-            this.lightsaberController.CurrentlyPlayingAttack = 0;
+            this._lightsaberController.Attacking = false;
+            this._lightsaberController.CurrentAttack = 0;
+            this._lightsaberController.CurrentlyPlayingAttack = 0;
 
-            this.lightsaberController.CanDealDamage(false);
+            this._lightsaberController.CanDealDamage(false);
         }
 
-        this.lightsaberController.CanTransitionAttack = true;
+        this._lightsaberController.CanTransitionAttack = true;
     }
 
     public void StartHeavyAttack()
     {
-        this.lightsaberController.HeavyAttacking = true;
-        this.lightsaberController.CanDealDamage(true);
+        this._lightsaberController.HeavyAttacking = true;
+        this._lightsaberController.CanDealDamage(true);
     }
 
     public void StopHeavyAttack()
     {
-        this.lightsaberController.HeavyAttacking = false;
-        this.lightsaberController.CanDealDamage(false);
+        this._lightsaberController.HeavyAttacking = false;
+        this._lightsaberController.CanDealDamage(false);
     }
 
     public void StartAirAttack()
     {
-        this.lightsaberController.CurrentlyPlayingAirAttack = this.lightsaberController.CurrentAirAttack;
-        this.lightsaberController.CanDealDamage(true);
+        this._lightsaberController.CurrentlyPlayingAirAttack = this._lightsaberController.CurrentAirAttack;
+        this._lightsaberController.CanDealDamage(true);
 
-        if (this.lightsaberController.CurrentlyPlayingAirAttack == 1)
+        if (this._lightsaberController.CurrentlyPlayingAirAttack == 1)
         {
-            Rigidbody playerRigidbody = this.player.gameObject.GetComponent<Rigidbody>();
+            Rigidbody playerRigidbody = this._player.gameObject.GetComponent<Rigidbody>();
 
             playerRigidbody.velocity = Vector3.zero;
             playerRigidbody.useGravity = false;
         }
 
-        this.lightsaberController.CanTransitionAttack = false;
+        this._lightsaberController.CanTransitionAttack = false;
     }
 
     public void StopAirAttack()
     {
-        if (this.lightsaberController.CurrentlyPlayingAirAttack == this.lightsaberController.CurrentAirAttack)
+        if (this._lightsaberController.CurrentlyPlayingAirAttack == this._lightsaberController.CurrentAirAttack)
         {
-            this.lightsaberController.AirAttacking = false;
-            this.lightsaberController.CurrentAirAttack = 0;
-            this.lightsaberController.CurrentlyPlayingAirAttack = 0;
-            this.lightsaberController.CanDealDamage(false);
+            this._lightsaberController.AirAttacking = false;
+            this._lightsaberController.CurrentAirAttack = 0;
+            this._lightsaberController.CurrentlyPlayingAirAttack = 0;
+            this._lightsaberController.CanDealDamage(false);
 
-            Rigidbody playerRigidbody = this.player.gameObject.GetComponent<Rigidbody>();
+            Rigidbody playerRigidbody = this._player.gameObject.GetComponent<Rigidbody>();
 
             playerRigidbody.useGravity = true;
         }
 
-        this.lightsaberController.CanTransitionAttack = true;
+        this._lightsaberController.CanTransitionAttack = true;
     }
 
     public void ChangeHand(string hand)
     {
-        this.lightsaberController.SetToHand(hand);
+        this._lightsaberController.SetToHand(hand);
     }
 
     public void StartAttackRecovery(string attackType)
     {
         if (attackType == "heavy")
-            this.lightsaberController.IsHeavyAttackRecovering = true;
+            this._lightsaberController.IsHeavyAttackRecovering = true;
         else
-            this.lightsaberController.IsAttackRecovering = true;
+            this._lightsaberController.IsAttackRecovering = true;
     }
 
     public void EndAttackRecovery(string attackType)
     {
         if (attackType == "heavy")
         {
-            this.lightsaberController.IsHeavyAttackRecovering = false;
+            this._lightsaberController.IsHeavyAttackRecovering = false;
         }
         else
         {
-            this.lightsaberController.IsHeavyAttackRecovering = false;
-            this.lightsaberController.IsAttackRecovering = false;
+            this._lightsaberController.IsHeavyAttackRecovering = false;
+            this._lightsaberController.IsAttackRecovering = false;
         }
     }
 
@@ -308,11 +308,11 @@ public class PlayerEventHandler : MonoBehaviour
         switch (activeState)
         {
             case "on":
-                this.lightsaberController.TrailsTurner(true);
+                this._lightsaberController.TrailsTurner(true);
 
                 break;
             case "off":
-                this.lightsaberController.TrailsTurner(false);
+                this._lightsaberController.TrailsTurner(false);
 
                 break;
             default:

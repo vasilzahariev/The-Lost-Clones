@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The B1 Battle Droid class
+/// </summary>
 public class B1Droid : Enemy
 {
     #region Properties
 
-    [HideInInspector]
-    public E5 Blaster;
+    public E5 Blaster { get; private set; } // The blaster (weapon) of the B1
 
     #endregion
 
     #region Fields
 
-    private bool aim;
-    private bool shoot;
+    private bool _aim; // Is the B1 aiming
+    private bool _shoot; // Is the B1 shooting
 
     #endregion
 
@@ -25,10 +27,10 @@ public class B1Droid : Enemy
         this.Blaster = this.GetComponentInChildren<E5>();
         this.Weapon = this.Blaster;
 
-        this.lookAt = UnityHelper.GetChildWithName(this.gameObject, "LookAt").transform;
-        this.eyes = UnityHelper.GetChildWithName(this.gameObject, "Eyes").transform;
-        this.shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
-        this.animator = this.gameObject.GetComponent<Animator>();
+        this._lookAt = UnityHelper.GetChildWithName(this.gameObject, "LookAt").transform;
+        this._eyes = UnityHelper.GetChildWithName(this.gameObject, "Eyes").transform;
+        this._shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
+        this._animator = this.gameObject.GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -57,27 +59,33 @@ public class B1Droid : Enemy
 
     #region Methods
 
+    /// <summary>
+    /// This method controlls the animations
+    /// </summary>
     protected override void AnimationParser()
     {
-        this.animator.SetBool("Aiming", this.aim);
-        this.animator.SetBool("Shooting", this.shoot);
+        this._animator.SetBool("Aiming", this._aim);
+        this._animator.SetBool("Shooting", this._shoot);
 
         base.AnimationParser();
     }
 
+    /// <summary>
+    /// This method sends a Raycast that looks for the player (to be changed for friendly AI)
+    /// </summary>
     private void LookForTarget()
     {
         RaycastHit hit;
         LayerMask mask = LayerMask.GetMask("Enemy");
 
-        if (Physics.Raycast(this.eyes.position, this.eyes.forward, out hit, 100f))
+        if (Physics.Raycast(this._eyes.position, this._eyes.forward, out hit, 100f))
         {
             Player player = hit.transform.gameObject.GetComponent<Player>();
 
             if (player != null)
             {
                 this.Target = player.gameObject;
-                this.aim = true;
+                this._aim = true;
             }
         }
     }

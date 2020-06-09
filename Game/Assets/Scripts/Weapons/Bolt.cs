@@ -5,23 +5,20 @@ using System.Collections.Generic;
 public class Bolt : MonoBehaviour
 {
     #region Properties
+    public float Speed { get; set; }
 
-    [HideInInspector]
-    public float Speed;
-
-    [HideInInspector]
-    public float Damage;
+    public float Damage { get; private set; }
 
     #endregion
 
     #region Fields
 
-    private Blaster blaster;
+    private Blaster _blaster;
 
-    private float[] deflectionXs;
-    private float[] deflectionYs;
+    private float[] _deflectionXs;
+    private float[] _deflectionYs;
 
-    private bool isParied;
+    private bool _isParied;
 
     #endregion
 
@@ -29,9 +26,9 @@ public class Bolt : MonoBehaviour
 
     private void Awake()
     {
-        this.blaster = this.gameObject.GetComponentInParent<Blaster>();
+        this._blaster = this.gameObject.GetComponentInParent<Blaster>();
 
-        this.deflectionXs = new float[]
+        this._deflectionXs = new float[]
         {
             -67.5f,
             -45f,
@@ -41,7 +38,7 @@ public class Bolt : MonoBehaviour
             67.5f
         };
 
-        this.deflectionYs = new float[]
+        this._deflectionYs = new float[]
         {
             90f,
             135f,
@@ -56,7 +53,7 @@ public class Bolt : MonoBehaviour
 
         this.gameObject.transform.parent = null;
 
-        Vector3 targetPos = this.blaster.GetWielder().Target.GetComponent<IShootable>().GetShootAt().position;
+        Vector3 targetPos = this._blaster.GetWielder().Target.GetComponent<IShootable>().GetShootAt().position;
 
         Vector3 lookAtPos = new Vector3(targetPos.x,
                                         targetPos.y,
@@ -72,10 +69,10 @@ public class Bolt : MonoBehaviour
 
     private void Update()
     {
-        float speed = this.blaster.BulletSpeed;
+        float speed = this._blaster.BulletSpeed;
 
-        this.Speed = this.isParied ? speed * 2f : speed;
-        this.Damage = this.blaster.DamagePerHit;
+        this.Speed = this._isParied ? speed * 2f : speed;
+        this.Damage = this._blaster.DamagePerHit;
     }
 
     private void FixedUpdate()
@@ -126,11 +123,11 @@ public class Bolt : MonoBehaviour
 
     private Vector3 GetXAndYForDeflection()
     {
-        this.deflectionXs = this.Shuffle<float>(this.deflectionXs);
-        this.deflectionYs = this.Shuffle<float>(this.deflectionYs);
+        this._deflectionXs = this.Shuffle<float>(this._deflectionXs);
+        this._deflectionYs = this.Shuffle<float>(this._deflectionYs);
 
-        float x = this.GetARandomFromValues(this.deflectionXs);
-        float y = this.GetARandomFromValues(this.deflectionYs);
+        float x = this.GetARandomFromValues(this._deflectionXs);
+        float y = this.GetARandomFromValues(this._deflectionYs);
         float z = 0f;
 
         return new Vector3(x, y, z);
@@ -142,7 +139,7 @@ public class Bolt : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != this.blaster &&
+        if (other.gameObject != this._blaster &&
             !other.gameObject.CompareTag("Player") &&
             other.gameObject.GetComponent<Bolt>() == null)
             StartCoroutine(this.WaitBeforeDeath(0f));
@@ -156,16 +153,16 @@ public class Bolt : MonoBehaviour
             {
                 Vector3 rotEulers;
 
-                if (Time.time - lightsaberController.BlockingStarTime < LightsaberController.TIMETOPARRY)
+                if (Time.time - lightsaberController.BlockingStarTime < LightsaberController.TIME_TO_PARRY)
                 {
-                    Vector3 wielderPos = this.blaster.GetWielder().GetShootAt().position;
+                    Vector3 wielderPos = this._blaster.GetWielder().GetShootAt().position;
 
                     Vector3 lookAtPos = new Vector3(wielderPos.x,
                                                     wielderPos.y,
                                                     wielderPos.z);
 
                     this.transform.LookAt(lookAtPos, Vector3.up);
-                    this.isParied = true;
+                    this._isParied = true;
                 }
                 else
                 {

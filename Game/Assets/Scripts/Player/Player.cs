@@ -9,6 +9,18 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 {
     #region Properties
 
+    public GameObject Target { get; private set; }
+
+    public bool IsTargetAcquired { get; private set; }
+
+    public bool IsConsoleActive { get; private set; }
+
+    public bool ArtificialGravity { get; private set; }
+
+    #endregion
+
+    #region Fields
+
     [Header("Player Settings")]
     [Range(0f, 500f)]
     public float Health;
@@ -30,30 +42,14 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
     [Header("Lightsaber")]
     public GameObject Lightsaber;
 
-    [HideInInspector]
-    public GameObject Target;
+    private Animator _animator;
+    private Rigidbody _rg;
+    private Transform _shootAt;
 
-    [HideInInspector]
-    public bool IsTargetAcquired;
+    private PlayerMovement _playerMovement;
+    private LightsaberController _lightsaberController;
 
-    [HideInInspector]
-    public bool IsConsoleActive;
-
-    [HideInInspector]
-    public bool ArtificialGravity;
-
-    #endregion
-
-    #region Fields
-
-    private Animator animator;
-    private Rigidbody rg;
-    private Transform shootAt;
-
-    private PlayerMovement playerMovement;
-    private LightsaberController lightsaberController;
-
-    private bool canUseArtificialGravity;
+    private bool _canUseArtificialGravity;
 
     #endregion
 
@@ -70,12 +66,12 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
         this.ArtificialGravity = false;
 
-        this.animator = this.gameObject.GetComponent<Animator>();
-        this.rg = this.gameObject.GetComponent<Rigidbody>();
-        this.shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
+        this._animator = this.gameObject.GetComponent<Animator>();
+        this._rg = this.gameObject.GetComponent<Rigidbody>();
+        this._shootAt = UnityHelper.GetChildWithName(this.gameObject, "ShootAt").transform;
 
-        this.playerMovement = this.gameObject.GetComponent<PlayerMovement>();
-        this.lightsaberController = this.gameObject.GetComponentInChildren<LightsaberController>();
+        this._playerMovement = this.gameObject.GetComponent<PlayerMovement>();
+        this._lightsaberController = this.gameObject.GetComponentInChildren<LightsaberController>();
     }
 
     void Update()
@@ -111,7 +107,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
     private void AnimationParser()
     {
-        this.animator.SetBool("Target", this.IsTargetAcquired);
+        this._animator.SetBool("Target", this.IsTargetAcquired);
     }
 
     private bool CanGetTarget()
@@ -182,7 +178,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
         this.IsTargetAcquired = true;
 
-        this.playerMovement.MakeThemZero();
+        this._playerMovement.MakeThemZero();
 
 
         this.freeLook.gameObject.SetActive(false);
@@ -209,7 +205,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
     {
         this.IsTargetAcquired = false;
 
-        this.playerMovement.MakeThemZero();
+        this._playerMovement.MakeThemZero();
 
         this.Target = null;
 
@@ -234,9 +230,9 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
     public void TakeTargetInput()
     {
-        if (!this.playerMovement.Slide &&
-            !this.playerMovement.Dashing &&
-            !this.playerMovement.Dodging)
+        if (!this._playerMovement.Slide &&
+            !this._playerMovement.Dashing &&
+            !this._playerMovement.Dodging)
         {
             if (!this.IsTargetAcquired && this.CanGetTarget())
             {
@@ -251,7 +247,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
     public LightsaberController GetLightsaberController()
     {
-        return this.lightsaberController;
+        return this._lightsaberController;
     }
 
     #endregion
@@ -260,13 +256,13 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
     public void TakeDamage(float damage)
     {
-        if (!this.lightsaberController.IsBlocking)
+        if (!this._lightsaberController.IsBlocking)
             this.Health -= damage;
     }
 
     public Transform GetShootAt()
     {
-        return this.shootAt;
+        return this._shootAt;
     }
 
     #endregion

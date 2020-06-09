@@ -7,30 +7,30 @@ public class PlayerUIManager : MonoBehaviour
 {
     #region Properties
 
-    public GameObject PlayerObject;
+    [SerializeField] private GameObject _playerObject;
 
     #endregion
 
     #region Fields
 
-    private Player player;
+    private Player _player;
 
-    private Slider health;
+    private Slider _health;
 
     #endregion
 
     private void Awake()
     {
-        this.player = this.PlayerObject.GetComponent<Player>();
-        this.health = UnityHelper.GetChildWithName(this.gameObject, "Health").GetComponent<Slider>();
+        this._player = this._playerObject.GetComponent<Player>();
+        this._health = UnityHelper.GetChildWithName(this.gameObject, "Health").GetComponent<Slider>();
 
-        this.health.minValue = 0f;
-        this.health.maxValue = this.player.Health;
-        this.health.value = this.player.Health;
+        this._health.minValue = 0f;
+        this._health.maxValue = this._player.Health;
+        this._health.value = this._player.Health;
     }
 
     private void Update()
     {
-        this.health.value = this.player.Health;
+        this._health.value = this._player.Health;
     }
 }
