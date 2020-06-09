@@ -10,78 +10,69 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Properties
 
-    public Camera Camera;
     public Transform PointForRotation;
 
-    public float RotationSpeed;
     public float JumpForce;
     public float DashingForce;
     public float DashingForceUp;
-    public float AirSpeed;
-    public float AirRunSpeed;
 
+    public bool Slide { get; set; }
 
-    [HideInInspector]
-    public bool Slide;
+    public bool IsSliding { get; set; }
 
-    [HideInInspector]
-    public bool IsSliding;
+    public bool Jumping { get; set; }
 
-    [HideInInspector]
-    public bool Jumping;
+    public bool CanStopSliding { get; set; }
 
-    [HideInInspector]
-    public bool CanStopSliding;
+    public bool Dash { get; set; }
 
-    [HideInInspector]
-    public bool Dash;
+    public bool Dashing { get; set; }
 
-    [HideInInspector]
-    public bool Dashing;
+    public bool CanDash { get; set; }
 
-    [HideInInspector]
-    public bool CanDash;
+    public bool Dodge { get; set; }
 
-    [HideInInspector]
-    public bool Dodge;
+    public bool Dodging { get; set; }
 
-    [HideInInspector]
-    public bool Dodging;
-
-    [HideInInspector]
-    public bool CanDodge;
+    public bool CanDodge { get; set; }
 
     #endregion
 
     #region Fields
 
-    private Player player;
+    [SerializeField] private Camera _camera;
 
-    private LightsaberController lightsaberController;
+    private Player _player;
 
-    private Animator animator;
-    private Rigidbody rg;
+    private LightsaberController _lightsaberController;
 
-    private PlayerInput input;
+    private Animator _animator;
+    private Rigidbody _rg;
 
-    private Vector2 movementInput;
+    private PlayerInput _input;
 
-    private float h;
-    private float v;
-    private float rotVal;
-    private float dodgePressedTime;
+    private Vector2 _movementInput;
 
-    private bool forward;
-    private bool backwards;
-    private bool left;
-    private bool right;
-    private bool running;
-    private bool jump;
-    private bool isInAir;
-    private bool wasInAir;
-    private bool move;
-    private bool isDodgePressed;
-    private bool resetDodgePressed;
+    [SerializeField] private float _rotationSpeed;
+    [SerializeField] private float _airSpeed;
+    [SerializeField] private float _airRunSpeed;
+
+    private float _h;
+    private float _v;
+    private float _rotVal;
+    private float _dodgePressedTime;
+
+    private bool _forward;
+    private bool _backwards;
+    private bool _left;
+    private bool _right;
+    private bool _running;
+    private bool _jump;
+    private bool _isInAir;
+    private bool _wasInAir;
+    private bool _move;
+    private bool _isDodgePressed;
+    private bool _resetDodgePressed;
 
     #endregion
 
@@ -89,11 +80,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        this.player = this.gameObject.GetComponent<Player>();
-        this.lightsaberController = this.player.GetComponentInChildren<LightsaberController>();
+        this._player = this.gameObject.GetComponent<Player>();
+        this._lightsaberController = this._player.GetComponentInChildren<LightsaberController>();
 
-        this.animator = this.gameObject.GetComponent<Animator>();
-        this.rg = this.gameObject.GetComponent<Rigidbody>();
+        this._animator = this.gameObject.GetComponent<Animator>();
+        this._rg = this.gameObject.GetComponent<Rigidbody>();
 
         this.CanDash = true;
         this.CanDodge = true;
@@ -101,28 +92,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (this.player.IsConsoleActive)
+        if (this._player.IsConsoleActive)
         {
             return;
         }
 
-        this.h = Input.GetAxis("Horizontal");
-        this.v = Input.GetAxis("Vertical");
+        this._h = Input.GetAxis("Horizontal");
+        this._v = Input.GetAxis("Vertical");
 
-        if (!this.player.IsTargetAcquired && !this.IsSliding)
+        if (!this._player.IsTargetAcquired && !this.IsSliding)
         {
             this.NoTargetMovementInput();
         }
 
-        if (!this.lightsaberController.IsBlocking && !this.IsSliding && Input.GetButton("Run"))
+        if (!this._lightsaberController.IsBlocking && !this.IsSliding && Input.GetButton("Run"))
         {
-            this.running = true;
+            this._running = true;
         }
 
-        if (Input.GetButton("Run") && this.lightsaberController.IsBlocking)
-            this.running = false;
+        if (Input.GetButton("Run") && this._lightsaberController.IsBlocking)
+            this._running = false;
 
-        if (this.CanStopSliding && this.IsSliding && !this.Slide && !this.player.IsTargetAcquired)
+        if (this.CanStopSliding && this.IsSliding && !this.Slide && !this._player.IsTargetAcquired)
         {
             this.Slide = true;
         }
@@ -130,48 +121,48 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (this.Jumping && this.isInAir)
+        if (this.Jumping && this._isInAir)
         {
-            this.isInAir = false;
+            this._isInAir = false;
         }
 
-        if (this.player.IsConsoleActive)
+        if (this._player.IsConsoleActive)
         {
-            this.forward = false;
-            this.backwards = false;
-            this.left = false;
-            this.right = false;
-            this.running = false;
+            this._forward = false;
+            this._backwards = false;
+            this._left = false;
+            this._right = false;
+            this._running = false;
 
             return;
         }
 
-        if (this.lightsaberController.Attacking ||
-            this.lightsaberController.HeavyAttacking)
+        if (this._lightsaberController.Attacking ||
+            this._lightsaberController.HeavyAttacking)
         {
-            this.move = false;
+            this._move = false;
         }
 
-        if (this.Dashing && !this.player.IsTargetAcquired)
+        if (this.Dashing && !this._player.IsTargetAcquired)
         {
-            this.rg.AddForce(this.transform.forward * this.DashingForce * this.rg.mass);
+            this._rg.AddForce(this.transform.forward * this.DashingForce * this._rg.mass);
         }
 
-        if (!this.player.IsTargetAcquired)
+        if (!this._player.IsTargetAcquired)
         {
-            if (this.move || this.isInAir || this.Jumping)
+            if (this._move || this._isInAir || this.Jumping)
             {
                 this.Rotate();
             }
 
-            if (this.move && !this.Jumping && !this.isInAir)
+            if (this._move && !this.Jumping && !this._isInAir)
             {
-                this.transform.Rotate(0f, this.rotVal, 0f);
+                this.transform.Rotate(0f, this._rotVal, 0f);
             }
 
-            if (this.Jumping || this.isInAir)
+            if (this.Jumping || this._isInAir)
             {
-                this.transform.Rotate(0f, this.rotVal, 0f);
+                this.transform.Rotate(0f, this._rotVal, 0f);
                 this.AirMove();
             }
         }
@@ -179,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //this.Rotate();
 
-            if (this.Jumping || this.isInAir)
+            if (this.Jumping || this._isInAir)
             {
                 this.AirMove();
             }
@@ -201,8 +192,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void NoTargetMovementInput()
     {
-        if (this.lightsaberController.Attacking ||
-            this.lightsaberController.HeavyAttacking)
+        if (this._lightsaberController.Attacking ||
+            this._lightsaberController.HeavyAttacking)
         {
             return;
         }
@@ -212,55 +203,55 @@ public class PlayerMovement : MonoBehaviour
             Input.GetKeyUp(KeyCode.A) ||
             Input.GetKeyUp(KeyCode.D))
         {
-            this.move = false;
+            this._move = false;
         }
 
         if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
         {
-            this.move = true;
+            this._move = true;
 
-            this.rotVal = 0f;
+            this._rotVal = 0f;
         }
 
         if (Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
         {
-            this.move = true;
+            this._move = true;
 
-            this.rotVal = 180f;
+            this._rotVal = 180f;
         }
 
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
-            this.move = true;
+            this._move = true;
 
-            this.rotVal = -90f;
+            this._rotVal = -90f;
         }
 
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
-            this.move = true;
+            this._move = true;
 
-            this.rotVal = 90f;
+            this._rotVal = 90f;
         }
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A))
         {
-            this.rotVal = 45f;
+            this._rotVal = 45f;
         }
 
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D))
         {
-            this.rotVal = -45f;
+            this._rotVal = -45f;
         }
 
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.A))
         {
-            this.rotVal = 135f;
+            this._rotVal = 135f;
         }
 
         if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
         {
-            this.rotVal = -135f;
+            this._rotVal = -135f;
         }
     }
 
@@ -269,8 +260,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Rotate()
     {
-        Vector3 forward = this.Camera.transform.forward;
-        Vector3 right = this.Camera.transform.right;
+        Vector3 forward = this._camera.transform.forward;
+        Vector3 right = this._camera.transform.right;
 
         Vector3 desiredMoveDirection = forward;
 
@@ -278,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion prevRotation = this.transform.rotation;
 
-        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(desiredMoveDirection), this.RotationSpeed);
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(desiredMoveDirection), this._rotationSpeed);
     }
 
 
@@ -287,41 +278,41 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        if (this.v > 0)
+        if (this._v > 0)
         {
-            this.forward = true;
-            this.backwards = false;
+            this._forward = true;
+            this._backwards = false;
         }
-        else if (this.v < 0)
+        else if (this._v < 0)
         {
-            this.backwards = true;
-            this.forward = false;
-        }
-        else
-        {
-            this.forward = false;
-            this.backwards = false;
-        }
-
-        if (this.h > 0)
-        {
-            this.right = true;
-            this.left = false;
-        }
-        else if (this.h < 0)
-        {
-            this.left = true;
-            this.right = false;
+            this._backwards = true;
+            this._forward = false;
         }
         else
         {
-            this.left = false;
-            this.right = false;
+            this._forward = false;
+            this._backwards = false;
         }
 
-        if (!this.forward && !this.backwards && !this.left && !this.right && this.running)
+        if (this._h > 0)
         {
-            this.running = false;
+            this._right = true;
+            this._left = false;
+        }
+        else if (this._h < 0)
+        {
+            this._left = true;
+            this._right = false;
+        }
+        else
+        {
+            this._left = false;
+            this._right = false;
+        }
+
+        if (!this._forward && !this._backwards && !this._left && !this._right && this._running)
+        {
+            this._running = false;
         }
     }
 
@@ -330,67 +321,67 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void AirMove()
     {
-        if (this.lightsaberController.AirAttacking)
+        if (this._lightsaberController.AirAttacking)
         {
             return;
         }
 
-        float speed = this.Dashing && !this.player.IsTargetAcquired ? this.AirRunSpeed : this.AirSpeed;
+        float speed = this.Dashing && !this._player.IsTargetAcquired ? this._airRunSpeed : this._airSpeed;
 
-        if (!this.player.IsTargetAcquired)
+        if (!this._player.IsTargetAcquired)
         {
-            if (this.rotVal == 180f)
+            if (this._rotVal == 180f)
             {
-                this.v = -this.v;
-                this.h = 0f;
+                this._v = -this._v;
+                this._h = 0f;
             }
-            else if (this.rotVal == 90f)
+            else if (this._rotVal == 90f)
             {
-                float oldH = this.h;
+                float oldH = this._h;
 
-                this.v = this.h;
-                this.h = 0f;
+                this._v = this._h;
+                this._h = 0f;
             }
-            else if (this.rotVal == -90f)
+            else if (this._rotVal == -90f)
             {
-                float oldH = this.h;
+                float oldH = this._h;
 
-                this.v = -this.h;
-                this.h = 0f;
+                this._v = -this._h;
+                this._h = 0f;
             }
-            else if (this.rotVal == 45f || this.rotVal == -45f)
+            else if (this._rotVal == 45f || this._rotVal == -45f)
             {
-                this.h = 0f;
+                this._h = 0f;
             }
-            else if (this.rotVal == 135f || this.rotVal == -135f)
+            else if (this._rotVal == 135f || this._rotVal == -135f)
             {
-                this.v = -this.v;
-                this.h = 0f;
+                this._v = -this._v;
+                this._h = 0f;
             }
         }
 
-        this.rg.MovePosition(this.transform.position +
-                            (this.transform.forward * this.v * speed * Time.fixedDeltaTime) +
-                            (this.transform.right * this.h * speed * Time.fixedDeltaTime));
+        this._rg.MovePosition(this.transform.position +
+                            (this.transform.forward * this._v * speed * Time.fixedDeltaTime) +
+                            (this.transform.right * this._h * speed * Time.fixedDeltaTime));
     }
 
     private void Land()
     {
-        this.jump = false;
+        this._jump = false;
         this.Jumping = false;
-        this.isInAir = false;
+        this._isInAir = false;
     }
 
     private bool IsMovingAtADirection()
     {
-        return (this.forward && !this.backwards && !this.left && !this.right) ||
-               (!this.forward && this.backwards && !this.left && !this.right) ||
-               (!this.forward && !this.backwards && this.left && !this.right) ||
-               (!this.forward && !this.backwards && !this.left && this.right) ||
-               (this.forward && !this.backwards && !this.left && this.right) ||
-               (this.forward && !this.backwards && this.left && !this.right) ||
-               (!this.forward && this.backwards && !this.left && this.right) ||
-               (!this.forward && this.backwards && this.left && !this.right);
+        return (this._forward && !this._backwards && !this._left && !this._right) ||
+               (!this._forward && this._backwards && !this._left && !this._right) ||
+               (!this._forward && !this._backwards && this._left && !this._right) ||
+               (!this._forward && !this._backwards && !this._left && this._right) ||
+               (this._forward && !this._backwards && !this._left && this._right) ||
+               (this._forward && !this._backwards && this._left && !this._right) ||
+               (!this._forward && this._backwards && !this._left && this._right) ||
+               (!this._forward && this._backwards && this._left && !this._right);
     }
 
     private bool CheckIfTheCollisionIsFromUnder(Collision collision)
@@ -412,28 +403,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeMovementInput(Vector2 newValues)
     {
-        this.movementInput = newValues;
+        this._movementInput = newValues;
     }
 
     public void TakeRunInput(bool run)
     {
         if (!this.IsSliding)
-            this.running = this.lightsaberController.IsBlocking ? false : run;
+            this._running = this._lightsaberController.IsBlocking ? false : run;
     }
 
     public void TakeSlideInput()
     {
-        if (this.running &&
+        if (this._running &&
             !this.IsSliding &&
             !this.Slide &&
-            !this.jump &&
+            !this._jump &&
             !this.Jumping &&
-            !this.isInAir &&
+            !this._isInAir &&
             !this.Dashing &&
             !this.Dash &&
-            !this.player.IsTargetAcquired &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
+            !this._player.IsTargetAcquired &&
+            !this._lightsaberController.Attacking &&
+            !this._lightsaberController.HeavyAttacking)
         {
             this.Slide = true;
         }
@@ -446,11 +437,11 @@ public class PlayerMovement : MonoBehaviour
             !this.Dash &&
             !this.IsSliding &&
             !this.Slide &&
-            !this.player.IsTargetAcquired &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking &&
-            !this.lightsaberController.IsAttackRecovering &&
-            !this.lightsaberController.IsBlocking)
+            !this._player.IsTargetAcquired &&
+            !this._lightsaberController.Attacking &&
+            !this._lightsaberController.HeavyAttacking &&
+            !this._lightsaberController.IsAttackRecovering &&
+            !this._lightsaberController.IsBlocking)
         {
             this.Dash = true;
         }
@@ -460,15 +451,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!this.Dodge &&
             !this.Dodging &&
-            !this.isInAir &&
-            !this.jump &&
+            !this._isInAir &&
+            !this._jump &&
             !this.Jumping &&
-            this.player.IsTargetAcquired &&
+            this._player.IsTargetAcquired &&
             this.IsMovingAtADirection() &&
             this.CanDodge &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking &&
-            !this.lightsaberController.IsAttackRecovering)
+            !this._lightsaberController.Attacking &&
+            !this._lightsaberController.HeavyAttacking &&
+            !this._lightsaberController.IsAttackRecovering)
         {
             this.Dodge = true;
         }
@@ -476,18 +467,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeJumpInput()
     {
-        if (!this.jump &&
+        if (!this._jump &&
             !this.IsSliding &&
             !this.Slide &&
             !this.Dash &&
             !this.Dashing &&
-            !this.isInAir &&
+            !this._isInAir &&
             !this.Dodge &&
             !this.Dodging &&
-            !this.lightsaberController.Attacking &&
-            !this.lightsaberController.HeavyAttacking)
+            !this._lightsaberController.Attacking &&
+            !this._lightsaberController.HeavyAttacking)
         {
-            this.jump = true;
+            this._jump = true;
         }
     }
 
@@ -496,63 +487,63 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public void MakeTheJump()
     {
-        this.rg.AddForce(this.transform.up * this.JumpForce * this.rg.mass);
+        this._rg.AddForce(this.transform.up * this.JumpForce * this._rg.mass);
     }
 
     public void MakeThemZero()
     {
-        if (this.player.IsTargetAcquired)
+        if (this._player.IsTargetAcquired)
         {
-            this.move = false;
-            this.running = false;
-            this.rotVal = 0f;
+            this._move = false;
+            this._running = false;
+            this._rotVal = 0f;
             this.CanStopSliding = true;
             this.IsSliding = false;
             this.Slide = false;
             this.Dashing = false;
             this.Dash = false;
 
-            this.transform.Rotate(0f, this.rotVal, 0f);
+            this.transform.Rotate(0f, this._rotVal, 0f);
         }
         else
         {
-            this.forward = false;
-            this.backwards = false;
-            this.left = false;
-            this.right = false;
-            this.running = false;
+            this._forward = false;
+            this._backwards = false;
+            this._left = false;
+            this._right = false;
+            this._running = false;
         }
     }
 
     public void MakeThemZeroWhenSliding()
     {
-        this.move = false;
-        this.running = false;
+        this._move = false;
+        this._running = false;
     }
 
     public void HoldOnDash()
     {
-        if (this.isInAir || this.Jumping)
+        if (this._isInAir || this.Jumping)
         {
-            this.rg.AddForce(this.transform.up * this.DashingForceUp * this.rg.mass);
+            this._rg.AddForce(this.transform.up * this.DashingForceUp * this._rg.mass);
         }
         else
         {
-            this.rg.AddForce(this.transform.up * this.DashingForceUp / 2f * this.rg.mass);
+            this._rg.AddForce(this.transform.up * this.DashingForceUp / 2f * this._rg.mass);
         }
 
-        this.rg.velocity = Vector3.zero;
+        this._rg.velocity = Vector3.zero;
 
         StartCoroutine(this.DashWithoutGravity());
     }
 
     private IEnumerator DashWithoutGravity()
     {
-        this.rg.useGravity = false;
+        this._rg.useGravity = false;
 
         yield return new WaitForSecondsRealtime(0.4f);
 
-        this.rg.useGravity = true;
+        this._rg.useGravity = true;
     }
 
     public void ReloadDash()
@@ -593,22 +584,22 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsMoving()
     {
-        return this.move || this.forward || this.backwards || this.left || this.right;
+        return this._move || this._forward || this._backwards || this._left || this._right;
     }
 
     public bool IsRunning()
     {
-        return this.running;
+        return this._running;
     }
 
     public bool IsInAir()
     {
-        return this.isInAir;
+        return this._isInAir;
     }
 
     public void SetInAir(bool value)
     {
-        this.isInAir = value;
+        this._isInAir = value;
     }
 
     /// <summary>
@@ -616,23 +607,23 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void AnimationParser()
     {
-        this.animator.SetBool("Forward", this.forward);
-        this.animator.SetBool("Backwards", this.backwards);
-        this.animator.SetBool("Left", this.left);
-        this.animator.SetBool("Right", this.right);
-        this.animator.SetBool("IsRunning", this.running);
-        this.animator.SetBool("Slide", this.Slide);
-        this.animator.SetBool("IsSliding", this.Slide);
-        this.animator.SetBool("Jump", this.jump);
-        this.animator.SetBool("IsJumping", this.Jumping);
-        this.animator.SetBool("CanStopSliding", this.CanStopSliding);
-        this.animator.SetBool("IsInAir", this.isInAir);
-        this.animator.SetBool("WasInAir", this.wasInAir);
-        this.animator.SetBool("Move", this.move);
-        this.animator.SetBool("Dash", this.Dash);
-        this.animator.SetBool("IsDashing", this.Dashing);
-        this.animator.SetBool("Dodge", this.Dodge);
-        this.animator.SetBool("IsDodging", this.Dodging);
+        this._animator.SetBool("Forward", this._forward);
+        this._animator.SetBool("Backwards", this._backwards);
+        this._animator.SetBool("Left", this._left);
+        this._animator.SetBool("Right", this._right);
+        this._animator.SetBool("IsRunning", this._running);
+        this._animator.SetBool("Slide", this.Slide);
+        this._animator.SetBool("IsSliding", this.Slide);
+        this._animator.SetBool("Jump", this._jump);
+        this._animator.SetBool("IsJumping", this.Jumping);
+        this._animator.SetBool("CanStopSliding", this.CanStopSliding);
+        this._animator.SetBool("IsInAir", this._isInAir);
+        this._animator.SetBool("WasInAir", this._wasInAir);
+        this._animator.SetBool("Move", this._move);
+        this._animator.SetBool("Dash", this.Dash);
+        this._animator.SetBool("IsDashing", this.Dashing);
+        this._animator.SetBool("Dodge", this.Dodge);
+        this._animator.SetBool("IsDodging", this.Dodging);
     }
 
     #endregion
@@ -658,11 +649,11 @@ public class PlayerMovement : MonoBehaviour
                 this.Land();
             }
 
-            if (this.isInAir)
+            if (this._isInAir)
             {
                 this.Land();
 
-                this.wasInAir = true;
+                this._wasInAir = true;
             }
         }
     }
@@ -671,12 +662,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if ((collision.gameObject.CompareTag("Ground") ||
             collision.gameObject.CompareTag("SlideArea")) &&
-            !this.isInAir &&
+            !this._isInAir &&
             !this.Jumping)
         {
-            this.isInAir = true;
-            this.wasInAir = false;
-            this.lightsaberController.MakeThemZero();
+            this._isInAir = true;
+            this._wasInAir = false;
+            this._lightsaberController.MakeThemZero();
         }
     }
 
@@ -686,8 +677,8 @@ public class PlayerMovement : MonoBehaviour
         {
             this.CanStopSliding = false;
 
-            this.wasInAir = this.isInAir;
-            this.isInAir = false;
+            this._wasInAir = this._isInAir;
+            this._isInAir = false;
         }
     }
 
@@ -697,7 +688,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.CanStopSliding = false;
 
-            this.isInAir = false;
+            this._isInAir = false;
         }
     }
 
@@ -707,7 +698,7 @@ public class PlayerMovement : MonoBehaviour
         {
             this.CanStopSliding = true;
 
-            this.isInAir = this.wasInAir;
+            this._isInAir = this._wasInAir;
         }
     }
 

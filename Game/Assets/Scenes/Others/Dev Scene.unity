@@ -6389,7 +6389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7851b7cc286d6384c8a6e1bf420999c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerObject: {fileID: 2090566523}
+  _playerObject: {fileID: 2090566523}
 --- !u!1001 &1181168022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7603,12 +7603,12 @@ PrefabInstance:
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.053550556
+      value: 0.05355056
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0025596658
+      value: -0.002559666
       objectReference: {fileID: 0}
     - target: {fileID: 6993921128999664590, guid: 4a540115d30f7be43ac0873327ddb013,
         type: 3}

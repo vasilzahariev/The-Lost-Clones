@@ -47,17 +47,6 @@ MonoBehaviour:
   LeftHandTransform: {fileID: 0}
   RightHand: {fileID: 8157047691573518617}
   RightHandTransform: {fileID: 2833977948435996431}
-  Attacking: 0
-  CurrentAttack: 0
-  CurrentlyPlayingAttack: 0
-  CurrentAirAttack: 0
-  CurrentlyPlayingAirAttack: 0
-  CanTransitionAttack: 0
-  HeavyAttacking: 0
-  AirAttacking: 0
-  IsAttackRecovering: 0
-  IsHeavyAttackRecovering: 0
-  IsBlocking: 0
 --- !u!1 &76589539848200489
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,10 +314,6 @@ MonoBehaviour:
   T: 0
   Console: {fileID: 0}
   Lightsaber: {fileID: 653358533976956}
-  Target: {fileID: 0}
-  IsTargetAcquired: 0
-  IsConsoleActive: 0
-  ArtificialGravity: 0
 --- !u!114 &6603479793172048486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,14 +326,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7615f506f93e45c4081920a39baf0d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 1876369986202262819}
+  _camera: {fileID: 1876369986202262819}
   PointForRotation: {fileID: 0}
-  RotationSpeed: 1
+  _rotationSpeed: 1
   JumpForce: 500
   DashingForce: 250
   DashingForceUp: 25
-  AirSpeed: 2.5
-  AirRunSpeed: 5
+  _airSpeed: 2.5
+  _airRunSpeed: 5
   Slide: 0
   IsSliding: 0
   Jumping: 0
@@ -883,7 +868,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3020270045536593491}
-  m_LocalRotation: {x: 0.07353356, y: 0.03596791, z: -0.0026537634, w: 0.99664044}
+  m_LocalRotation: {x: 0.07352697, y: 0.038359992, z: -0.0028302546, w: 0.9965512}
   m_LocalPosition: {x: 531.6216, y: 675.67566, z: -1394.0541}
   m_LocalScale: {x: 270.27026, y: 270.27026, z: 270.27023}
   m_Children: []
