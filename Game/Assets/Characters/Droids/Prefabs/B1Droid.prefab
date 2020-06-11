@@ -2042,9 +2042,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 1
-  Target: {fileID: 0}
-  Weapon: {fileID: 0}
-  Blaster: {fileID: 0}
+  _viewRadius: 10
+  _viewAngle: 135
+  _isMoveable: 0
 --- !u!1 &8155911756023864289
 GameObject:
   m_ObjectHideFlags: 0

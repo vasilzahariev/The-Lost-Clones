@@ -28,6 +28,11 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable, I
 
     protected Animator _animator; // The Animator component of the Enemy object
 
+    [SerializeField] protected float _viewRadius;
+    [SerializeField] protected float _viewAngle;
+
+    [SerializeField] protected bool _isMoveable; // Whether or not the Enemy can move
+
     #endregion
 
     #region Methods

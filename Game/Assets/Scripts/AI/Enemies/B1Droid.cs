@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -40,11 +41,9 @@ public class B1Droid : Enemy
             this.Die();
         }
 
-        if (this.Target == null)
-        {
-            this.LookForTarget();
-        }
-        else
+        this.LookForTarget();
+
+        if (this.Target != null)
         {
             this.LockOnTarget();
         }
@@ -75,17 +74,38 @@ public class B1Droid : Enemy
     /// </summary>
     private void LookForTarget()
     {
-        RaycastHit hit;
-        LayerMask mask = LayerMask.GetMask("Enemy");
+        LayerMask mask =~ LayerMask.GetMask("Player");
 
-        if (Physics.Raycast(this._eyes.position, this._eyes.forward, out hit, 100f))
+        // TODO: When there is a friendly AI add the search for them
+        Collider[] hitColliders = Physics.OverlapSphere(_eyes.position, _viewRadius)
+                                         .ToList().FindAll(t => t.transform.gameObject.CompareTag("Player")).ToArray();
+
+        if (hitColliders.Length > 0)
         {
-            Player player = hit.transform.gameObject.GetComponent<Player>();
-
-            if (player != null)
+            foreach (Collider hitCollider in hitColliders)
             {
-                this.Target = player.gameObject;
-                this._aim = true;
+                Transform target = hitCollider.gameObject.transform;
+                Vector3 dirToTarget = (_eyes.position - target.position).normalized;
+
+                if (Vector3.Angle(-_eyes.forward, dirToTarget) < _viewAngle / 2f)
+                {
+                    RaycastHit hit;
+                    float distance = Vector3.Distance(_eyes.position, target.position);
+
+                    if (Physics.Raycast(_eyes.position, -dirToTarget, out hit, distance))
+                    {
+                        if (hit.transform.gameObject == target.transform.gameObject)
+                        {
+                            this.Target = target.gameObject;
+                            _aim = true;
+                        }
+                        else
+                        {
+                            this.Target = null;
+                            _aim = false;
+                        }
+                    }
+                }
             }
         }
     }
