@@ -286,6 +286,11 @@ public class PlayerEventHandler : MonoBehaviour
         _lightsaberController.CanDealDamage(true);
     }
 
+    public void StopFailedStealthKill()
+    {
+        _lightsaberController.FailedStealthKill = false;
+    }
+
     public void ChangeHand(string hand)
     {
         this._lightsaberController.SetToHand(hand);
