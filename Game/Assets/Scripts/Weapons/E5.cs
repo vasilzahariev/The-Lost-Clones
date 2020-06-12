@@ -19,7 +19,10 @@ public class E5 : Blaster
 
     private void FixedUpdate()
     {
-        if (this.CanShoot && !this.Reloading && this._wielder.Target != null)
+        if (this.CanShoot &&
+            !this.Reloading &&
+            _wielder.Target != null &&
+            !_wielder.IsStealthKilled)
             this.Shoot();
     }
 

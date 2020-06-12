@@ -15,6 +15,7 @@ public class Lightsaber : MonoBehaviour
     #region Fields
 
     private Player _player;
+    private LightsaberController _lightsaberController;
 
     private GameObject _trails;
 
@@ -27,6 +28,8 @@ public class Lightsaber : MonoBehaviour
     private void Awake()
     {
         this.Blade = UnityHelper.GetChildWithName(this.gameObject, "Blade");
+
+        _lightsaberController = this.gameObject.GetComponentInParent<LightsaberController>();
 
         this._trails = UnityHelper.GetChildWithName(this.Blade, "Trails");
 
@@ -80,7 +83,10 @@ public class Lightsaber : MonoBehaviour
 
             if (enemy != null)
             {
-                enemy.TakeDamage(this.Damage);
+                if (_lightsaberController.StealthKilling)
+                    enemy.TakeDamage(1000f, _player.gameObject);
+                else
+                    enemy.TakeDamage(this.Damage, _player.gameObject);
             }
         }
     }

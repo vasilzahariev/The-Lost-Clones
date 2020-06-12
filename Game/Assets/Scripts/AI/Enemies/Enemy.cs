@@ -18,6 +18,10 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable, I
 
     public Weapon Weapon { get; protected set; } // The weapon of the Enemy
 
+    public bool IsStealthKilled { get; set; }
+
+    public bool CanDie { get; set; }
+
     #endregion
 
     #region Fields
@@ -53,11 +57,13 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable, I
     /// This method reduces the health of the Enemy by a specific values
     /// </summary>
     /// <param name="damage">The amount of health that is reduced</param>
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, GameObject attacker)
     {
         float newHealth = this.Health - damage;
 
         this.Health = newHealth > 0 ? newHealth : 0f;
+
+        this.Target = attacker;
     }
 
     /// <summary>
@@ -66,7 +72,10 @@ public class Enemy : MonoBehaviour, IDamagable<float>, IKillable, ITargetable, I
     /// </summary>
     public virtual void Die()
     {
-        Destroy(this.gameObject);
+        if (!this.IsStealthKilled)
+            Destroy(this.gameObject);
+        else
+            Destroy(this);
     }
 
     /// <summary>

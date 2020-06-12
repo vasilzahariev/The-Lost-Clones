@@ -9,9 +9,9 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 {
     #region Properties
 
-    public GameObject Target { get; private set; }
+    public GameObject Target { get; set; }
 
-    public bool IsTargetAcquired { get; private set; }
+    public bool IsTargetAcquired { get; set; }
 
     public bool IsConsoleActive { get; private set; }
 
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
         this.Camera.transform.position = newCameraPos;
     }
 
-    private void UnlockTarget()
+    public void UnlockTarget()
     {
         this.IsTargetAcquired = false;
 
@@ -254,7 +254,7 @@ public class Player : MonoBehaviour, IDamagable<float>, IShootable
 
     #region InterfaceMethods
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, GameObject attacker)
     {
         if (!this._lightsaberController.IsBlocking)
             this.Health -= damage;

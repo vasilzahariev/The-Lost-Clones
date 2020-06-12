@@ -173,9 +173,18 @@ public class Bolt : MonoBehaviour
             }
             else
             {
-                player.TakeDamage(this.Damage);
+                player.TakeDamage(this.Damage, _blaster.GetWielder().gameObject);
                 StartCoroutine(this.WaitBeforeDeath(.05f));
             }
+        }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+            enemy.TakeDamage(this.Damage, _blaster.GetWielder().gameObject);
+
+            StartCoroutine(this.WaitBeforeDeath(.0f));
         }
     }
 

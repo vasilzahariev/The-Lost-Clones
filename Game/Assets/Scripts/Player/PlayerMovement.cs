@@ -192,8 +192,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void NoTargetMovementInput()
     {
-        if (this._lightsaberController.Attacking ||
-            this._lightsaberController.HeavyAttacking)
+        if (_lightsaberController.Attacking ||
+            _lightsaberController.HeavyAttacking ||
+            _lightsaberController.StealthKilling ||
+            _lightsaberController.ShouldExecuteStealthKill)
         {
             return;
         }
@@ -414,17 +416,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void TakeSlideInput()
     {
-        if (this._running &&
+        if (_running &&
             !this.IsSliding &&
             !this.Slide &&
-            !this._jump &&
+            !_jump &&
             !this.Jumping &&
-            !this._isInAir &&
+            !_isInAir &&
             !this.Dashing &&
             !this.Dash &&
-            !this._player.IsTargetAcquired &&
-            !this._lightsaberController.Attacking &&
-            !this._lightsaberController.HeavyAttacking)
+            !_player.IsTargetAcquired &&
+            !_lightsaberController.Attacking &&
+            !_lightsaberController.HeavyAttacking &&
+            !_lightsaberController.StealthKilling &&
+            !_lightsaberController.ShouldExecuteStealthKill)
         {
             this.Slide = true;
         }
@@ -441,7 +445,9 @@ public class PlayerMovement : MonoBehaviour
             !this._lightsaberController.Attacking &&
             !this._lightsaberController.HeavyAttacking &&
             !this._lightsaberController.IsAttackRecovering &&
-            !this._lightsaberController.IsBlocking)
+            !this._lightsaberController.IsBlocking &&
+            !_lightsaberController.StealthKilling &&
+            !_lightsaberController.ShouldExecuteStealthKill)
         {
             this.Dash = true;
         }
@@ -459,7 +465,9 @@ public class PlayerMovement : MonoBehaviour
             this.CanDodge &&
             !this._lightsaberController.Attacking &&
             !this._lightsaberController.HeavyAttacking &&
-            !this._lightsaberController.IsAttackRecovering)
+            !this._lightsaberController.IsAttackRecovering &&
+            !_lightsaberController.StealthKilling &&
+            !_lightsaberController.ShouldExecuteStealthKill)
         {
             this.Dodge = true;
         }
@@ -476,7 +484,9 @@ public class PlayerMovement : MonoBehaviour
             !this.Dodge &&
             !this.Dodging &&
             !this._lightsaberController.Attacking &&
-            !this._lightsaberController.HeavyAttacking)
+            !this._lightsaberController.HeavyAttacking &&
+            !_lightsaberController.StealthKilling &&
+            !_lightsaberController.ShouldExecuteStealthKill)
         {
             this._jump = true;
         }
