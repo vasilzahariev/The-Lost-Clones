@@ -10,6 +10,7 @@ public class LightsaberController : MonoBehaviour
     const int AIR_COMBO_ANIM_COUNT = 2;
     const float BLOCK_RECOVERY_SECONDS = 0.4f;
     public const float TIME_TO_PARRY = 0.3f;
+    const float RUN_ATTACK_COOLDOWN = 1.5f;
 
     #endregion
 
@@ -55,6 +56,8 @@ public class LightsaberController : MonoBehaviour
 
     public bool FailedStealthKill { get; set; }
 
+    public bool RunForwardAttacking { get; set; }
+
     public float BlockingStarTime { get; private set; }
 
     #endregion
@@ -71,6 +74,7 @@ public class LightsaberController : MonoBehaviour
 
     private bool _shouldExecuteAHeavyAttack;
     private bool _canBlock = true;
+    private bool _canRunAttack = true;
 
     #endregion
 
@@ -181,6 +185,7 @@ public class LightsaberController : MonoBehaviour
         _animator.SetBool("HeavyAttacking", this.HeavyAttacking);
         _animator.SetBool("ShouldExecuteStealthKill", this.ShouldExecuteStealthKill);
         _animator.SetBool("FailedStealthKill", this.FailedStealthKill);
+        _animator.SetBool("RunForwardAttacking", this.RunForwardAttacking);
 
         this._animator.SetBool("IsBlocking", this.IsBlocking);
     }
@@ -192,12 +197,18 @@ public class LightsaberController : MonoBehaviour
         this._canBlock = true;
     }
 
+    private IEnumerator WaitRunAttackCooldown()
+    {
+        yield return new WaitForSecondsRealtime(RUN_ATTACK_COOLDOWN);
+        _canRunAttack = true;
+    }
+
     private void StealthKillInput()
     {
         if (_player.Target != null &&
             _player.Target.GetComponent<Enemy>() != null &&
             _player.Target.GetComponent<Enemy>().Target != _player.gameObject &&
-            Vector3.Distance(this.transform.position, _player.Target.transform.position) <= 3f &&
+            Vector3.Distance(this.transform.position, _player.Target.transform.position) <= 2.5f &&
             !_playerMovement.IsInAir() &&
             !_playerMovement.Jumping &&
             !this.ShouldExecuteStealthKill &&
@@ -210,7 +221,8 @@ public class LightsaberController : MonoBehaviour
             !_playerMovement.Dodging &&
             !_playerMovement.IsInAir() &&
             !_playerMovement.Jumping &&
-            !_playerMovement.IsSliding)
+            !_playerMovement.IsSliding &&
+            !this.RunForwardAttacking)
         {
             Enemy enemy = _player.Target.GetComponent<Enemy>();
 
@@ -223,9 +235,9 @@ public class LightsaberController : MonoBehaviour
 
             float distance = Vector3.Distance(this.transform.position, _player.Target.transform.position);
 
-            if (distance > 1.3f)
+            if (distance > 1f)
             {
-                float distanceToTravel = distance - 1.3f;
+                float distanceToTravel = distance - 1f;
 
                 enemy.transform.position = Vector3.MoveTowards(enemy.transform.position,
                                                                _player.transform.position,
@@ -238,8 +250,8 @@ public class LightsaberController : MonoBehaviour
         if (_player.Target != null &&
             _player.Target.GetComponent<Enemy>() != null &&
             _player.Target.GetComponent<Enemy>().Target != _player.gameObject &&
-            Vector3.Distance(this.transform.position, _player.Target.transform.position) > 3f &&
-            Vector3.Distance(this.transform.position, _player.Target.transform.position) < 5f &&
+            Vector3.Distance(this.transform.position, _player.Target.transform.position) > 2.5f &&
+            Vector3.Distance(this.transform.position, _player.Target.transform.position) < 3f &&
             !_playerMovement.IsInAir() &&
             !_playerMovement.Jumping &&
             !this.ShouldExecuteStealthKill &&
@@ -251,9 +263,33 @@ public class LightsaberController : MonoBehaviour
             !_playerMovement.Dodging &&
             !_playerMovement.IsInAir() &&
             !_playerMovement.Jumping &&
-            !_playerMovement.IsSliding)
+            !_playerMovement.IsSliding &&
+            !this.RunForwardAttacking)
         {
             this.FailedStealthKill = true;
+        }
+    }
+
+    private void RunAttacksInput()
+    {
+        if (_playerMovement.IsRunning() &&
+            _playerMovement.IsMovingForward() &&
+            !this.RunForwardAttacking &&
+            _canRunAttack &&
+            !_playerMovement.Jumping &&
+            !_playerMovement.IsInAir() &&
+            !this.ShouldExecuteStealthKill &&
+            !this.StealthKilling &&
+            !this.FailedStealthKill &&
+            !this.Attacking &&
+            !this.AirAttacking &&
+            !this.IsBlocking &&
+            !_shouldExecuteAHeavyAttack &&
+            !this.HeavyAttacking &&
+            !_playerMovement.Dodging &&
+            !_playerMovement.IsSliding)
+        {
+            this.RunForwardAttacking = true;
         }
     }
 
@@ -272,25 +308,11 @@ public class LightsaberController : MonoBehaviour
             !this._playerMovement.Dodging &&
             !this.IsBlocking &&
             !this.ShouldExecuteStealthKill &&
-            !this.FailedStealthKill)
+            !this.FailedStealthKill &&
+            !this.RunForwardAttacking)
         {
             this.CurrentAttack++;
         }
-
-        //if (Input.GetMouseButtonDown(2) &&
-        //this._player.LightsaberStamina > 0f &&
-        //this.CurrentAttack == 0 &&
-        //!this.HeavyAttacking &&
-        //!this.Attacking &&
-        //!this._playerMovement.IsInAir() &&
-        //!this._playerMovement.Jumping &&
-        //!this._playerMovement.Dashing &&
-        //!this.IsHeavyAttackRecovering &&
-        //!this.ShouldExecuteStealthKill &&
-        //!this.FailedStealthKill)
-        //{
-        //    this._shouldExecuteAHeavyAttack = true;
-        //}
     }
 
     private void AirAttacksInput()
@@ -308,7 +330,8 @@ public class LightsaberController : MonoBehaviour
             !this._playerMovement.Dodging &&
             !this.IsBlocking &&
             !this.ShouldExecuteStealthKill &&
-            !this.FailedStealthKill)
+            !this.FailedStealthKill &&
+            !this.RunForwardAttacking)
         {
             this.CurrentAirAttack++;
         }
@@ -328,7 +351,8 @@ public class LightsaberController : MonoBehaviour
             !this._playerMovement.Dodging &&
             !this.IsBlocking &&
             !this.ShouldExecuteStealthKill &&
-            !this.FailedStealthKill)
+            !this.FailedStealthKill &&
+            !this.RunForwardAttacking)
         {
             this._shouldExecuteAHeavyAttack = true;
         }
@@ -339,9 +363,11 @@ public class LightsaberController : MonoBehaviour
         if (this._canBlock &&
             !this.Attacking &&
             !this.HeavyAttacking &&
+            !this.IsHeavyAttackRecovering &&
             !this.AirAttacking &&
             !this.ShouldExecuteStealthKill &&
-            !this.FailedStealthKill)
+            !this.FailedStealthKill &&
+            !this.RunForwardAttacking)
         {
             this.IsBlocking = true;
             this.BlockingStarTime = Time.time;
@@ -360,6 +386,7 @@ public class LightsaberController : MonoBehaviour
     {
         this.AirAttacksInput();
         this.StealthKillInput();
+        this.RunAttacksInput();
         this.BasicAttacksInput();
     }
 
@@ -414,6 +441,12 @@ public class LightsaberController : MonoBehaviour
     {
         this._firstLightsaber.SetCanDealDamage(canDealDamage);
         this._secondLightsaber.SetCanDealDamage(canDealDamage);
+    }
+
+    public void RunAttackCooldown()
+    {
+        _canRunAttack = false;
+        StartCoroutine(this.WaitRunAttackCooldown());
     }
 
     #endregion

@@ -212,8 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2e2a7a7034d72d4297a525271080d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blade: {fileID: 4051377607327975395}
-  Damage: 0
 --- !u!136 &1847420523256958688
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -900,12 +898,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2ef5a8f3a378364ebd55a7e4ae4c573, type: 3}
---- !u!1 &4051377607327975395 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2749866845009881753, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,
-    type: 3}
-  m_PrefabInstance: {fileID: 2166265662453951866}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4051377607327975392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2749866845009881754, guid: e2ef5a8f3a378364ebd55a7e4ae4c573,

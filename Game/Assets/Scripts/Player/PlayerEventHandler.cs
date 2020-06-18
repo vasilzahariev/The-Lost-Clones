@@ -291,6 +291,22 @@ public class PlayerEventHandler : MonoBehaviour
         _lightsaberController.FailedStealthKill = false;
     }
 
+    public void StartRunAttack()
+    {
+        this.TurnTrails("on");
+        this.ChangeHand("right");
+        _lightsaberController.CanDealDamage(true);
+    }
+
+    public void StopRunAttack()
+    {
+        this.TurnTrails("off");
+        _lightsaberController.CanDealDamage(false);
+        _lightsaberController.RunAttackCooldown();
+
+        _lightsaberController.RunForwardAttacking = false;
+    }
+
     public void ChangeHand(string hand)
     {
         this._lightsaberController.SetToHand(hand);

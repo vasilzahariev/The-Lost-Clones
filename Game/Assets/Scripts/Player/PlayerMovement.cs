@@ -612,6 +612,14 @@ public class PlayerMovement : MonoBehaviour
         this._isInAir = value;
     }
 
+    public bool IsMovingForward()
+    {
+        if ((_player.IsTargetAcquired && _forward) || (!_player.IsTargetAcquired && _move))
+            return true;
+        else
+            return false;
+    }
+
     /// <summary>
     /// This method controls what values the animation controller parameters have
     /// </summary>
