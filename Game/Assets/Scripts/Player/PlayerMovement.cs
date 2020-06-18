@@ -428,7 +428,8 @@ public class PlayerMovement : MonoBehaviour
             !_lightsaberController.Attacking &&
             !_lightsaberController.HeavyAttacking &&
             !_lightsaberController.StealthKilling &&
-            !_lightsaberController.ShouldExecuteStealthKill)
+            !_lightsaberController.ShouldExecuteStealthKill &&
+            !_lightsaberController.RunForwardAttacking)
         {
             this.Slide = true;
         }
@@ -447,7 +448,8 @@ public class PlayerMovement : MonoBehaviour
             !this._lightsaberController.IsAttackRecovering &&
             !this._lightsaberController.IsBlocking &&
             !_lightsaberController.StealthKilling &&
-            !_lightsaberController.ShouldExecuteStealthKill)
+            !_lightsaberController.ShouldExecuteStealthKill &&
+            !_lightsaberController.RunForwardAttacking)
         {
             this.Dash = true;
         }
@@ -467,7 +469,8 @@ public class PlayerMovement : MonoBehaviour
             !this._lightsaberController.HeavyAttacking &&
             !this._lightsaberController.IsAttackRecovering &&
             !_lightsaberController.StealthKilling &&
-            !_lightsaberController.ShouldExecuteStealthKill)
+            !_lightsaberController.ShouldExecuteStealthKill &&
+            !_lightsaberController.RunForwardAttacking)
         {
             this.Dodge = true;
         }
@@ -486,7 +489,8 @@ public class PlayerMovement : MonoBehaviour
             !this._lightsaberController.Attacking &&
             !this._lightsaberController.HeavyAttacking &&
             !_lightsaberController.StealthKilling &&
-            !_lightsaberController.ShouldExecuteStealthKill)
+            !_lightsaberController.ShouldExecuteStealthKill &&
+            !_lightsaberController.RunForwardAttacking)
         {
             this._jump = true;
         }
